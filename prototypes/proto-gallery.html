@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 画廊</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  /* ── 画廊页专属 ── */
+  .gallery-header {
+    padding: 16px 16px 0;
+    position: relative; z-index: 2;
+  }
+  .gallery-header h1 {
+    font-size: 22px; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gallery-header .subtitle {
+    font-size: 12px; color: var(--text-muted); margin-top: 4px;
+  }
+  .gallery-card {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--blur-amount));
+    cursor: pointer;
+    transition: all .35s ease;
+  }
+  .gallery-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,.12);
+    box-shadow: 0 12px 40px rgba(0,0,0,.3);
+  }
+  .gallery-card .card-img {
+    width: 100%; display: block;
+    background: var(--bg-mid);
+    object-fit: cover;
+  }
+  .gallery-card .card-img-placeholder {
+    width: 100%; display: flex;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(108,92,231,.08), rgba(0,206,201,.08));
+    font-size: 32px; color: var(--text-muted);
+  }
+  .gallery-card .card-bottom {
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .gallery-card .card-avatar-sm {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #fff; font-weight: 700;
+  }
+  .gallery-card .card-name { font-size: 12px; color: var(--text-secondary); flex:1; }
+  .gallery-card .card-likes {
+    font-size: 11px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 3px;
+  }
+  .pull-refresh {
+    text-align: center; padding: 12px;
+    font-size: 12px; color: var(--text-muted);
+    opacity: 0; transition: opacity .3s;
+  }
+  .load-more {
+    text-align: center; padding: 16px;
+    font-size: 12px; color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons">
+      <i class="fas fa-signal"></i>
+      <i class="fas fa-wifi"></i>
+      <i class="fas fa-battery-full"></i>
+    </span>
+  </div>
+
+  <!-- 弥散背景 -->
+  <div class="ambient-bg">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- 页面内容 -->
+  <div class="page-content">
+    <div class="gallery-header reveal">
+      <h1>画廊</h1>
+      <p class="subtitle">发现灵感 · 生成同款</p>
+    </div>
+
+    <!-- 分类筛选 -->
+    <div class="filter-bar reveal">
+      <span class="glass-pill active">热门</span>
+      <span class="glass-pill">最新</span>
+      <span class="glass-pill">人像</span>
+      <span class="glass-pill">风景</span>
+      <span class="glass-pill">动漫</span>
+      <span class="glass-pill">创意</span>
+      <span class="glass-pill">写实</span>
+    </div>
+
+    <!-- 瀑布流 -->
+    <div class="waterfall" id="waterfall">
+      <div class="waterfall-col stagger-children">
+        <!-- 左列 -->
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:180px">🎨</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm">L</div>
+            <span class="card-name">LumiArtist</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 128</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:240px;background:linear-gradient(135deg,rgba(0,206,201,.12),rgba(253,203,110,.08))">🌊</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-3),var(--accent-5))">A</div>
+            <span class="card-name">AquaVision</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 256</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:150px;background:linear-gradient(135deg,rgba(253,121,168,.12),rgba(108,92,231,.08))">🌸</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-4),var(--accent-1))">M</div>
+            <span class="card-name">MoonDraw</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 89</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:200px;background:linear-gradient(135deg,rgba(253,203,110,.1),rgba(0,206,201,.06))">✨</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-5),var(--accent-3))">S</div>
+            <span class="card-name">StarMaker</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 342</span>
+          </div>
+        </a>
+      </div>
+      <div class="waterfall-col stagger-children">
+        <!-- 右列 -->
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:220px;background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(253,121,168,.06))">🔮</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm">Z</div>
+            <span class="card-name">ZenCreator</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 67</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:160px;background:linear-gradient(135deg,rgba(162,155,254,.1),rgba(0,206,201,.06))">🦋</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-2),var(--accent-3))">D</div>
+            <span class="card-name">DreamWeaver</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 198</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:190px;background:linear-gradient(135deg,rgba(85,239,196,.1),rgba(108,92,231,.06))">🌿</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,#55efc4,var(--accent-1))">G</div>
+            <span class="card-name">GreenAI</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 156</span>
+          </div>
+        </a>
+        <a href="proto-gallery-detail.html" class="gallery-card">
+          <div class="card-img-placeholder" style="height:170px;background:linear-gradient(135deg,rgba(253,121,168,.08),rgba(253,203,110,.06))">🌙</div>
+          <div class="card-bottom">
+            <div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-4),var(--accent-5))">N</div>
+            <span class="card-name">NightOwl</span>
+            <span class="card-likes"><i class="fas fa-heart"></i> 73</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="load-more">下拉加载更多灵感...</div>
+  </div>
+
+  <!-- TabBar -->
+  <div class="tab-bar">
+    <div class="tab-item active" data-page="proto-gallery.html">
+      <i class="fas fa-images"></i>
+      <span>画廊</span>
+    </div>
+    <div class="tab-item" data-page="proto-inspiration.html">
+      <i class="fas fa-lightbulb"></i>
+      <span>灵感</span>
+    </div>
+    <div class="tab-item tab-create" data-page="proto-create.html">
+      <div class="create-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+      <span class="tab-label">创作</span>
+    </div>
+    <div class="tab-item" data-page="proto-works.html">
+      <i class="fas fa-folder"></i>
+      <span>作品</span>
+    </div>
+    <div class="tab-item" data-page="proto-profile.html">
+      <i class="fas fa-user"></i>
+      <span>我的</span>
+    </div>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>

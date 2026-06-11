@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 编辑资料</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .edit-page { padding:16px; }
+  .avatar-upload { text-align:center;padding:20px; }
+  .avatar-circle {
+    width:80px;height:80px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:32px;color:#fff;font-weight:700;
+    box-shadow:0 4px 20px rgba(108,92,231,.3);
+    cursor:pointer;position:relative;overflow:hidden;
+  }
+  .avatar-circle .edit-badge {
+    position:absolute;bottom:2px;right:2px;
+    width:20px;height:20px;border-radius:50%;
+    background:var(--accent-3);font-size:10px;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .form-group { margin-top:20px; }
+  .form-label { font-size:12px;color:var(--text-muted);margin-bottom:8px;font-weight:600; }
+  .save-btn-area { padding:16px; }
+  .save-btn { position:relative;overflow:hidden;width:100%;padding:16px;border-radius:100px;font-size:16px;font-weight:700;text-align:center;cursor:pointer;background:var(--glass-bg);border:none;display:flex;align-items:center;justify-content:center;gap:8px; }
+  .save-btn .flow-border { position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from var(--flow-angle),transparent 15%,var(--accent-1) 40%,var(--accent-3) 50%,transparent 70%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:flow-rot 3s linear infinite; }
+  .save-btn .btn-inner { position:relative;z-index:2;background:linear-gradient(135deg,var(--accent-1),var(--accent-3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
+  <div class="nav-bar"><a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">编辑资料</span></div>
+  <div class="page-content-sub">
+    <div class="edit-page">
+      <div class="avatar-upload reveal">
+        <div class="avatar-circle" onclick="showToast('选择头像图片')">L<span class="edit-badge"><i class="fas fa-camera"></i></span></div>
+      </div>
+      <div class="form-group reveal">
+        <div class="form-label">昵称</div>
+        <input class="glass-input" value="LumiArtist" placeholder="输入昵称">
+      </div>
+      <div class="form-group reveal">
+        <div class="form-label">个性签名</div>
+        <textarea class="glass-textarea" placeholder="介绍一下自己" style="min-height:80px">AI创作，让想象发光 ✨</textarea>
+      </div>
+      <div class="save-btn-area reveal">
+        <button class="save-btn btn-flow" onclick="showToast('资料已保存');setTimeout(()=>history.back(),1500)">
+          <div class="flow-border"></div>
+          <span class="btn-inner"><i class="fas fa-check"></i> 保存修改</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared/app.js"></script>
+</body>
+</html>

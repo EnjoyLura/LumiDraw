@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 设置</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .settings-page { padding:16px; }
+  .settings-group { margin-bottom:20px; }
+  .settings-group .group-label { font-size:12px;color:var(--text-muted);margin-bottom:8px;letter-spacing:.05em;font-weight:600; }
+  .settings-item {
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 16px;border-radius:8px;background:var(--glass-bg);
+    border:1px solid var(--glass-border);margin-bottom:8px;
+    cursor:pointer;transition:all .3s;
+  }
+  .settings-item:hover { background:var(--glass-hover); }
+  .settings-item .item-left { display:flex;align-items:center;gap:12px; }
+  .settings-item .item-left i { font-size:16px;color:var(--text-muted);width:20px; }
+  .settings-item .item-label { font-size:14px;color:var(--text-primary); }
+  .settings-item .item-right { display:flex;align-items:center;gap:8px; }
+  .settings-item .item-value { font-size:12px;color:var(--text-muted); }
+  .logout-btn { width:100%;padding:14px;border-radius:100px;font-size:14px;font-weight:600;text-align:center;background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.12);color:#ff6b6b;cursor:pointer;margin-top:24px;transition:all .3s; }
+  .logout-btn:hover { background:rgba(255,107,107,.1); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
+  <div class="nav-bar"><a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">设置</span></div>
+  <div class="page-content-sub">
+    <div class="settings-page">
+      <div class="settings-group reveal">
+        <div class="group-label">通知设置</div>
+        <div class="settings-item card-ripple ripple-target">
+          <div class="item-left"><i class="fas fa-bell"></i><span class="item-label">新消息通知</span></div>
+          <div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div>
+        </div>
+        <div class="settings-item card-ripple ripple-target">
+          <div class="item-left"><i class="fas fa-heart"></i><span class="item-label">作品被点赞</span></div>
+          <div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div>
+        </div>
+        <div class="settings-item card-ripple ripple-target">
+          <div class="item-left"><i class="fas fa-user-check"></i><span class="item-label">新粉丝通知</span></div>
+          <div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div>
+        </div>
+      </div>
+      <div class="settings-group reveal">
+        <div class="group-label">隐私</div>
+        <div class="settings-item card-ripple ripple-target">
+          <div class="item-left"><i class="fas fa-eye"></i><span class="item-label">公开我的作品</span></div>
+          <div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div>
+        </div>
+        <div class="settings-item card-ripple ripple-target">
+          <div class="item-left"><i class="fas fa-terminal"></i><span class="item-label">公开我的Prompt</span></div>
+          <div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div>
+        </div>
+      </div>
+      <div class="settings-group reveal">
+        <div class="group-label">关于</div>
+        <div class="settings-item card-ripple ripple-target" onclick="showToast('版本信息')">
+          <div class="item-left"><i class="fas fa-info-circle"></i><span class="item-label">版本号</span></div>
+          <div class="item-right"><span class="item-value">v1.0.0</span><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div>
+        </div>
+        <div class="settings-item card-ripple ripple-target" onclick="showToast('用户协议')">
+          <div class="item-left"><i class="fas fa-file-lines"></i><span class="item-label">用户协议</span></div>
+          <div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div>
+        </div>
+        <div class="settings-item card-ripple ripple-target" onclick="showToast('隐私政策')">
+          <div class="item-left"><i class="fas fa-shield"></i><span class="item-label">隐私政策</span></div>
+          <div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div>
+        </div>
+      </div>
+      <button class="logout-btn reveal" onclick="showToast('确认退出登录？')">退出登录</button>
+    </div>
+  </div>
+</div>
+<script src="shared/app.js"></script>
+</body>
+</html>

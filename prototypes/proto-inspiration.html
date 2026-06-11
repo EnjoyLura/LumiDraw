@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 灵感</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .inspiration-header { padding: 16px 16px 0; position:relative; z-index:2; }
+  .inspiration-header h1 {
+    font-size: 22px; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .inspiration-header .subtitle { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .insp-tabs { margin: 12px 16px; }
+  .template-section { padding: 0 16px; }
+  .template-filter { display:flex; gap:6px; margin-bottom:12px; overflow-x:auto; scrollbar-width:none; }
+  .template-filter::-webkit-scrollbar { display:none; }
+  .template-card {
+    position:relative; border-radius: var(--radius-md);
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--blur-amount)); overflow:hidden;
+    cursor:pointer; transition: all .35s;
+  }
+  .template-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.12); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+  .template-card .template-img {
+    width:100%; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(135deg, rgba(108,92,231,.08), rgba(0,206,201,.08));
+    font-size: 28px; color: var(--text-muted);
+  }
+  .template-card .template-info { padding: 10px 12px; }
+  .template-card .template-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .template-card .template-usage { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 16px; }
+  .tool-card {
+    position:relative; border-radius: var(--radius-md);
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--blur-amount));
+    padding: 16px; cursor:pointer; transition: all .35s; overflow:hidden;
+  }
+  .tool-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.12); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+  .tool-card .tool-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 10px;
+  }
+  .tool-card .tool-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .tool-card .tool-desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; line-height: 1.4; }
+  .tool-card .tool-points { font-size: 11px; color: var(--accent-5); margin-top: 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span>
+  </div>
+  <div class="ambient-bg"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+  <div class="noise-overlay"></div>
+
+  <div class="page-content">
+    <div class="inspiration-header reveal">
+      <h1>灵感</h1>
+      <p class="subtitle">模板起步 · 工具加持</p>
+    </div>
+
+    <div class="insp-tabs reveal">
+      <div class="glass-tabs">
+        <div class="glass-tab active" data-tab="templates">官方模板</div>
+        <div class="glass-tab" data-tab="tools">AI工具</div>
+      </div>
+    </div>
+
+    <!-- 模板面板 -->
+    <div class="tab-panel" data-panel="templates">
+      <div class="template-section">
+        <div class="template-filter reveal">
+          <span class="glass-pill active">全部</span>
+          <span class="glass-pill">AI头像</span>
+          <span class="glass-pill">壁纸</span>
+          <span class="glass-pill">表情包</span>
+          <span class="glass-pill">海报</span>
+          <span class="glass-pill">插画</span>
+        </div>
+
+        <div class="grid-2 stagger-children">
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px">👤</div>
+            <div class="template-info">
+              <div class="template-title">赛博朋克头像</div>
+              <div class="template-usage">2.3k 人使用</div>
+            </div>
+          </a>
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(0,206,201,.12),rgba(253,203,110,.08))">🌌</div>
+            <div class="template-info">
+              <div class="template-title">星空壁纸</div>
+              <div class="template-usage">1.8k 人使用</div>
+            </div>
+          </a>
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(108,92,231,.06))">🐱</div>
+            <div class="template-info">
+              <div class="template-title">萌宠表情包</div>
+              <div class="template-usage">5.2k 人使用</div>
+            </div>
+          </a>
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(253,203,110,.1),rgba(0,206,201,.06))">🖼️</div>
+            <div class="template-info">
+              <div class="template-title">水墨风景画</div>
+              <div class="template-usage">980 人使用</div>
+            </div>
+          </a>
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(85,239,196,.1),rgba(108,92,231,.06))">✏️</div>
+            <div class="template-info">
+              <div class="template-title">像素风插画</div>
+              <div class="template-usage">670 人使用</div>
+            </div>
+          </a>
+          <a href="proto-template-detail.html" class="template-card">
+            <div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(162,155,254,.1),rgba(0,206,201,.06))">🎉</div>
+            <div class="template-info">
+              <div class="template-title">节日海报</div>
+              <div class="template-usage">1.1k 人使用</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI工具面板 -->
+    <div class="tab-panel" data-panel="tools" style="display:none">
+      <div class="tool-grid stagger-children">
+        <a href="proto-tool-process.html?tool=cutout" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(0,206,201,.1);color:var(--accent-3)">
+            <i class="fas fa-scissors"></i>
+          </div>
+          <div class="tool-name">AI抠图</div>
+          <div class="tool-desc">智能去除背景</div>
+          <div class="tool-points">2 积分/次</div>
+        </a>
+        <a href="proto-tool-process.html?tool=watermark" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(108,92,231,.1);color:var(--accent-1)">
+            <i class="fas fa-eraser"></i>
+          </div>
+          <div class="tool-name">AI去水印</div>
+          <div class="tool-desc">智能去除水印</div>
+          <div class="tool-points">2 积分/次</div>
+        </a>
+        <a href="proto-tool-process.html?tool=enhance" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)">
+            <i class="fas fa-expand"></i>
+          </div>
+          <div class="tool-name">图片变清晰</div>
+          <div class="tool-desc">低分辨率高清增强</div>
+          <div class="tool-points">2 积分/次</div>
+        </a>
+        <a href="proto-tool-process.html?tool=restore" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(253,121,168,.1);color:var(--accent-4)">
+            <i class="fas fa-clock-rotate-left"></i>
+          </div>
+          <div class="tool-name">老照片修复</div>
+          <div class="tool-desc">修复 + 上色</div>
+          <div class="tool-points">3 积分/次</div>
+        </a>
+        <a href="proto-tool-process.html?tool=style" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(162,155,254,.1);color:var(--accent-2)">
+            <i class="fas fa-palette"></i>
+          </div>
+          <div class="tool-name">AI风格迁移</div>
+          <div class="tool-desc">动漫/油画/水彩</div>
+          <div class="tool-points">2 积分/次</div>
+        </a>
+        <a href="proto-tool-process.html?tool=outpaint" class="tool-card card-breathe">
+          <div class="breathe-core"></div>
+          <div class="tool-icon" style="background:rgba(85,239,196,.1);color:#55efc4">
+            <i class="fas fa-up-right-and-down-left-from-center"></i>
+          </div>
+          <div class="tool-name">AI扩图</div>
+          <div class="tool-desc">智能扩展边界</div>
+          <div class="tool-points">3 积分/次</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item" data-page="proto-gallery.html"><i class="fas fa-images"></i><span>画廊</span></div>
+    <div class="tab-item active" data-page="proto-inspiration.html"><i class="fas fa-lightbulb"></i><span>灵感</span></div>
+    <div class="tab-item tab-create" data-page="proto-create.html"><div class="create-icon"><i class="fas fa-wand-magic-sparkles"></i></div><span class="tab-label">创作</span></div>
+    <div class="tab-item" data-page="proto-works.html"><i class="fas fa-folder"></i><span>作品</span></div>
+    <div class="tab-item" data-page="proto-profile.html"><i class="fas fa-user"></i><span>我的</span></div>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>

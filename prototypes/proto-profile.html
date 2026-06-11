@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 我的</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .profile-hero {
+    position: relative; padding: 24px 16px 20px;
+    overflow: hidden;
+  }
+  .profile-hero .aurora-wrap {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  .profile-hero .aurora-wrap .aurora-band { opacity: .2; }
+  .profile-user { display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+  .profile-avatar {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: #fff; font-weight: 700;
+    box-shadow: 0 4px 20px rgba(108,92,231,.3);
+  }
+  .profile-info { flex: 1; }
+  .profile-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .profile-sign { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .profile-points {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: var(--radius-sm);
+    background: rgba(253,203,110,.06); border: 1px solid rgba(253,203,110,.12);
+    margin-top: 16px; position: relative; z-index: 2;
+    cursor: pointer;
+  }
+  .profile-points .points-icon { font-size: 18px; color: var(--accent-5); }
+  .profile-points .points-num { font-size: 20px; font-weight: 700; color: var(--accent-5); }
+  .profile-points .points-label { font-size: 12px; color: var(--text-muted); }
+  .profile-points .points-arrow { font-size: 14px; color: var(--text-muted); margin-left: auto; }
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; padding: 0 16px; margin-top: 16px;
+  }
+  .stat-item {
+    text-align: center; padding: 12px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+  }
+  .stat-item .stat-num { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .stat-item .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .profile-menu { padding: 16px; }
+  .profile-menu .menu-group { margin-bottom: 16px; }
+  .profile-menu .group-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; letter-spacing: .05em; }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span>
+  </div>
+  <div class="ambient-bg"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+  <div class="noise-overlay"></div>
+
+  <div class="page-content">
+    <!-- 用户信息区（极光散射背景） -->
+    <div class="profile-hero card-aurora reveal">
+      <div class="aurora-wrap">
+        <div class="aurora-band ab-1"></div>
+        <div class="aurora-band ab-2"></div>
+        <div class="aurora-band ab-3"></div>
+      </div>
+      <div class="profile-user">
+        <a href="proto-edit-profile.html" class="profile-avatar">L</a>
+        <div class="profile-info">
+          <div class="profile-name">LumiArtist</div>
+          <div class="profile-sign">AI创作，让想象发光 ✨</div>
+        </div>
+      </div>
+      <a href="proto-points-center.html" class="profile-points">
+        <div class="points-icon"><i class="fas fa-coins"></i></div>
+        <div>
+          <div class="points-num">230</div>
+          <div class="points-label">积分余额</div>
+        </div>
+        <div class="points-arrow"><i class="fas fa-chevron-right"></i></div>
+      </a>
+    </div>
+
+    <!-- 统计 -->
+    <div class="stats-row stagger-children">
+      <div class="stat-item">
+        <div class="stat-num">24</div>
+        <div class="stat-label">总生成</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">已发布</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">156</div>
+        <div class="stat-label">获赞</div>
+      </div>
+    </div>
+
+    <!-- 功能列表 -->
+    <div class="profile-menu stagger-children">
+      <div class="menu-group">
+        <div class="group-label">积分与社交</div>
+        <a href="proto-points-center.html" class="glass-list-item card-ripple ripple-target">
+          <div class="item-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)"><i class="fas fa-coins"></i></div>
+          <div class="item-content"><div class="item-title">积分中心</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a href="proto-sign-in.html" class="glass-list-item card-ripple ripple-target">
+          <div class="item-icon" style="background:rgba(0,206,201,.1);color:var(--accent-3)"><i class="fas fa-calendar-check"></i></div>
+          <div class="item-content"><div class="item-title">每日签到</div><div class="item-desc">今日可领 +2 积分</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <a href="proto-invite.html" class="glass-list-item card-ripple ripple-target">
+          <div class="item-icon" style="background:rgba(108,92,231,.1);color:var(--accent-1)"><i class="fas fa-user-plus"></i></div>
+          <div class="item-content"><div class="item-title">邀请好友</div><div class="item-desc">双方各得 20 积分</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+      </div>
+      <div class="menu-group">
+        <div class="group-label">其他</div>
+        <a href="proto-settings.html" class="glass-list-item card-ripple ripple-target">
+          <div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-gear"></i></div>
+          <div class="item-content"><div class="item-title">设置</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </a>
+        <div class="glass-list-item card-ripple ripple-target" onclick="showToast('意见反馈页面')">
+          <div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-comment"></i></div>
+          <div class="item-content"><div class="item-title">意见反馈</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="glass-list-item card-ripple ripple-target" onclick="showToast('客服对话框')">
+          <div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-headset"></i></div>
+          <div class="item-content"><div class="item-title">联系客服</div></div>
+          <div class="item-arrow"><i class="fas fa-chevron-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <div class="tab-item" data-page="proto-gallery.html"><i class="fas fa-images"></i><span>画廊</span></div>
+    <div class="tab-item" data-page="proto-inspiration.html"><i class="fas fa-lightbulb"></i><span>灵感</span></div>
+    <div class="tab-item tab-create" data-page="proto-create.html"><div class="create-icon"><i class="fas fa-wand-magic-sparkles"></i></div><span class="tab-label">创作</span></div>
+    <div class="tab-item" data-page="proto-works.html"><i class="fas fa-folder"></i><span>作品</span></div>
+    <div class="tab-item active" data-page="proto-profile.html"><i class="fas fa-user"></i><span>我的</span></div>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>

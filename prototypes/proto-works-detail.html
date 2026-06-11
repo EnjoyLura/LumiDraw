@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 作品详情</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .detail-img { width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(108,92,231,.12),rgba(0,206,201,.08));font-size:80px;color:var(--text-muted); }
+  .detail-params { padding:16px; }
+  .param-card { padding:16px;border-radius:var(--radius-sm);background:var(--glass-bg);border:1px solid var(--glass-border); }
+  .param-row { display:flex;margin-bottom:8px; }
+  .param-row:last-child { margin-bottom:0; }
+  .param-label { font-size:12px;color:var(--text-muted);width:60px; }
+  .param-value { font-size:13px;color:var(--text-secondary);flex:1; }
+  .detail-actions { display:flex;gap:12px;padding:16px; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
+  <div class="nav-bar"><a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">作品详情</span></div>
+  <div class="page-content-sub">
+    <a href="proto-image-preview.html" class="detail-img reveal">🚀</a>
+    <div class="detail-params reveal">
+      <div class="param-card">
+        <div class="param-row"><div class="param-label">Prompt</div><div class="param-value">赛博朋克风格的猫咪宇航员</div></div>
+        <div class="param-row"><div class="param-label">模型</div><div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div></div>
+        <div class="param-row"><div class="param-label">尺寸</div><div class="param-value">1:1 · 1024×1024</div></div>
+        <div class="param-row"><div class="param-label">时间</div><div class="param-value">2026-06-11 14:30</div></div>
+      </div>
+    </div>
+    <div class="detail-actions reveal">
+      <button class="btn-primary card-ripple ripple-target" onclick="showToast('已保存到相册')"><i class="fas fa-download"></i> 下载</button>
+      <button class="btn-glass card-ripple ripple-target" onclick="showToast('已发布到画廊')"><i class="fas fa-share"></i> 发布</button>
+    </div>
+    <div class="detail-actions reveal">
+      <button class="btn-small" onclick="showToast('确认删除？')" style="width:100%"><i class="fas fa-trash"></i> 删除作品</button>
+    </div>
+  </div>
+</div>
+<script src="shared/app.js"></script>
+</body>
+</html>

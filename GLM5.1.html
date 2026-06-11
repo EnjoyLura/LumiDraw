@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi · Glass</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --bg-deep:#0a0a0f;
+    --bg-mid:#111119;
+    --glass-bg:rgba(255,255,255,.04);
+    --glass-border:rgba(255,255,255,.08);
+    --glass-hover:rgba(255,255,255,.07);
+    --text-primary:rgba(255,255,255,.92);
+    --text-secondary:rgba(255,255,255,.5);
+    --text-muted:rgba(255,255,255,.28);
+    --accent-1:#6c5ce7;
+    --accent-2:#a29bfe;
+    --accent-3:#00cec9;
+    --accent-4:#fd79a8;
+    --accent-5:#fdcb6e;
+    --blur-amount:40px;
+    --radius-sm:12px;
+    --radius-md:20px;
+    --radius-lg:28px;
+    --radius-xl:36px;
+  }
+
+  html{scroll-behavior:smooth}
+
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg-deep);
+    color:var(--text-primary);
+    overflow-x:hidden;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── Ambient Background ── */
+  .ambient{
+    position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  }
+  .ambient .orb{
+    position:absolute;border-radius:50%;filter:blur(120px);opacity:.35;
+    animation:float 20s ease-in-out infinite alternate;
+  }
+  .ambient .orb:nth-child(1){width:600px;height:600px;background:var(--accent-1);top:-10%;left:-5%;animation-delay:0s}
+  .ambient .orb:nth-child(2){width:500px;height:500px;background:var(--accent-3);bottom:-15%;right:-8%;animation-delay:-7s}
+  .ambient .orb:nth-child(3){width:400px;height:400px;background:var(--accent-4);top:40%;left:50%;animation-delay:-14s}
+  .ambient .orb:nth-child(4){width:300px;height:300px;background:var(--accent-5);bottom:20%;left:15%;animation-delay:-4s;opacity:.2}
+  .ambient .grid-overlay{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at 50% 50%,black 20%,transparent 70%);
+  }
+
+  @keyframes float{
+    0%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(60px,-40px) scale(1.1)}
+    66%{transform:translate(-30px,50px) scale(.95)}
+    100%{transform:translate(20px,-20px) scale(1.05)}
+  }
+
+  /* ── Noise Overlay ── */
+  .noise{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── Layout ── */
+  .content{position:relative;z-index:2}
+
+  /* ── Navigation ── */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:20px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:all .4s ease;
+  }
+  .nav.scrolled{
+    background:rgba(10,10,15,.7);
+    backdrop-filter:blur(var(--blur-amount));
+    -webkit-backdrop-filter:blur(var(--blur-amount));
+    border-bottom:1px solid var(--glass-border);
+  }
+  .nav-brand{
+    display:flex;align-items:center;gap:12px;
+    font-weight:700;font-size:20px;letter-spacing:-.5px;
+    text-decoration:none;color:var(--text-primary);
+  }
+  .nav-brand .logo{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:800;color:#fff;
+  }
+  .nav-links{display:flex;gap:8px}
+  .nav-links a{
+    color:var(--text-secondary);text-decoration:none;
+    padding:8px 16px;border-radius:var(--radius-sm);
+    font-size:14px;font-weight:500;
+    transition:all .3s ease;
+  }
+  .nav-links a:hover{color:var(--text-primary);background:var(--glass-hover)}
+
+  /* ── Hero ── */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    padding:120px 40px 80px;text-align:center;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 16px 6px 8px;
+    border-radius:100px;
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    font-size:13px;color:var(--text-secondary);
+    margin-bottom:32px;
+    animation:fadeUp .8s ease both;
+  }
+  .hero-badge .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent-3);
+    box-shadow:0 0 12px var(--accent-3);
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  .hero h1{
+    font-size:clamp(48px,8vw,96px);font-weight:200;
+    letter-spacing:-3px;line-height:1.05;
+    margin-bottom:24px;
+    animation:fadeUp .8s ease .1s both;
+  }
+  .hero h1 strong{
+    font-weight:800;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent-3));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero p{
+    font-size:clamp(16px,2vw,20px);color:var(--text-secondary);
+    max-width:560px;line-height:1.7;font-weight:300;
+    animation:fadeUp .8s ease .2s both;
+  }
+  .hero-actions{
+    display:flex;gap:12px;margin-top:48px;
+    animation:fadeUp .8s ease .3s both;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 28px;border-radius:100px;
+    font-size:15px;font-weight:600;
+    text-decoration:none;cursor:pointer;
+    border:none;transition:all .3s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent-1),var(--accent-3));
+    color:#fff;
+    box-shadow:0 4px 24px rgba(108,92,231,.3);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(108,92,231,.4)}
+  .btn-glass{
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    color:var(--text-primary);
+    backdrop-filter:blur(20px);
+  }
+  .btn-glass:hover{background:var(--glass-hover);transform:translateY(-2px)}
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  /* ── Section Title ── */
+  .section{padding:120px 40px}
+  .section-header{text-align:center;margin-bottom:80px}
+  .section-header .label{
+    display:inline-block;font-size:12px;font-weight:600;
+    letter-spacing:3px;text-transform:uppercase;
+    color:var(--accent-3);margin-bottom:16px;
+  }
+  .section-header h2{
+    font-size:clamp(32px,5vw,56px);font-weight:300;
+    letter-spacing:-2px;line-height:1.15;
+  }
+  .section-header h2 strong{font-weight:700}
+
+  /* ── Glass Card ── */
+  .glass{
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);
+    backdrop-filter:blur(var(--blur-amount));
+    -webkit-backdrop-filter:blur(var(--blur-amount));
+    transition:all .4s ease;
+  }
+  .glass:hover{
+    background:var(--glass-hover);
+    border-color:rgba(255,255,255,.12);
+    transform:translateY(-4px);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+  }
+
+  /* ── Features Grid ── */
+  .features-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;max-width:1200px;margin:0 auto;
+  }
+  .feature-card{padding:40px;position:relative;overflow:hidden}
+  .feature-card .icon{
+    width:52px;height:52px;border-radius:var(--radius-sm);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;margin-bottom:24px;
+  }
+  .feature-card:nth-child(1) .icon{background:linear-gradient(135deg,rgba(108,92,231,.3),rgba(162,155,254,.1))}
+  .feature-card:nth-child(2) .icon{background:linear-gradient(135deg,rgba(0,206,201,.3),rgba(0,206,201,.1))}
+  .feature-card:nth-child(3) .icon{background:linear-gradient(135deg,rgba(253,121,168,.3),rgba(253,121,168,.1))}
+  .feature-card:nth-child(4) .icon{background:linear-gradient(135deg,rgba(253,203,110,.3),rgba(253,203,110,.1))}
+  .feature-card:nth-child(5) .icon{background:linear-gradient(135deg,rgba(85,239,196,.3),rgba(85,239,196,.1))}
+  .feature-card:nth-child(6) .icon{background:linear-gradient(135deg,rgba(129,236,236,.3),rgba(129,236,236,.1))}
+
+  .feature-card h3{
+    font-size:18px;font-weight:600;margin-bottom:12px;
+    letter-spacing:-.3px;
+  }
+  .feature-card p{font-size:14px;color:var(--text-secondary);line-height:1.7;font-weight:300}
+  .feature-card .glow{
+    position:absolute;top:-60px;right:-60px;
+    width:160px;height:160px;border-radius:50%;
+    filter:blur(60px);opacity:.15;pointer-events:none;
+    transition:opacity .4s ease;
+  }
+  .feature-card:hover .glow{opacity:.3}
+  .feature-card:nth-child(1) .glow{background:var(--accent-1)}
+  .feature-card:nth-child(2) .glow{background:var(--accent-3)}
+  .feature-card:nth-child(3) .glow{background:var(--accent-4)}
+  .feature-card:nth-child(4) .glow{background:var(--accent-5)}
+  .feature-card:nth-child(5) .glow{background:#55efc4}
+  .feature-card:nth-child(6) .glow{background:#81ecec}
+
+  /* ── Stats ── */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:20px;max-width:1200px;margin:0 auto;
+  }
+  .stat-card{
+    padding:40px 32px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .stat-card .number{
+    font-size:clamp(36px,4vw,52px);font-weight:200;
+    letter-spacing:-2px;margin-bottom:8px;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent-3));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .stat-card .unit{
+    font-size:clamp(18px,2vw,24px);font-weight:300;
+    opacity:.6;
+  }
+  .stat-card .desc{font-size:13px;color:var(--text-muted);margin-top:8px;font-weight:400}
+
+  /* ── Showcase / Bento Grid ── */
+  .bento{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    grid-template-rows:auto;
+    gap:20px;max-width:1200px;margin:0 auto;
+  }
+  .bento-card{padding:32px;position:relative;overflow:hidden;min-height:200px}
+  .bento-card.wide{grid-column:span 2}
+  .bento-card.tall{grid-row:span 2}
+  .bento-card h3{font-size:20px;font-weight:600;margin-bottom:12px;letter-spacing:-.3px}
+  .bento-card p{font-size:14px;color:var(--text-secondary);line-height:1.7;font-weight:300}
+
+  /* Animated ring */
+  .ring-container{
+    position:absolute;right:20px;bottom:20px;
+    width:120px;height:120px;
+  }
+  .ring{
+    position:absolute;inset:0;border-radius:50%;
+    border:1.5px solid rgba(255,255,255,.06);
+  }
+  .ring:nth-child(1){animation:spin 12s linear infinite}
+  .ring:nth-child(2){inset:15px;animation:spin 8s linear infinite reverse}
+  .ring:nth-child(3){inset:30px;animation:spin 6s linear infinite}
+  .ring::after{
+    content:'';position:absolute;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--accent-3);top:-3px;left:50%;
+    box-shadow:0 0 10px var(--accent-3);
+  }
+  .ring:nth-child(2)::after{background:var(--accent-1);box-shadow:0 0 10px var(--accent-1)}
+  .ring:nth-child(3)::after{background:var(--accent-4);box-shadow:0 0 10px var(--accent-4)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Wave visualization */
+  .wave-vis{
+    display:flex;align-items:end;gap:3px;
+    height:60px;margin-top:24px;
+  }
+  .wave-vis .bar{
+    width:4px;border-radius:4px;
+    background:linear-gradient(to top,var(--accent-1),var(--accent-3));
+    animation:wave 1.5s ease-in-out infinite;
+  }
+  @keyframes wave{
+    0%,100%{height:10px;opacity:.4}
+    50%{height:50px;opacity:1}
+  }
+
+  /* Code snippet */
+  .code-block{
+    background:rgba(0,0,0,.3);
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:var(--radius-sm);
+    padding:20px;margin-top:20px;
+    font-family:'SF Mono',Monaco,monospace;
+    font-size:13px;line-height:1.8;
+    color:var(--text-secondary);
+    overflow:hidden;
+  }
+  .code-block .keyword{color:var(--accent-2)}
+  .code-block .string{color:var(--accent-3)}
+  .code-block .comment{color:var(--text-muted)}
+  .code-block .fn{color:var(--accent-4)}
+
+  /* ── Marquee ── */
+  .marquee-section{padding:80px 0;overflow:hidden}
+  .marquee{
+    display:flex;gap:40px;
+    animation:scroll 30s linear infinite;
+    white-space:nowrap;
+  }
+  .marquee span{
+    font-size:clamp(48px,6vw,80px);font-weight:200;
+    letter-spacing:-2px;color:var(--text-muted);
+    display:flex;align-items:center;gap:40px;
+  }
+  .marquee span .sep{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--accent-3);opacity:.5;
+  }
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ── Footer ── */
+  .footer{
+    text-align:center;padding:80px 40px 40px;
+    border-top:1px solid var(--glass-border);
+  }
+  .footer p{font-size:14px;color:var(--text-muted);font-weight:300}
+  .footer .heart{
+    display:inline-block;color:var(--accent-4);
+    animation:heartbeat 1.5s ease-in-out infinite;
+  }
+  @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+  /* ── Scroll reveal ── */
+  .reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  /* ── Responsive ── */
+  @media(max-width:768px){
+    .nav{padding:16px 20px}
+    .nav-links{display:none}
+    .hero{padding:100px 20px 60px}
+    .section{padding:80px 20px}
+    .features-grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .bento{grid-template-columns:1fr}
+    .bento-card.wide{grid-column:span 1}
+    .hero-actions{flex-direction:column;width:100%;max-width:300px}
+    .btn{justify-content:center}
+  }
+
+  /* ── Cursor Glow ── */
+  .cursor-glow{
+    position:fixed;width:400px;height:400px;
+    border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(108,92,231,.08),transparent 70%);
+    transform:translate(-50%,-50%);
+    z-index:1;transition:opacity .3s;
+  }
+
+  /* ========================================
+     光动效卡片 — 四种光影交互范式
+     ======================================== */
+
+  /* ── 光效展示区网格 ── */
+  .lightfx-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;max-width:1200px;margin:0 auto;
+  }
+  .lightfx-card{
+    position:relative;border-radius:var(--radius-lg);
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(var(--blur-amount));
+    -webkit-backdrop-filter:blur(var(--blur-amount));
+    padding:34px 30px;overflow:hidden;
+    transition:transform .45s cubic-bezier(.22,1,.36,1),border-color .4s ease;
+    cursor:default;
+  }
+  .lightfx-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,255,255,.13);
+  }
+  .lightfx-icon{
+    width:54px;height:54px;border-radius:15px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;margin-bottom:22px;
+    position:relative;z-index:3;
+  }
+  .lightfx-title{
+    font-size:21px;font-weight:600;
+    margin-bottom:10px;letter-spacing:-0.03em;
+    position:relative;z-index:3;
+  }
+  .lightfx-desc{
+    font-size:13.5px;line-height:1.75;
+    color:var(--text-secondary);margin-bottom:22px;
+    position:relative;z-index:3;
+  }
+  .lightfx-tag{
+    display:inline-block;font-size:10.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.13em;
+    padding:5px 14px;border-radius:100px;
+    position:relative;z-index:3;
+  }
+
+  /* ── 1. 流光边框 — Conic Gradient 旋转 ── */
+  @property --flow-angle {
+    syntax: '<angle>'; initial-value: 0deg; inherits: false;
+  }
+  .card-flow { border: none; }
+  .card-flow .flow-border {
+    position:absolute;inset:0;border-radius:var(--radius-lg);
+    padding:1.5px;pointer-events:none;
+    background:conic-gradient(
+      from var(--flow-angle),
+      transparent 20%,var(--accent-1) 42%,
+      var(--accent-3) 48%,transparent 65%
+    );
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:flow-rot 3.5s linear infinite;
+  }
+  .card-flow .flow-trail {
+    position:absolute;inset:0;border-radius:var(--radius-lg);
+    pointer-events:none;z-index:0;
+    background:conic-gradient(
+      from var(--flow-angle),
+      transparent 20%,rgba(108,92,231,0.04) 42%,
+      rgba(0,206,201,0.04) 48%,transparent 65%
+    );
+    filter:blur(18px);
+    animation:flow-rot 3.5s linear infinite;
+  }
+  @keyframes flow-rot { to { --flow-angle: 360deg; } }
+
+  /* ── 2. 呼吸脉冲 — Box-Shadow 节律 ── */
+  .card-breathe {
+    animation:breathe 3.2s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% {
+      box-shadow:0 0 0 0 rgba(0,206,201,0),
+                  0 0 0 0 rgba(0,206,201,0),
+                  inset 0 0 0 0 rgba(0,206,201,0);
+    }
+    50% {
+      box-shadow:0 0 24px 3px rgba(0,206,201,0.1),
+                  0 0 64px 6px rgba(0,206,201,0.05),
+                  inset 0 0 36px 0 rgba(0,206,201,0.035);
+    }
+  }
+  .card-breathe .breathe-core {
+    position:absolute;top:50%;left:50%;
+    width:60%;height:60%;border-radius:50%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(0,206,201,0.08),transparent 70%);
+    animation:breathe-core 3.2s ease-in-out infinite;
+    pointer-events:none;z-index:0;
+  }
+  @keyframes breathe-core {
+    0%,100% {opacity:0;transform:translate(-50%,-50%) scale(0.8);}
+    50% {opacity:1;transform:translate(-50%,-50%) scale(1.1);}
+  }
+
+  /* ── 3. 极光散射 — 多层渐变波动 ── */
+  .card-aurora .aurora-wrap {
+    position:absolute;inset:0;border-radius:var(--radius-lg);
+    overflow:hidden;pointer-events:none;z-index:0;
+  }
+  .aurora-band {
+    position:absolute;width:140%;height:45%;
+    border-radius:50%;filter:blur(36px);
+  }
+  .ab-1 {
+    background:linear-gradient(90deg,transparent,rgba(0,206,201,0.28),rgba(108,92,231,0.18),transparent);
+    top:5%;left:-20%;
+    animation:ab1 7s ease-in-out infinite;
+  }
+  .ab-2 {
+    background:linear-gradient(90deg,transparent,rgba(253,121,168,0.22),rgba(253,203,110,0.16),transparent);
+    bottom:0;left:-20%;
+    animation:ab2 9s ease-in-out infinite;
+  }
+  .ab-3 {
+    background:linear-gradient(90deg,transparent,rgba(108,92,231,0.14),transparent);
+    top:30%;left:-20%;
+    animation:ab3 11s ease-in-out infinite;
+  }
+  @keyframes ab1 {0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(18%) scaleY(1.35)}}
+  @keyframes ab2 {0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-14%) scaleY(.7)}}
+  @keyframes ab3 {0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(10%) scaleY(1.2)}}
+
+  /* ── 4. 星尘漂浮 — JS 粒子 ── */
+  .stardust-wrap {
+    position:absolute;inset:0;border-radius:var(--radius-lg);
+    overflow:hidden;pointer-events:none;z-index:1;
+  }
+  .sd-particle {
+    position:absolute;border-radius:50%;pointer-events:none;
+  }
+  @keyframes sdf0 {
+    0%,100%{transform:translate(0,0);opacity:.3}
+    25%{transform:translate(9px,-14px);opacity:.75}
+    50%{transform:translate(-5px,-9px);opacity:.3}
+    75%{transform:translate(7px,5px);opacity:.1}
+  }
+  @keyframes sdf1 {
+    0%,100%{transform:translate(0,0);opacity:.25}
+    33%{transform:translate(-11px,7px);opacity:.8}
+    66%{transform:translate(6px,-11px);opacity:.15}
+  }
+  @keyframes sdf2 {
+    0%,100%{transform:translate(0,0);opacity:.35}
+    50%{transform:translate(13px,9px);opacity:.7}
+  }
+
+  /* ── 5. 波纹触控 — 点击扩散涟漪 ── */
+  .card-ripple {
+    cursor:pointer;
+  }
+  .ripple-wave {
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(253,121,168,0.25),transparent 70%);
+    transform:scale(0);
+    animation:ripple-expand 0.9s ease-out forwards;
+    pointer-events:none;z-index:1;
+  }
+  @keyframes ripple-expand {
+    to {transform:scale(4);opacity:0;}
+  }
+  .card-ripple .click-hint {
+    position:absolute;
+    bottom:16px;right:20px;
+    font-size:11px;color:rgba(253,121,168,0.5);
+    z-index:3;pointer-events:none;
+    animation:hint-blink 2s ease-in-out infinite;
+  }
+  @keyframes hint-blink {
+    0%,100% {opacity:.5;}
+    50% {opacity:1;}
+  }
+
+  /* ── 光效卡片入场 ── */
+  .lfx-enter {
+    opacity:0;transform:translateY(36px);
+    transition:opacity .7s cubic-bezier(.22,1,.36,1),
+                transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .lfx-enter.visible {opacity:1;transform:translateY(0);}
+
+  /* ── 光效区响应式 ── */
+  @media(max-width:768px){
+    .lightfx-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor Glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Ambient Background -->
+<div class="ambient">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="grid-overlay"></div>
+</div>
+<div class="noise"></div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-brand">
+      <div class="logo">L</div>
+      Lumi
+    </a>
+    <div class="nav-links">
+      <a href="#features">特性</a>
+      <a href="#stats">数据</a>
+      <a href="#showcase">展示</a>
+      <a href="#lightfx">光动效</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      极简主义 × 毛玻璃美学
+    </div>
+    <h1>Less is <strong>More</strong></h1>
+    <p>当极简主义遇见毛玻璃质感，每一个像素都在呼吸。轻量、通透、优雅——这就是未来界面的样子。</p>
+    <div class="hero-actions">
+      <a href="#features" class="btn btn-primary">探索设计 →</a>
+      <a href="#showcase" class="btn btn-glass">查看展示</a>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-section">
+    <div class="marquee">
+      <span>Minimalism <span class="sep"></span></span>
+      <span>Glassmorphism <span class="sep"></span></span>
+      <span>Transparency <span class="sep"></span></span>
+      <span>Elegance <span class="sep"></span></span>
+      <span>Minimalism <span class="sep"></span></span>
+      <span>Glassmorphism <span class="sep"></span></span>
+      <span>Transparency <span class="sep"></span></span>
+      <span>Elegance <span class="sep"></span></span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="section" id="features">
+    <div class="section-header reveal">
+      <div class="label">核心特性</div>
+      <h2>设计哲学的<strong>六个维度</strong></h2>
+    </div>
+    <div class="features-grid">
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">✦</div>
+        <h3>呼吸感留白</h3>
+        <p>每一个元素都拥有足够的呼吸空间，让视觉焦点自然流动，而非被信息淹没。</p>
+      </div>
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">◎</div>
+        <h3>通透层次</h3>
+        <p>毛玻璃质感创造视觉纵深感，信息层级不再依赖边框，而是通过透明度自然呈现。</p>
+      </div>
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">△</div>
+        <h3>柔和光效</h3>
+        <p>微妙的渐变光晕替代硬阴影，为界面注入温暖的生命力与科技感。</p>
+      </div>
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">◇</div>
+        <h3>克制动效</h3>
+        <p>每一次运动都有意义，不炫技、不干扰，只为引导注意力和提供反馈。</p>
+      </div>
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">⬡</div>
+        <h3>深色基调</h3>
+        <p>深色画布让光与色更加鲜明，毛玻璃效果在暗色中展现出最迷人的折射质感。</p>
+      </div>
+      <div class="glass feature-card reveal">
+        <div class="glow"></div>
+        <div class="icon">⊕</div>
+        <h3>极简交互</h3>
+        <p>去除冗余操作路径，每个触点都直达目标，交互如流水般自然。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section" id="stats">
+    <div class="section-header reveal">
+      <div class="label">数据说话</div>
+      <h2>设计的<strong>力量</strong></h2>
+    </div>
+    <div class="stats">
+      <div class="glass stat-card reveal">
+        <div class="number" data-target="97">0<span class="unit">%</span></div>
+        <div class="desc">用户满意度</div>
+      </div>
+      <div class="glass stat-card reveal">
+        <div class="number" data-target="40">0<span class="unit">ms</span></div>
+        <div class="desc">模糊半径</div>
+      </div>
+      <div class="glass stat-card reveal">
+        <div class="number" data-target="4">0<span class="unit">px</span></div>
+        <div class="desc">边框透明度</div>
+      </div>
+      <div class="glass stat-card reveal">
+        <div class="number" data-target="0">0<span class="unit">个</span></div>
+        <div class="desc">冗余装饰</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase / Bento -->
+  <section class="section" id="showcase">
+    <div class="section-header reveal">
+      <div class="label">视觉展示</div>
+      <h2>毛玻璃的<strong>无限可能</strong></h2>
+    </div>
+    <div class="bento">
+      <div class="glass bento-card wide reveal">
+        <h3>轨道运动系统</h3>
+        <p>精确的环形运动轨道，呈现科技感十足的视觉节奏，每一帧都是优雅的数学。</p>
+        <div class="ring-container">
+          <div class="ring"></div>
+          <div class="ring"></div>
+          <div class="ring"></div>
+        </div>
+      </div>
+      <div class="glass bento-card reveal">
+        <h3>声波可视化</h3>
+        <p>数据也可以很美</p>
+        <div class="wave-vis" id="waveVis"></div>
+      </div>
+      <div class="glass bento-card reveal">
+        <h3>代码即设计</h3>
+        <p>简洁的代码本身就是最好的文档</p>
+        <div class="code-block">
+          <span class="comment">// 纯粹的毛玻璃</span><br>
+          <span class="keyword">.glass</span> {<br>
+          &nbsp;&nbsp;background: <span class="fn">rgba</span>(<span class="string">255,255,255,.04</span>);<br>
+          &nbsp;&nbsp;backdrop-filter: <span class="fn">blur</span>(<span class="string">40px</span>);<br>
+          &nbsp;&nbsp;border: <span class="string">1px</span> solid <span class="fn">rgba</span>(<span class="string">255,255,255,.08</span>);<br>
+          }
+        </div>
+      </div>
+      <div class="glass bento-card wide reveal" id="interactiveCard">
+        <h3>交互画布</h3>
+        <p>移动鼠标，感受光与影的对话</p>
+        <canvas id="particleCanvas" style="width:100%;height:200px;border-radius:12px;margin-top:16px;"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- 光动效展示 -->
+  <section class="section" id="lightfx">
+    <div class="section-header reveal">
+      <div class="label">光动效范式</div>
+      <h2>光影交互的<strong>五种维度</strong></h2>
+    </div>
+    <div class="lightfx-grid">
+
+      <!-- 1. 流光边框 -->
+      <div class="lightfx-card card-flow lfx-enter" data-delay="0">
+        <div class="flow-border"></div>
+        <div class="flow-trail"></div>
+        <div class="lightfx-icon" style='background:rgba(108,92,231,0.1);color:var(--accent-1)'>
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h3 class="lightfx-title">流光边框</h3>
+        <p class="lightfx-desc">锥形渐变沿边缘持续旋转，模拟数据流在边界高速传输的视觉韵律</p>
+        <span class="lightfx-tag" style='color:var(--accent-1);border:1px solid rgba(108,92,231,0.18);background:rgba(108,92,231,0.06)'>Conic Flow</span>
+      </div>
+
+      <!-- 2. 呼吸脉冲 -->
+      <div class="lightfx-card card-breathe lfx-enter" data-delay="90">
+        <div class="breathe-core"></div>
+        <div class="lightfx-icon" style='background:rgba(0,206,201,0.1);color:var(--accent-3)'>
+          <i class="fas fa-heart-pulse"></i>
+        </div>
+        <h3 class="lightfx-title">呼吸脉冲</h3>
+        <p class="lightfx-desc">内外光影以生命节律缓缓起伏，赋予界面有机的呼吸感与温度</p>
+        <span class="lightfx-tag" style='color:var(--accent-3);border:1px solid rgba(0,206,201,0.18);background:rgba(0,206,201,0.06)'>Breathing</span>
+      </div>
+
+      <!-- 3. 极光散射 -->
+      <div class="lightfx-card card-aurora lfx-enter" data-delay="180">
+        <div class="aurora-wrap">
+          <div class="aurora-band ab-1"></div>
+          <div class="aurora-band ab-2"></div>
+          <div class="aurora-band ab-3"></div>
+        </div>
+        <div class="lightfx-icon" style='background:rgba(162,155,254,0.1);color:var(--accent-2)'>
+          <i class="fas fa-wind"></i>
+        </div>
+        <h3 class="lightfx-title">极光散射</h3>
+        <p class="lightfx-desc">多层渐变光带在玻璃层下缓慢波动，再现极地天幕的流转光辉</p>
+        <span class="lightfx-tag" style='color:var(--accent-2);border:1px solid rgba(162,155,254,0.18);background:rgba(162,155,254,0.06)'>Aurora</span>
+      </div>
+
+      <!-- 4. 星尘漂浮 -->
+      <div class="lightfx-card card-stardust lfx-enter" data-delay="270">
+        <div class="stardust-wrap"></div>
+        <div class="lightfx-icon" style='background:rgba(253,121,168,0.1);color:var(--accent-4)'>
+          <i class="fas fa-wand-magic-sparkles"></i>
+        </div>
+        <h3 class="lightfx-title">星尘漂浮</h3>
+        <p class="lightfx-desc">微小光粒在空间中随机漂浮与闪烁，营造宇宙尘埃悬浮的深邃氛围</p>
+        <span class="lightfx-tag" style='color:var(--accent-4);border:1px solid rgba(253,121,168,0.18);background:rgba(253,121,168,0.06)'>Stardust</span>
+      </div>
+
+      <!-- 5. 波纹触控 -->
+      <div class="lightfx-card card-ripple lfx-enter" data-delay="360" style="grid-column:1 / -1">
+        <div class="lightfx-icon" style='background:rgba(253,203,110,0.1);color:var(--accent-5)'>
+          <i class="fas fa-hand-pointer"></i>
+        </div>
+        <h3 class="lightfx-title">波纹触控</h3>
+        <p class="lightfx-desc">点击卡片任意位置产生光波纹扩散，提供直觉化的触觉反馈，涟漪由中心向外消散</p>
+        <span class="lightfx-tag" style='color:var(--accent-5);border:1px solid rgba(253,203,110,0.18);background:rgba(253,203,110,0.06)'>Ripple</span>
+        <span class="click-hint">点击试试 ↗</span>
+      </div>
+
+    </div>
+
+    <p class="reveal" style="text-align:center;margin-top:32px;font-size:12px;letter-spacing:0.1em;color:var(--text-muted)">
+      所有光效均为实时渲染 · 无 GIF · 无 Canvas · 纯 CSS + JS 粒子
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>用 <span class="heart">♥</span> 和毛玻璃精心打造</p>
+    <p style="margin-top:8px;font-size:12px;opacity:.4">Less is More · Glassmorphism × Minimalism × LightFX</p>
+  </footer>
+
+</div>
+
+<script>
+// ── Nav scroll effect ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── Cursor glow ──
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// ── Scroll reveal ──
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => revealObserver.observe(el));
+
+// ── Counter animation ──
+const counters = document.querySelectorAll('.stat-card .number');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target);
+      const unit = el.querySelector('.unit').textContent;
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 40));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(interval); }
+        el.innerHTML = current + `<span class="unit">${unit}</span>`;
+      }, 30);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObserver.observe(el));
+
+// ── Wave visualization ──
+const waveVis = document.getElementById('waveVis');
+for (let i = 0; i < 24; i++) {
+  const bar = document.createElement('div');
+  bar.className = 'bar';
+  bar.style.animationDelay = (i * 0.08) + 's';
+  waveVis.appendChild(bar);
+}
+
+// ── Particle Canvas ──
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: -1000, y: -1000 };
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * 2;
+  canvas.height = rect.height * 2;
+  ctx.scale(2, 2);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+});
+canvas.addEventListener('mouseleave', () => { mouse.x = -1000; mouse.y = -1000; });
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    const rect = canvas.getBoundingClientRect();
+    this.x = Math.random() * rect.width;
+    this.y = Math.random() * rect.height;
+    this.vx = (Math.random() - .5) * .3;
+    this.vy = (Math.random() - .5) * .3;
+    this.r = Math.random() * 2 + .5;
+    this.alpha = Math.random() * .5 + .1;
+  }
+  update() {
+    const dx = mouse.x - this.x;
+    const dy = mouse.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 100) {
+      this.vx -= dx * .002;
+      this.vy -= dy * .002;
+    }
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= .99;
+    this.vy *= .99;
+    const rect = canvas.getBoundingClientRect();
+    if (this.x < 0 || this.x > rect.width || this.y < 0 || this.y > rect.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(162,155,254,${this.alpha})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animateParticles() {
+  const rect = canvas.getBoundingClientRect();
+  ctx.clearRect(0, 0, rect.width, rect.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  // Draw connections
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 80) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(108,92,231,${.15 * (1 - dist / 80)})`;
+        ctx.lineWidth = .5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateParticles);
+}
+// ── Light FX card entrance animation ──
+const lfxCards = document.querySelectorAll('.lfx-enter');
+const lfxObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const d = parseInt(entry.target.dataset.delay) || 0;
+      setTimeout(() => entry.target.classList.add('visible'), d);
+      lfxObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
+lfxCards.forEach(c => lfxObserver.observe(c));
+
+// ── Stardust particle generation ──
+document.querySelectorAll('.card-stardust').forEach(card => {
+  const wrap = card.querySelector('.stardust-wrap');
+  const colors = ['var(--accent-4)', 'var(--accent-1)', '#ffffff', 'var(--accent-3)'];
+  const anims = ['sdf0', 'sdf1', 'sdf2'];
+
+  for (let i = 0; i < 24; i++) {
+    const p = document.createElement('div');
+    p.className = 'sd-particle';
+    const sz = Math.random() * 2.8 + 0.8;
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    const a = anims[Math.floor(Math.random() * anims.length)];
+    const dur = (Math.random() * 5 + 3).toFixed(1);
+    const del = (Math.random() * 6).toFixed(1);
+    const op = (Math.random() * 0.5 + 0.15).toFixed(2);
+
+    p.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      left:${(Math.random()*100).toFixed(1)}%;
+      top:${(Math.random()*100).toFixed(1)}%;
+      background:${c};
+      box-shadow:0 0 ${(sz*3).toFixed(1)}px ${c};
+      opacity:${op};
+      animation:${a} ${dur}s ease-in-out ${del}s infinite;
+    `;
+    wrap.appendChild(p);
+  }
+});
+
+// ── Ripple click interaction ──
+document.querySelectorAll('.card-ripple').forEach(card => {
+  card.addEventListener('click', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const size = Math.max(rect.width, rect.height) * 0.6;
+    // 产生3圈涟漪，依次延迟
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        const ripple = document.createElement('div');
+        ripple.classList.add('ripple-wave');
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = (x - size / 2) + 'px';
+        ripple.style.top = (y - size / 2) + 'px';
+        card.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
+      }, i * 150);
+    }
+  });
+});
+
+animateParticles();
+</script>
+</body>
+</html>

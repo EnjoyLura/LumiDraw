@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 积分中心</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .balance-card { position:relative;padding:24px;border-radius:var(--radius-lg);background:var(--glass-bg);border:1px solid var(--glass-border);overflow:hidden;margin:16px; }
+  .balance-card .aurora-wrap { position:absolute;inset:0;overflow:hidden;pointer-events:none; }
+  .balance-card .aurora-wrap .aurora-band { opacity:.15; }
+  .balance-num { font-size:36px;font-weight:200;color:var(--accent-5);letter-spacing:-1px;position:relative;z-index:2; }
+  .balance-num .unit { font-size:18px;font-weight:300;opacity:.6; }
+  .balance-label { font-size:12px;color:var(--text-muted);margin-top:8px;position:relative;z-index:2; }
+  .recharge-section { padding:16px; }
+  .recharge-section .section-label { font-size:12px;color:var(--text-muted);margin-bottom:12px;font-weight:600;letter-spacing:.05em; }
+  .recharge-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
+  .recharge-card {
+    padding:14px 10px;border-radius:var(--radius-sm);text-align:center;
+    background:var(--glass-bg);border:1px solid var(--glass-border);
+    cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
+  }
+  .recharge-card:hover { background:var(--glass-hover);border-color:rgba(255,255,255,.12); }
+  .recharge-card.selected { border-color:var(--accent-1);box-shadow:0 0 0 2px rgba(108,92,231,.2); }
+  .recharge-card.selected .flow-border { position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from var(--flow-angle),transparent 15%,var(--accent-1) 40%,var(--accent-3) 50%,transparent 70%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:flow-rot 3s linear infinite; }
+  .recharge-card .price { font-size:18px;font-weight:700;color:var(--text-primary); }
+  .recharge-card .price .yen { font-size:12px;font-weight:400; }
+  .recharge-card .points { font-size:11px;color:var(--accent-5);margin-top:4px; }
+  .recharge-card .bonus { font-size:10px;color:var(--accent-3);margin-top:2px; }
+  .ledger-section { padding:16px; }
+  .ledger-tabs { margin-bottom:16px; }
+  .ledger-item { display:flex;justify-content:space-between;padding:12px 16px;border-radius:8px;background:var(--glass-bg);border:1px solid var(--glass-border);margin-bottom:8px; }
+  .ledger-item .ledger-info .ledger-source { font-size:14px;color:var(--text-primary); }
+  .ledger-item .ledger-info .ledger-time { font-size:11px;color:var(--text-muted); }
+  .ledger-item .ledger-amount { font-size:14px;font-weight:600; }
+  .ledger-item .ledger-amount.income { color:var(--accent-3); }
+  .ledger-item .ledger-amount.expense { color:var(--accent-4); }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
+  <div class="nav-bar"><a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">积分中心</span></div>
+  <div class="page-content-sub">
+    <!-- 余额卡（极光散射背景） -->
+    <div class="balance-card card-aurora reveal">
+      <div class="aurora-wrap"><div class="aurora-band ab-1"></div><div class="aurora-band ab-2"></div></div>
+      <div class="balance-num">230 <span class="unit">积分</span></div>
+      <div class="balance-label">1元 = 10积分 · 充值积分永久有效</div>
+    </div>
+    <!-- 充值档位 -->
+    <div class="recharge-section reveal">
+      <div class="section-label">选择充值档位</div>
+      <div class="recharge-grid stagger-children">
+        <div class="recharge-card" onclick="selectRecharge(this)"><div class="price"><span class="yen">¥</span>6</div><div class="points">60积分</div></div>
+        <div class="recharge-card" onclick="selectRecharge(this)"><div class="price"><span class="yen">¥</span>18</div><div class="points">190积分</div><div class="bonus">赠+10</div></div>
+        <div class="recharge-card selected card-flow" onclick="selectRecharge(this)"><div class="flow-border"></div><div class="price"><span class="yen">¥</span>30</div><div class="points">330积分</div><div class="bonus">赠+30 · 9折</div></div>
+        <div class="recharge-card" onclick="selectRecharge(this)"><div class="price"><span class="yen">¥</span>68</div><div class="points">780积分</div><div class="bonus">赠+100</div></div>
+        <div class="recharge-card" onclick="selectRecharge(this)"><div class="price"><span class="yen">¥</span>128</div><div class="points">1530积分</div><div class="bonus">赠+250</div></div>
+      </div>
+    </div>
+    <!-- 积分明细 -->
+    <div class="ledger-section reveal">
+      <div class="section-label">积分明细</div>
+      <div class="ledger-tabs">
+        <div class="glass-tabs">
+          <div class="glass-tab active" data-tab="income">收入</div>
+          <div class="glass-tab" data-tab="expense">支出</div>
+        </div>
+      </div>
+      <div class="tab-panel" data-panel="income">
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">注册赠送</div><div class="ledger-time">2026-06-08</div></div><div class="ledger-amount income">+50</div></div>
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">每日签到</div><div class="ledger-time">2026-06-10</div></div><div class="ledger-amount income">+2</div></div>
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">作品被收藏</div><div class="ledger-time">2026-06-10</div></div><div class="ledger-amount income">+1</div></div>
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">充值 ¥30</div><div class="ledger-time">2026-06-11</div></div><div class="ledger-amount income">+330</div></div>
+      </div>
+      <div class="tab-panel" data-panel="expense" style="display:none">
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">AI生成图片</div><div class="ledger-time">2026-06-11</div></div><div class="ledger-amount expense">-3</div></div>
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">AI生成图片</div><div class="ledger-time">2026-06-10</div></div><div class="ledger-amount expense">-6</div></div>
+        <div class="ledger-item"><div class="ledger-info"><div class="ledger-source">AI抠图</div><div class="ledger-time">2026-06-09</div></div><div class="ledger-amount expense">-2</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="shared/app.js"></script>
+<script>
+function selectRecharge(el) {
+  document.querySelectorAll('.recharge-card').forEach(c => { c.classList.remove('selected','card-flow'); const fb = c.querySelector('.flow-border'); if(fb) fb.remove(); });
+  el.classList.add('selected','card-flow');
+  const fb = document.createElement('div'); fb.className='flow-border'; el.appendChild(fb);
+  showToast('已选择 ¥30 充值档位');
+}
+</script>
+</body>
+</html>

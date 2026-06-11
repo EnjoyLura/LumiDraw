@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumi-Draw · 画廊详情</title>
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/glass-components.css">
+<link rel="stylesheet" href="shared/lightfx.css">
+<link rel="stylesheet" href="shared/animations.css">
+<style>
+  .detail-image {
+    width: 100%; aspect-ratio: 1; display: flex;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(108,92,231,.12), rgba(0,206,201,.08));
+    font-size: 80px; color: var(--text-muted); cursor: pointer;
+  }
+  .detail-actions {
+    display: flex; justify-content: space-around;
+    padding: 16px; border-bottom: 1px solid var(--glass-border);
+  }
+  .action-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer; transition: all .3s; padding: 8px;
+    border-radius: 8px;
+  }
+  .action-btn:hover { background: var(--glass-hover); }
+  .action-btn i { font-size: 20px; color: var(--text-secondary); }
+  .action-btn span { font-size: 11px; color: var(--text-muted); }
+  .action-btn.liked i { color: var(--accent-4); }
+  .action-btn.collected i { color: var(--accent-5); }
+  .detail-section { padding: 16px; }
+  .param-card {
+    padding: 16px; border-radius: var(--radius-sm);
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+  }
+  .param-row { display: flex; margin-bottom: 10px; }
+  .param-row:last-child { margin-bottom: 0; }
+  .param-label { font-size: 12px; color: var(--text-muted); width: 60px; }
+  .param-value { font-size: 13px; color: var(--text-secondary); flex: 1; }
+  .author-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px;
+  }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #fff; font-weight: 700;
+  }
+  .author-info { flex: 1; }
+  .author-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .author-stats { font-size: 12px; color: var(--text-muted); }
+  .remix-btn {
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px; border-radius: 100px; width: 100%;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    background: var(--glass-bg); border: none;
+  }
+  .remix-btn .flow-border {
+    position: absolute; inset: 0; border-radius: inherit;
+    padding: 2px; pointer-events: none;
+    background: conic-gradient(from var(--flow-angle), transparent 15%, var(--accent-1) 40%, var(--accent-3) 50%, transparent 70%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: flow-rot 3s linear infinite;
+  }
+  .remix-btn .btn-inner {
+    position: relative; z-index: 2;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="status-bar">
+    <span class="time">9:41</span>
+    <span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span>
+  </div>
+
+  <div class="nav-bar">
+    <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+    <span class="nav-title">作品详情</span>
+  </div>
+
+  <div class="page-content-sub">
+    <!-- 大图预览 -->
+    <a href="proto-image-preview.html" class="detail-image reveal">🎨</a>
+
+    <!-- 操作按钮 -->
+    <div class="detail-actions reveal">
+      <div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')">
+        <i class="fas fa-heart"></i><span>128</span>
+      </div>
+      <div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')">
+        <i class="fas fa-bookmark"></i><span>56</span>
+      </div>
+      <div class="action-btn card-ripple ripple-target" onclick="showToast('分享链接已生成')">
+        <i class="fas fa-share-nodes"></i><span>分享</span>
+      </div>
+    </div>
+
+    <!-- 创作参数 -->
+    <div class="detail-section reveal">
+      <div class="param-card">
+        <div class="param-row">
+          <div class="param-label">Prompt</div>
+          <div class="param-value">赛博朋克风格的猫咪宇航员，霓虹灯光下漫步星空</div>
+        </div>
+        <div class="param-row">
+          <div class="param-label">模型</div>
+          <div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div>
+        </div>
+        <div class="param-row">
+          <div class="param-label">尺寸</div>
+          <div class="param-value">1:1 · 1024×1024</div>
+        </div>
+        <div class="param-row">
+          <div class="param-label">风格</div>
+          <div class="param-value">赛博朋克</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 生成同款 -->
+    <div class="detail-section reveal">
+      <a href="proto-create.html?remix=true" class="remix-btn btn-flow">
+        <div class="flow-border"></div>
+        <span class="btn-inner"><i class="fas fa-wand-magic-sparkles"></i> 生成同款</span>
+      </a>
+    </div>
+
+    <!-- 作者 -->
+    <div class="author-bar reveal">
+      <a href="proto-gallery-user.html" class="author-avatar">L</a>
+      <a href="proto-gallery-user.html" class="author-info">
+        <div class="author-name">LumiArtist</div>
+        <div class="author-stats">48 作品 · 1.2k 获赞</div>
+      </a>
+      <div class="glass-badge badge-cyan">关注</div>
+    </div>
+  </div>
+</div>
+
+<script src="shared/app.js"></script>
+</body>
+</html>
