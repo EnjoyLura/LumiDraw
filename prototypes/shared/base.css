@@ -18,9 +18,9 @@
   --text-primary: rgba(255,255,255,.92);
   --text-secondary: rgba(255,255,255,.5);
   --text-muted: rgba(255,255,255,.28);
-  --accent-1: #6c5ce7;  /* 极光紫 */
-  --accent-2: #a29bfe;  /* 浅紫 */
-  --accent-3: #00cec9;  /* 赛博青 */
+  --accent-1: #58D7B9;  /* 青绿 */
+  --accent-2: #8FE8D0;  /* 浅青绿 */
+  --accent-3: #3AAF8E;  /* 深青绿 */
   --accent-4: #fd79a8;  /* 玫粉 */
   --accent-5: #fdcb6e;  /* 金 */
 
@@ -67,7 +67,7 @@ body {
   box-shadow:
     0 0 0 2px rgba(255,255,255,.1),
     0 20px 80px rgba(0,0,0,.5),
-    0 0 120px rgba(108,92,231,.08);
+    0 0 120px rgba(88,215,185,.08);
   flex-shrink: 0;
 }
 
@@ -184,12 +184,12 @@ body {
   justify-content: center;
   font-size: 20px;
   color: #fff;
-  box-shadow: 0 4px 16px rgba(108,92,231,.4);
+  box-shadow: 0 4px 16px rgba(88,215,185,.4);
   transition: transform .2s, box-shadow .2s;
 }
 .tab-create .create-icon:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 24px rgba(108,92,231,.5);
+  box-shadow: 0 6px 24px rgba(88,215,185,.5);
 }
 .tab-create .tab-label { color: var(--text-secondary); font-size: 10px; }
 
@@ -207,10 +207,10 @@ small { font-size: 12px; color: var(--text-muted); }
   font-size: 15px; font-weight: 600;
   background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
   color: #fff; border: none; cursor: pointer;
-  box-shadow: 0 4px 24px rgba(108,92,231,.3);
+  box-shadow: 0 4px 24px rgba(88,215,185,.3);
   transition: transform .2s, box-shadow .2s;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(108,92,231,.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(88,215,185,.4); }
 
 .btn-glass {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;

@@ -83,7 +83,7 @@
 .glass-pill.active {
   background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
   color: #fff; border-color: transparent;
-  box-shadow: 0 4px 16px rgba(108,92,231,.3);
+  box-shadow: 0 4px 16px rgba(88,215,185,.3);
 }
 
 /* ── 输入框 ── */
@@ -101,7 +101,7 @@
 }
 .glass-input:focus {
   border-color: var(--accent-1);
-  box-shadow: 0 0 0 3px rgba(108,92,231,.15);
+  box-shadow: 0 0 0 3px rgba(88,215,185,.15);
 }
 .glass-input::placeholder { color: var(--text-muted); }
 
@@ -121,7 +121,7 @@
 }
 .glass-textarea:focus {
   border-color: var(--accent-1);
-  box-shadow: 0 0 0 3px rgba(108,92,231,.15);
+  box-shadow: 0 0 0 3px rgba(88,215,185,.15);
 }
 .glass-textarea::placeholder { color: var(--text-muted); }
 
@@ -190,12 +190,12 @@
   letter-spacing: .05em;
 }
 .glass-badge.badge-purple {
-  background: rgba(108,92,231,.1); color: var(--accent-1);
-  border: 1px solid rgba(108,92,231,.18);
+  background: rgba(88,215,185,.1); color: var(--accent-1);
+  border: 1px solid rgba(88,215,185,.18);
 }
 .glass-badge.badge-cyan {
-  background: rgba(0,206,201,.1); color: var(--accent-3);
-  border: 1px solid rgba(0,206,201,.18);
+  background: rgba(58,175,142,.1); color: var(--accent-3);
+  border: 1px solid rgba(58,175,142,.18);
 }
 .glass-badge.badge-pink {
   background: rgba(253,121,168,.1); color: var(--accent-4);
