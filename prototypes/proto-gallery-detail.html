@@ -15,10 +15,13 @@
     background: linear-gradient(135deg, rgba(108,92,231,.12), rgba(0,206,201,.08));
     font-size: 80px; color: var(--text-muted); cursor: pointer;
   }
-  .detail-actions {
+  .detail-actions-bar {
     display: flex; justify-content: space-around;
-    padding: 16px; border-bottom: 1px solid var(--glass-border);
+    padding: 12px 16px; background: rgba(10,10,20,.95);
+    backdrop-filter: blur(20px); border-top: 1px solid var(--glass-border);
+    flex-shrink: 0;
   }
+  .phone-frame { display: flex; flex-direction: column; }
   .action-btn {
     display: flex; flex-direction: column; align-items: center; gap: 6px;
     cursor: pointer; transition: all .3s; padding: 8px;
@@ -87,21 +90,18 @@
     <span class="nav-title">作品详情</span>
   </div>
 
-  <div class="page-content-sub">
+  <div class="page-content-sub" style="flex:1;height:auto">
     <!-- 大图预览 -->
     <a href="proto-image-preview.html" class="detail-image reveal">🎨</a>
 
-    <!-- 操作按钮 -->
-    <div class="detail-actions reveal">
-      <div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')">
-        <i class="fas fa-heart"></i><span>128</span>
-      </div>
-      <div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')">
-        <i class="fas fa-bookmark"></i><span>56</span>
-      </div>
-      <div class="action-btn card-ripple ripple-target" onclick="showToast('分享链接已生成')">
-        <i class="fas fa-share-nodes"></i><span>分享</span>
-      </div>
+    <!-- 作者 -->
+    <div class="author-bar reveal">
+      <a href="proto-gallery-user.html" class="author-avatar">L</a>
+      <a href="proto-gallery-user.html" class="author-info">
+        <div class="author-name">LumiArtist</div>
+        <div class="author-stats">48 作品 · 1.2k 获赞</div>
+      </a>
+      <div class="glass-badge badge-cyan">关注</div>
     </div>
 
     <!-- 创作参数 -->
@@ -125,23 +125,18 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 生成同款 -->
-    <div class="detail-section reveal">
-      <a href="proto-create.html?remix=true" class="remix-btn btn-flow">
-        <div class="flow-border"></div>
-        <span class="btn-inner"><i class="fas fa-wand-magic-sparkles"></i> 生成同款</span>
-      </a>
+  <!-- 固定底部操作栏 -->
+  <div class="detail-actions-bar">
+    <div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')">
+      <i class="fas fa-heart"></i><span>128</span>
     </div>
-
-    <!-- 作者 -->
-    <div class="author-bar reveal">
-      <a href="proto-gallery-user.html" class="author-avatar">L</a>
-      <a href="proto-gallery-user.html" class="author-info">
-        <div class="author-name">LumiArtist</div>
-        <div class="author-stats">48 作品 · 1.2k 获赞</div>
-      </a>
-      <div class="glass-badge badge-cyan">关注</div>
+    <div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')">
+      <i class="fas fa-bookmark"></i><span>56</span>
+    </div>
+    <div class="action-btn" onclick="showToast('分享链接已生成')">
+      <i class="fas fa-share-nodes"></i><span>分享</span>
     </div>
   </div>
 </div>

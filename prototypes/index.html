@@ -11,9 +11,18 @@
 <link rel="stylesheet" href="shared/pages.css">
 <style>
 .page-view{position:absolute;left:0;right:0;display:none;overflow:hidden;transition:opacity .25s ease}
-.page-view[data-type="tabbar"]{top:44px;bottom:90px}
-.page-view[data-type="sub"]{top:44px;bottom:34px}
+.page-view[data-type="tabbar"]{top:84px;bottom:90px}
+.page-view[data-type="sub"]{top:84px;bottom:34px}
+.page-view[data-type="sub"] .nav-bar{display:none}
 .page-view[data-type="overlay"]{inset:0;z-index:60;background:#000}
+.mini-title-bar{position:absolute;top:0;left:0;right:0;height:84px;display:flex;align-items:flex-end;padding:0 16px 14px;z-index:45;background:rgba(10,10,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.mini-title-bar .title-text{font-size:16px;font-weight:600;color:var(--text-primary);flex:1;text-align:center;line-height:20px}
+.mini-title-bar .mtb-phantom{display:none;width:34px;flex-shrink:0}
+.mini-title-bar.is-sub .mtb-phantom{display:block}
+.mini-title-bar.hidden{display:none}
+.mini-title-bar .mtb-back{display:none;font-size:18px;color:var(--text-primary);cursor:pointer;padding:2px 8px 0;border-radius:8px;transition:background .2s;flex-shrink:0;line-height:20px}
+.mini-title-bar .mtb-back:hover{background:rgba(255,255,255,.08)}
+.mini-title-bar.is-sub .mtb-back{display:block}
 .page-view.active{display:flex;flex-direction:column;opacity:1}
 .page-view.slide-in{animation:slideIn .3s ease forwards}
 .page-view.slide-out{animation:slideOut .3s ease forwards}
@@ -28,13 +37,13 @@
 <body>
 <div class="phone-frame">
   <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
+  <div class="mini-title-bar" id="miniTitleBar"><span class="mtb-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></span><span class="title-text">画廊</span><span class="mtb-phantom"></span></div>
   <div class="ambient-bg"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
   <div class="noise-overlay"></div>
 
   <!-- ═══ 画廊 ═══ -->
   <div class="page-view active" id="pg-gallery" data-type="tabbar">
     <div class="page-content">
-      <div class="gallery-header reveal"><h1>画廊</h1><p class="subtitle">发现灵感 · 生成同款</p></div>
       <div class="carousel-wrap reveal">
         <div class="carousel">
           <div class="carousel-track" id="carouselTrack">
@@ -45,7 +54,7 @@
         </div>
         <div class="carousel-dots" id="carouselDots"><span class="carousel-dot active" onclick="goSlide(0)"></span><span class="carousel-dot" onclick="goSlide(1)"></span><span class="carousel-dot" onclick="goSlide(2)"></span></div>
       </div>
-      <div class="gallery-tabs reveal"><span class="gallery-tab active" onclick="switchGalleryTab(this)">推荐</span><span class="gallery-tab" onclick="switchGalleryTab(this)">最新</span><span class="gallery-tab" onclick="switchGalleryTab(this)">热门</span><span class="tab-search"><i class="fas fa-search"></i></span></div>
+      <div class="gallery-tabs reveal"><span class="gallery-tab active" onclick="switchGalleryTab(this)">推荐</span><span class="gallery-tab" onclick="switchGalleryTab(this)">最新</span><span class="gallery-tab" onclick="switchGalleryTab(this)">热门</span><span class="tab-search" onclick="openSearch()"><i class="fas fa-search"></i></span></div>
       <div class="filter-bar reveal"><span class="glass-pill active">全部</span><span class="glass-pill">风景</span><span class="glass-pill">人像</span><span class="glass-pill">动漫</span><span class="glass-pill">创意</span><span class="glass-pill">写实</span><span class="glass-pill">萌宠</span></div>
       <div class="waterfall">
         <div class="waterfall-col stagger-children">
@@ -63,12 +72,19 @@
       </div>
       <div class="load-more">下拉加载更多灵感...</div>
     </div>
+    <!-- 搜索面板 -->
+    <div class="search-panel" id="searchPanel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span onclick="closeSearch()" style="font-size:18px;color:var(--text-primary);cursor:pointer;padding:4px;flex-shrink:0"><i class="fas fa-chevron-left"></i></span><div class="search-bar" style="flex:1;margin-bottom:0"><i class="fas fa-search" style="color:var(--text-muted);font-size:14px"></i><input placeholder="搜索作品、用户、风格..." id="searchInput"><span class="search-close" onclick="document.getElementById('searchInput').value=''"><i class="fas fa-xmark"></i></span></div><span onclick="showToast('搜索中...')" style="font-size:13px;color:var(--accent-1);cursor:pointer;padding:4px;flex-shrink:0;font-weight:600">搜索</span></div>
+      <div class="search-section"><div class="section-label">历史记录</div><div class="search-tags"><span class="search-tag" onclick="showToast('搜索：赛博朋克')">赛博朋克</span><span class="search-tag" onclick="showToast('搜索：猫咪')">猫咪</span><span class="search-tag" onclick="showToast('搜索：星空')">星空</span></div></div>
+      <div class="search-section"><div class="section-label">猜你想搜</div><div class="search-tags"><span class="search-tag" onclick="showToast('搜索：动漫头像')">动漫头像</span><span class="search-tag" onclick="showToast('搜索：风景壁纸')">风景壁纸</span><span class="search-tag" onclick="showToast('搜索：机甲')">机甲</span><span class="search-tag" onclick="showToast('搜索：水墨画')">水墨画</span></div></div>
+      <div class="search-section"><div class="section-label">热门搜索</div><div class="search-tags"><span class="search-tag">🔥 AI头像</span><span class="search-tag">🔥 赛博朋克</span><span class="search-tag">🔥 像素风</span><span class="search-tag">🔥 水墨山水</span><span class="search-tag">🔥 机甲战士</span></div></div>
+    </div>
   </div>
 
   <!-- ═══ 灵感 ═══ -->
   <div class="page-view" id="pg-inspiration" data-type="tabbar">
     <div class="page-content">
-      <div class="inspiration-header reveal"><h1>灵感</h1></div>
+      <div class="inspiration-header reveal"></div>
       <div class="insp-tabs reveal"><div class="glass-tabs"><div class="glass-tab active" data-tab="templates">官方模板</div><div class="glass-tab" data-tab="tools">AI工具</div></div></div>
       <div class="tab-panel" data-panel="templates"><div class="template-section"><div class="template-filter reveal visible"><span class="glass-pill active">全部</span><span class="glass-pill">AI头像</span><span class="glass-pill">壁纸</span><span class="glass-pill">表情包</span><span class="glass-pill">海报</span><span class="glass-pill">插画</span></div><div class="waterfall stagger-children">
 <div class="waterfall-col">
@@ -89,33 +105,61 @@
   <!-- ═══ 创作 ═══ -->
   <div class="page-view" id="pg-create" data-type="tabbar">
     <div class="page-content create-page">
-      <div class="create-section reveal"><div class="section-label">描述你想要的画面</div><div class="prompt-area"><textarea placeholder="例如：一只穿着宇航服的猫咪，在星空下漫步，赛博朋克风格，4K高清" id="promptInput">一只穿着宇航服的猫咪，在星空下漫步，赛博朋克风格</textarea><div class="prompt-hint">好的Prompt = 主体 + 场景 + 风格 + 细节</div></div><div class="negative-toggle" onclick="this.nextElementSibling.classList.toggle('show')"><i class="fas fa-chevron-right"></i> 负面提示词（高级）</div><div class="negative-area"><textarea class="glass-textarea" placeholder="不想出现的元素" style="min-height:60px"></textarea></div></div>
-      <div class="create-section reveal"><div class="section-label">参考图（可选）</div><div class="ref-upload"><div class="upload-icon"><i class="fas fa-plus"></i></div><div class="upload-text">上传参考图片，AI将以此为灵感创作</div></div></div>
-      <div class="create-section reveal"><div class="section-label">选择AI模型</div><div class="model-scroll"><div class="model-card card-ripple ripple-target selected" data-model="nano-banana-2" data-price="3" onclick="selectModel(this)"><div class="model-brand">Google</div><div class="model-name">Nano Banana 2.0</div><div class="model-price">3 积分/张</div><span class="glass-badge badge-cyan" style="font-size:9px;padding:2px 6px;margin-top:4px">快速</span></div><div class="model-card card-ripple ripple-target" data-model="nano-banana-pro" data-price="6" onclick="selectModel(this)"><div class="model-brand">Google</div><div class="model-name">Nano Banana Pro</div><div class="model-price">6 积分/张</div><span class="glass-badge badge-gold" style="font-size:9px;padding:2px 6px;margin-top:4px">4K</span></div><div class="model-card card-ripple ripple-target" data-model="gpt-image-1" data-price="8" onclick="selectModel(this)"><div class="model-brand">OpenAI</div><div class="model-name">GPT-Image-1</div><div class="model-price">8 积分/张</div></div><div class="model-card card-ripple ripple-target" data-model="gpt-image-2" data-price="15" onclick="selectModel(this)"><div class="model-brand">OpenAI</div><div class="model-name">GPT-Image-2</div><div class="model-price">15 积分/张</div><span class="glass-badge badge-purple" style="font-size:9px;padding:2px 6px;margin-top:4px">最强</span></div><div class="model-card card-ripple ripple-target" data-model="seedream-4" data-price="4" onclick="selectModel(this)"><div class="model-brand">ByteDance</div><div class="model-name">Seedream 4.0</div><div class="model-price">4 积分/张</div></div><div class="model-card card-ripple ripple-target" data-model="hunyuan" data-price="0" onclick="selectModel(this)"><div class="model-brand">微信</div><div class="model-name">混元大模型</div><div class="model-price">免费</div><span class="glass-badge badge-free" style="font-size:9px;padding:2px 6px;margin-top:4px">免费</span></div></div></div>
-      <div class="create-section reveal"><div class="section-label">参数设置</div><div class="params-grid"><div class="param-group"><div class="param-label">图片比例</div><div class="param-options"><span class="param-option selected" onclick="selectParam(this)">1:1</span><span class="param-option" onclick="selectParam(this)">16:9</span><span class="param-option" onclick="selectParam(this)">9:16</span><span class="param-option" onclick="selectParam(this)">4:3</span></div></div><div class="param-group"><div class="param-label">生成数量</div><div class="param-options"><span class="param-option selected" onclick="selectParam(this)">1张</span><span class="param-option" onclick="selectParam(this)">2张</span><span class="param-option" onclick="selectParam(this)">4张</span></div></div></div><div class="param-group mt-12"><div class="param-label">风格预设</div><div class="param-options"><span class="param-option" onclick="selectParam(this)">写实</span><span class="param-option" onclick="selectParam(this)">动漫</span><span class="param-option" onclick="selectParam(this)">油画</span><span class="param-option selected" onclick="selectParam(this)">赛博朋克</span><span class="param-option" onclick="selectParam(this)">水彩</span><span class="param-option" onclick="selectParam(this)">像素</span></div></div></div>
-      <div class="create-section reveal"><div class="points-tip"><div><div class="tip-label">本次创作消耗</div><div class="tip-balance">余额: 230 积分</div></div><div class="tip-cost" id="pointsCost">3 积分</div></div></div>
+      <div class="create-section reveal"><div class="section-header-row"><div class="section-label">描述你想要的画面</div><div class="char-counter" id="charCounter">24/800</div></div><div class="prompt-area"><textarea placeholder="例如：一只穿着宇航服的猫咪，在星空下漫步，赛博朋克风格，4K高清" id="promptInput">一只穿着宇航服的猫咪，在星空下漫步，赛博朋克风格</textarea><button class="prompt-upload-btn" onclick="showToast('选择参考图片')"><i class="fas fa-plus"></i></button><button class="prompt-clear-btn" onclick="document.getElementById('promptInput').value='';updateCharCount()"><i class="fas fa-xmark"></i></button></div></div>
+      <div class="create-section reveal"><div class="section-label">参数</div><div class="create-params-card"><div class="create-selectors">
+<div class="selector-group"><div class="selector-label">模型</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">Nano Banana 2.0</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu" id="modelMenu"><div class="selector-option selected" data-value="Nano Banana 2.0" data-price="3" onclick="selectSelectorOption(this,'modelMenu')">Nano Banana 2.0<span class="option-extra">3 积分</span></div><div class="selector-option" data-value="Nano Banana Pro" data-price="6" onclick="selectSelectorOption(this,'modelMenu')">Nano Banana Pro<span class="option-extra">6 积分</span></div><div class="selector-option" data-value="GPT-Image-1" data-price="8" onclick="selectSelectorOption(this,'modelMenu')">GPT-Image-1<span class="option-extra">8 积分</span></div><div class="selector-option" data-value="GPT-Image-2" data-price="15" onclick="selectSelectorOption(this,'modelMenu')">GPT-Image-2<span class="option-extra">15 积分</span></div><div class="selector-option" data-value="Seedream 4.0" data-price="4" onclick="selectSelectorOption(this,'modelMenu')">Seedream 4.0<span class="option-extra">4 积分</span></div><div class="selector-option" data-value="混元大模型" data-price="0" onclick="selectSelectorOption(this,'modelMenu')">混元大模型<span class="option-extra">免费</span></div></div></div>
+<div class="selector-group"><div class="selector-label">尺寸</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">1:1</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu"><div class="selector-option selected" data-value="1:1" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-1-1"></span>1:1</div><div class="selector-option" data-value="16:9" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-16-9"></span>16:9</div><div class="selector-option" data-value="9:16" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-9-16"></span>9:16</div><div class="selector-option" data-value="4:3" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-4-3"></span>4:3</div></div></div>
+<div class="selector-group"><div class="selector-label">分辨率</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">高清 1024px</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu" id="resMenu"><div class="selector-option" data-value="标清 512px" data-multiplier="1" onclick="selectSelectorOption(this,'resMenu')">标清 512px<span class="option-extra">×1</span></div><div class="selector-option selected" data-value="高清 1024px" data-multiplier="1.5" onclick="selectSelectorOption(this,'resMenu')">高清 1024px<span class="option-extra">×1.5</span></div><div class="selector-option" data-value="超清 2048px" data-multiplier="2" onclick="selectSelectorOption(this,'resMenu')">超清 2048px<span class="option-extra">×2</span></div></div></div>
+<div class="selector-group"><div class="selector-label">数量</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">1 张</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu" id="qtyMenu"><div class="selector-option selected" data-value="1 张" data-qty="1" onclick="selectSelectorOption(this,'qtyMenu')">1 张</div><div class="selector-option" data-value="2 张" data-qty="2" onclick="selectSelectorOption(this,'qtyMenu')">2 张</div><div class="selector-option" data-value="4 张" data-qty="4" onclick="selectSelectorOption(this,'qtyMenu')">4 张</div></div></div>
+</div></div></div>
+
+    <!-- 输出组件 -->
+    <div class="create-output" id="createOutput">
+      <div class="output-processing" id="outputProcessing" style="display:none">
+        <div class="output-spinner"></div>
+        <div class="output-status" id="outputStatus">AI正在构思画面...</div>
+        <div class="output-progress-bar"><div class="glass-progress"><div class="progress-bar" id="outputProgressBar" style="width:0%"></div></div></div>
+        <div class="output-progress-text" id="outputProgressText">0%</div>
+      </div>
+      <div class="output-result" id="outputResult" style="display:none">
+        <div class="output-image" id="outputImage" onclick="showOutputPreview()">🚀</div>
+        <div class="output-meta">
+          <div class="output-meta-item"><div class="meta-label">耗时</div><div class="meta-value" id="outputTime">--</div></div>
+          <div class="output-meta-item"><div class="meta-label">大小</div><div class="meta-value" id="outputSize">--</div></div>
+          <div class="output-meta-item"><div class="meta-label">分辨率</div><div class="meta-value" id="outputRes">--</div></div>
+        </div>
+        <button class="output-download-btn" id="outputDownloadBtn" onclick="downloadOutput()"><i class="fas fa-download"></i> 下载图片</button>
+      </div>
     </div>
-    <div class="create-btn-area"><button class="create-btn" onclick="startCreating()"><i class="fas fa-wand-magic-sparkles"></i> 开始创作</button></div>
+
+    </div>
+    <div class="create-btn-area"><div class="create-points-widget"><div class="points-label">消耗</div><div class="points-cost" id="pointsCost">3 积分</div></div><button class="create-btn btn-breathe" onclick="startCreating()"><i class="fas fa-wand-magic-sparkles"></i> 开始创作</button></div>
     <div class="generating-overlay" id="genOverlay"><div class="aurora-wrap" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"><div class="aurora-band ab-1" style="opacity:.15"></div><div class="aurora-band ab-2" style="opacity:.1"></div></div><div class="gen-spinner"></div><div class="gen-text">AI正在为你创作...</div><div class="gen-sub">Nano Banana 2.0 · 预计15秒</div></div>
+    <!-- 图片放大遮罩 -->
+    <div class="output-preview-overlay" id="outputPreviewOverlay" onclick="hideOutputPreview()">
+      <div class="output-preview-close"><i class="fas fa-xmark"></i></div>
+      <div class="output-preview-img">🚀</div>
+    </div>
   </div>
 
   <!-- ═══ 作品 ═══ -->
   <div class="page-view" id="pg-works" data-type="tabbar">
     <div class="page-content">
-      <div class="works-header reveal" style="display:flex;justify-content:space-between;align-items:center"><h1>作品</h1><div class="manage-btn" onclick="showToast('进入管理模式')">管理</div></div>
+      <div class="works-header reveal" style="display:flex;justify-content:flex-end;align-items:center"><div class="manage-btn" id="worksManageBtn" onclick="toggleManageMode()">管理</div></div>
       <div class="works-tabs reveal"><div class="glass-tabs"><div class="glass-tab active" data-tab="history">历史作品</div><div class="glass-tab" data-tab="published">已发布</div><div class="glass-tab" data-tab="collected">收藏夹</div></div></div>
-      <div class="tab-panel" data-panel="history"><div class="works-grid stagger-children"><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06))">🚀</div><div class="item-meta"><div class="item-model">Nano Banana 2.0</div><div class="item-time">今天 14:30</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06))">🌸</div><div class="item-meta"><div class="item-model">Seedream 4.0</div><div class="item-time">今天 12:15</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06))">🌊</div><div class="item-meta"><div class="item-model">混元大模型</div><div class="item-time">昨天 20:00</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06))">🔮</div><div class="item-meta"><div class="item-model">GPT-Image-1</div><div class="item-time">昨天 18:30</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(253,203,110,.08),rgba(85,239,196,.06))">✨</div><div class="item-meta"><div class="item-model">Nano Banana Pro</div><div class="item-time">6月9日</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(85,239,196,.08),rgba(88,215,185,.06))">🌿</div><div class="item-meta"><div class="item-model">Seedream 4.5</div><div class="item-time">6月8日</div></div></div></div></div>
-      <div class="tab-panel" data-panel="published" style="display:none"><div class="works-grid stagger-children"><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06))">🚀</div><div class="item-meta"><div class="item-model">128赞 · 56收藏</div></div></div><div class="works-item" onclick="navigateTo('pg-works-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06))">🌸</div><div class="item-meta"><div class="item-model">89赞 · 34收藏</div></div></div></div></div>
-      <div class="tab-panel" data-panel="collected" style="display:none"><div class="works-grid stagger-children"><div class="works-item" onclick="navigateTo('pg-gallery-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06))">🌊</div><div class="item-meta"><div class="item-model">by AquaVision</div></div></div><div class="works-item" onclick="navigateTo('pg-gallery-detail')"><div class="item-img" style="background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06))">🦋</div><div class="item-meta"><div class="item-model">by DreamWeaver</div></div></div></div></div>
+      <div class="tab-panel" data-panel="history"><div class="works-grid stagger-children" id="worksGridHistory"><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:160px;background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06))">🚀</div><div class="item-meta"><div class="item-model">Nano Banana 2.0</div><div class="item-time">今天 14:30</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:120px;background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06))">🌸</div><div class="item-meta"><div class="item-model">Seedream 4.0</div><div class="item-time">今天 12:15</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:180px;background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06))">🌊</div><div class="item-meta"><div class="item-model">混元大模型</div><div class="item-time">昨天 20:00</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:140px;background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06))">🔮</div><div class="item-meta"><div class="item-model">GPT-Image-1</div><div class="item-time">昨天 18:30</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:150px;background:linear-gradient(135deg,rgba(253,203,110,.08),rgba(85,239,196,.06))">✨</div><div class="item-meta"><div class="item-model">Nano Banana Pro</div><div class="item-time">6月9日</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:130px;background:linear-gradient(135deg,rgba(85,239,196,.08),rgba(88,215,185,.06))">🌿</div><div class="item-meta"><div class="item-model">Seedream 4.5</div><div class="item-time">6月8日</div></div></div></div></div>
+      <div class="tab-panel" data-panel="published" style="display:none"><div class="works-grid stagger-children"><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:150px;background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06))">🚀</div><div class="item-meta"><div class="item-model">128赞 · 56收藏</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:170px;background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06))">🌸</div><div class="item-meta"><div class="item-model">89赞 · 34收藏</div></div></div></div></div>
+      <div class="tab-panel" data-panel="collected" style="display:none"><div class="works-grid stagger-children"><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:160px;background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06))">🌊</div><div class="item-meta"><div class="item-model">by AquaVision</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:140px;background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06))">🦋</div><div class="item-meta"><div class="item-model">by DreamWeaver</div></div></div></div></div>
     </div>
+    <div class="works-manage-bar" id="worksManageBar"><div class="sel-count">已选 <span id="worksSelCount">0</span> 项</div><div class="manage-actions"><button class="btn-small" onclick="deleteSelectedWorks()" style="background:rgba(255,107,107,.1);color:#ff6b6b;border:1px solid rgba(255,107,107,.2)"><i class="fas fa-trash"></i> 删除</button><button class="btn-small" onclick="toggleManageMode()">取消</button></div></div>
   </div>
 
   <!-- ═══ 我的 ═══ -->
   <div class="page-view" id="pg-profile" data-type="tabbar">
     <div class="page-content">
-      <div class="profile-hero card-aurora reveal"><div class="aurora-wrap"><div class="aurora-band ab-1"></div><div class="aurora-band ab-2"></div><div class="aurora-band ab-3"></div></div><div class="profile-user"><div class="profile-avatar" onclick="navigateTo('pg-edit-profile')">L</div><div class="profile-info"><div class="profile-name">LumiArtist</div><div class="profile-sign">AI创作，让想象发光 ✨</div></div></div><div class="profile-points" onclick="navigateTo('pg-points-center')"><div class="points-icon"><i class="fas fa-coins"></i></div><div><div class="points-num">230</div><div class="points-label">积分余额</div></div><div class="points-arrow"><i class="fas fa-chevron-right"></i></div></div></div>
+      <div class="profile-hero card-aurora reveal"><div class="aurora-wrap"><div class="aurora-band ab-1"></div><div class="aurora-band ab-2"></div><div class="aurora-band ab-3"></div></div><div class="profile-user"><div class="profile-avatar" onclick="navigateTo('pg-edit-profile')">L</div><div class="profile-info"><div class="profile-name">LumiArtist</div><div class="profile-sign">这是你在LumiDraw的第<span style="color:var(--accent-1);font-weight:600">100</span>天</div></div></div><div class="profile-points" onclick="navigateTo('pg-points-center')"><div class="points-icon"><i class="fas fa-coins"></i></div><div><div class="points-num">230</div><div class="points-label">积分余额</div></div><div class="points-arrow"><i class="fas fa-chevron-right"></i></div></div></div>
       <div class="stats-row stagger-children"><div class="stat-item"><div class="stat-num">24</div><div class="stat-label">总生成</div></div><div class="stat-item"><div class="stat-num">8</div><div class="stat-label">已发布</div></div><div class="stat-item"><div class="stat-num">156</div><div class="stat-label">获赞</div></div></div>
-      <div class="profile-menu stagger-children"><div class="menu-group"><div class="group-label">积分与社交</div><div class="glass-list-item card-ripple ripple-target" onclick="navigateTo('pg-points-center')"><div class="item-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)"><i class="fas fa-coins"></i></div><div class="item-content"><div class="item-title">积分中心</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div><div class="glass-list-item card-ripple ripple-target" onclick="navigateTo('pg-sign-in')"><div class="item-icon" style="background:rgba(58,175,142,.1);color:var(--accent-3)"><i class="fas fa-calendar-check"></i></div><div class="item-content"><div class="item-title">每日签到</div><div class="item-desc">今日可领 +2 积分</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div><div class="glass-list-item card-ripple ripple-target" onclick="navigateTo('pg-invite')"><div class="item-icon" style="background:rgba(88,215,185,.1);color:var(--accent-1)"><i class="fas fa-user-plus"></i></div><div class="item-content"><div class="item-title">邀请好友</div><div class="item-desc">双方各得 20 积分</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div></div><div class="menu-group"><div class="group-label">其他</div><div class="glass-list-item card-ripple ripple-target" onclick="navigateTo('pg-settings')"><div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-gear"></i></div><div class="item-content"><div class="item-title">设置</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div><div class="glass-list-item card-ripple ripple-target" onclick="showToast('意见反馈页面')"><div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-comment"></i></div><div class="item-content"><div class="item-title">意见反馈</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div><div class="glass-list-item card-ripple ripple-target" onclick="showToast('客服对话框')"><div class="item-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-headset"></i></div><div class="item-content"><div class="item-title">联系客服</div></div><div class="item-arrow"><i class="fas fa-chevron-right"></i></div></div></div></div>
+      <div class="profile-menu stagger-children"><div class="menu-group"><div class="group-label">积分与社交</div><div class="profile-icon-grid"><div class="profile-icon-card" onclick="navigateTo('pg-points-center')"><div class="card-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)"><i class="fas fa-coins"></i></div><div class="card-label">积分中心</div></div><div class="profile-icon-card" onclick="navigateTo('pg-sign-in')"><div class="card-icon" style="background:rgba(58,175,142,.1);color:var(--accent-3)"><i class="fas fa-calendar-check"></i></div><div class="card-label">每日签到</div></div><div class="profile-icon-card" onclick="navigateTo('pg-invite')"><div class="card-icon" style="background:rgba(88,215,185,.1);color:var(--accent-1)"><i class="fas fa-user-plus"></i></div><div class="card-label">邀请好友</div></div></div></div><div class="menu-group"><div class="group-label">其他</div><div class="profile-icon-grid"><div class="profile-icon-card" onclick="navigateTo('pg-settings')"><div class="card-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-gear"></i></div><div class="card-label">设置</div></div><div class="profile-icon-card" onclick="showToast('意见反馈页面')"><div class="card-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-comment"></i></div><div class="card-label">意见反馈</div></div><div class="profile-icon-card" onclick="showToast('客服对话框')"><div class="card-icon" style="background:rgba(255,255,255,.06);color:var(--text-muted)"><i class="fas fa-headset"></i></div><div class="card-label">联系客服</div></div></div></div></div>
     </div>
   </div>
 
@@ -126,15 +170,10 @@
     <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">作品详情</span></div>
     <div class="page-content-sub">
       <div class="detail-image reveal" onclick="navigateTo('pg-image-preview')">🎨</div>
-      <div class="detail-actions reveal">
-        <div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')"><i class="fas fa-heart"></i><span>128</span></div>
-        <div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')"><i class="fas fa-bookmark"></i><span>56</span></div>
-        <div class="action-btn card-ripple ripple-target" onclick="showToast('分享链接已生成')"><i class="fas fa-share-nodes"></i><span>分享</span></div>
-      </div>
-      <div class="detail-section reveal"><div class="param-card"><div class="param-row"><div class="param-label">Prompt</div><div class="param-value">赛博朋克风格的猫咪宇航员，霓虹灯光下漫步星空</div></div><div class="param-row"><div class="param-label">模型</div><div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div></div><div class="param-row"><div class="param-label">尺寸</div><div class="param-value">1:1 · 1024×1024</div></div><div class="param-row"><div class="param-label">风格</div><div class="param-value">赛博朋克</div></div></div></div>
-      <div class="detail-section reveal"><a href="javascript:void(0)" onclick="switchTab('pg-create')" class="remix-btn btn-flow"><div class="flow-border"></div><span class="btn-inner"><i class="fas fa-wand-magic-sparkles"></i> 生成同款</span></a></div>
-      <div class="author-bar reveal"><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-avatar">L</a><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-info"><div class="author-name">LumiArtist</div><div class="author-stats">48 作品 · 1.2k 获赞</div></a><div class="glass-badge badge-cyan">关注</div></div>
+      <div class="author-bar reveal"><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-avatar">L</a><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-info"><div class="author-name">LumiArtist</div><div class="author-stats">48 作品 · 1.2k 获赞</div></a><div class="glass-badge badge-cyan" onclick="this.classList.toggle('followed');this.textContent=this.classList.contains('followed')?'已关注':'关注';this.style.background=this.classList.contains('followed')?'rgba(255,255,255,.06)':'';this.style.color=this.classList.contains('followed')?'var(--text-muted)':''">关注</div></div>
+      <div class="detail-section reveal"><div class="param-card"><div class="param-row"><div class="param-label">Prompt</div><div class="param-value">赛博朋克风格的猫咪宇航员，霞虹灯光下漫步星空</div></div><div class="param-row"><div class="param-label">模型</div><div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div></div><div class="param-row"><div class="param-label">尺寸</div><div class="param-value">1:1 · 1024×1024</div></div><div class="param-row"><div class="param-label">风格</div><div class="param-value">赛博朋克</div></div></div></div>
     </div>
+    <div class="detail-actions-bar"><div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')"><i class="fas fa-heart"></i><span>128</span></div><div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')"><i class="fas fa-star"></i><span>56</span></div><div class="action-btn" onclick="switchTab('pg-create')"><i class="fas fa-wand-magic-sparkles" style="color:var(--accent-1)"></i><span style="color:var(--accent-1)">同款</span></div></div>
   </div>
 
   <!-- 用户主页 -->
@@ -227,10 +266,21 @@
   <div class="page-view" id="pg-settings" data-type="sub">
     <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">设置</span></div>
     <div class="page-content-sub">
-      <div class="settings-page"><div class="settings-group reveal"><div class="group-label">通知设置</div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-bell"></i><span class="item-label">新消息通知</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-heart"></i><span class="item-label">作品被点赞</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-user-check"></i><span class="item-label">新粉丝通知</span></div><div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div></div></div>
-      <div class="settings-group reveal"><div class="group-label">隐私</div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-eye"></i><span class="item-label">公开我的作品</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-terminal"></i><span class="item-label">公开我的Prompt</span></div><div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div></div></div>
-      <div class="settings-group reveal"><div class="group-label">关于</div><div class="settings-item card-ripple ripple-target" onclick="showToast('版本信息')"><div class="item-left"><i class="fas fa-info-circle"></i><span class="item-label">版本号</span></div><div class="item-right"><span class="item-value">v1.0.0</span><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item card-ripple ripple-target" onclick="showToast('用户协议')"><div class="item-left"><i class="fas fa-file-lines"></i><span class="item-label">用户协议</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item card-ripple ripple-target" onclick="showToast('隐私政策')"><div class="item-left"><i class="fas fa-shield"></i><span class="item-label">隐私政策</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div></div>
+      <div class="settings-page">
+      <div class="settings-group reveal"><div class="group-label">通用</div><div class="settings-item" onclick="navigateTo('pg-edit-profile')"><div class="item-left"><i class="fas fa-user"></i><span class="item-label">个人资料</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="navigateTo('pg-notification')"><div class="item-left"><i class="fas fa-bell"></i><span class="item-label">通知设置</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="navigateTo('pg-change-password')"><div class="item-left"><i class="fas fa-lock"></i><span class="item-label">修改密码</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div></div>
+      <div class="settings-group reveal"><div class="group-label">隐私</div><div class="settings-item"><div class="item-left"><i class="fas fa-eye"></i><span class="item-label">公开我的作品</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item"><div class="item-left"><i class="fas fa-terminal"></i><span class="item-label">公开我的Prompt</span></div><div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div></div></div>
+      <div class="settings-group reveal"><div class="group-label">关于</div><div class="settings-item" onclick="navigateTo('pg-update-log')"><div class="item-left"><i class="fas fa-info-circle"></i><span class="item-label">版本号</span></div><div class="item-right"><span class="item-value">v1.0.0</span><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="showToast('用户协议')"><div class="item-left"><i class="fas fa-file-lines"></i><span class="item-label">用户协议</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="showToast('隐私政策')"><div class="item-left"><i class="fas fa-shield"></i><span class="item-label">隐私政策</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div></div>
       <button class="logout-btn reveal" onclick="showToast('确认退出登录？')">退出登录</button></div>
+    </div>
+  </div>
+
+  <!-- 通知设置 -->
+  <div class="page-view" id="pg-notification" data-type="sub">
+    <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">通知设置</span></div>
+    <div class="page-content-sub">
+      <div class="settings-page">
+      <div class="settings-group reveal"><div class="group-label">通知设置</div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-bell"></i><span class="item-label">新消息通知</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-heart"></i><span class="item-label">作品被点赞</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item card-ripple ripple-target"><div class="item-left"><i class="fas fa-user-check"></i><span class="item-label">新粉丝通知</span></div><div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div></div></div>
+      </div>
     </div>
   </div>
 
@@ -238,10 +288,47 @@
   <div class="page-view" id="pg-edit-profile" data-type="sub">
     <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">编辑资料</span></div>
     <div class="page-content-sub">
-      <div class="edit-page"><div class="avatar-upload reveal"><div class="avatar-circle" onclick="showToast('选择头像图片')">L<span class="edit-badge"><i class="fas fa-camera"></i></span></div></div>
-      <div class="form-group reveal"><div class="form-label">昵称</div><input class="glass-input" value="LumiArtist" placeholder="输入昵称"></div>
-      <div class="form-group reveal"><div class="form-label">个性签名</div><textarea class="glass-textarea" placeholder="介绍一下自己" style="min-height:80px">AI创作，让想象发光 ✨</textarea></div>
-      <div class="save-btn-area reveal"><button class="save-btn btn-flow" onclick="showToast('资料已保存');setTimeout(()=>navigateBack(),1500)"><div class="flow-border"></div><span class="btn-inner"><i class="fas fa-check"></i> 保存修改</span></button></div></div>
+      <div class="edit-page">
+      <div class="avatar-upload reveal"><div class="avatar-circle" onclick="showToast('选择头像图片')">L<span class="edit-badge"><i class="fas fa-camera"></i></span></div></div>
+      <div class="edit-form-card reveal"><div class="form-label">昵称</div><input value="LumiArtist" placeholder="输入昵称"></div>
+      <div class="edit-form-card reveal"><div class="form-label">ID</div><div class="form-value accent">LD-100258<span class="lock-icon"><i class="fas fa-lock"></i></span></div></div>
+      <div class="edit-form-card reveal"><div class="form-label">手机号</div><div class="form-value">188******46</div></div>
+      <div class="save-btn-area reveal"><button class="save-btn btn-flow" onclick="showToast('资料已保存');setTimeout(()=>navigateBack(),1500)"><div class="flow-border"></div><span class="btn-inner"><i class="fas fa-check"></i> 保存修改</span></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 修改密码 -->
+  <div class="page-view" id="pg-change-password" data-type="sub">
+    <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">修改密码</span></div>
+    <div class="page-content-sub">
+      <div class="edit-page">
+      <div class="edit-form-card reveal"><div class="form-label">原密码</div><input type="password" placeholder="请输入原密码"></div>
+      <div class="edit-form-card reveal"><div class="form-label">新密码</div><input type="password" placeholder="请输入新密码"></div>
+      <div class="edit-form-card reveal"><div class="form-label">确认密码</div><input type="password" placeholder="请再次输入新密码"></div>
+      <div class="save-btn-area reveal"><button class="save-btn btn-flow" onclick="showToast('密码修改成功');setTimeout(()=>navigateBack(),1500)"><div class="flow-border"></div><span class="btn-inner"><i class="fas fa-check"></i> 确认修改</span></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 更新日志 -->
+  <div class="page-view" id="pg-update-log" data-type="sub">
+    <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">更新日志</span></div>
+    <div class="page-content-sub">
+      <div class="settings-page">
+      <div class="settings-group reveal">
+        <div class="group-label">v1.0.0 · 2026年6月12日</div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-star" style="color:var(--accent-5)"></i><span class="item-label">全新创作页上线，支持多模型选择</span></div></div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-star" style="color:var(--accent-5)"></i><span class="item-label">画廊页瀑布流重构，支持收藏与同款</span></div></div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-star" style="color:var(--accent-5)"></i><span class="item-label">积分中心、每日签到、邀请好友系统</span></div></div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-star" style="color:var(--accent-5)"></i><span class="item-label">9款AI工具上线（抠图、去水印等）</span></div></div>
+      </div>
+      <div class="settings-group reveal">
+        <div class="group-label">v0.9.0 · 2026年5月28日</div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-circle" style="color:var(--text-muted);font-size:6px"></i><span class="item-label">内测版本发布</span></div></div>
+        <div class="settings-item"><div class="item-left"><i class="fas fa-circle" style="color:var(--text-muted);font-size:6px"></i><span class="item-label">基础创作功能上线</span></div></div>
+      </div>
+      </div>
     </div>
   </div>
 
@@ -376,6 +463,14 @@ const navStack = [];
 const tabPages = ['pg-gallery','pg-inspiration','pg-create','pg-works','pg-profile'];
 let currentTab = 'pg-gallery';
 
+const pageTitles = {
+  'pg-gallery':'画廊','pg-inspiration':'灵感','pg-create':'创作','pg-works':'作品','pg-profile':'我的',
+  'pg-gallery-detail':'作品详情','pg-gallery-user':'用户主页','pg-template-detail':'模板详情',
+  'pg-tool-process':'AI工具','pg-create-result':'创作完成','pg-works-detail':'作品详情',
+  'pg-points-center':'积分中心','pg-sign-in':'每日签到','pg-invite':'邀请好友',
+  'pg-settings':'设置','pg-edit-profile':'编辑资料','pg-notification':'通知设置','pg-change-password':'修改密码','pg-update-log':'更新日志'
+};
+
 function showPage(id) {
   document.querySelectorAll('.page-view').forEach(p => {
     p.classList.remove('active','slide-in','slide-out','tab-fade');
@@ -386,6 +481,14 @@ function showPage(id) {
   // Show/hide tabbar
   const isTab = tabPages.includes(id);
   document.getElementById('sharedTabBar').classList.toggle('hidden', !isTab);
+  // Update title bar — always visible, show back button for sub-pages
+  const titleBar = document.getElementById('miniTitleBar');
+  if (titleBar) {
+    titleBar.classList.remove('hidden');
+    titleBar.classList.toggle('is-sub', !isTab);
+    const titleText = titleBar.querySelector('.title-text');
+    if (titleText) titleText.textContent = pageTitles[id] || '';
+  }
   // Update tabbar active state
   if (isTab) {
     document.querySelectorAll('#sharedTabBar .tab-item').forEach(t => {
@@ -453,11 +556,71 @@ function reinitPage(page) {
 }
 
 // ═══ Page-specific functions ═══
-function selectModel(el) {
-  el.closest('.page-view').querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  const price = parseInt(el.dataset.price) || 0;
-  document.getElementById('pointsCost').textContent = price + ' 积分';
+function toggleSelector(trigger) {
+  const wasOpen = trigger.classList.contains('open');
+  document.querySelectorAll('.selector-trigger.open').forEach(t => {
+    t.classList.remove('open');
+    const m = t.nextElementSibling;
+    m.classList.remove('open','open-up');
+  });
+  if (!wasOpen) {
+    const menu = trigger.nextElementSibling;
+    trigger.classList.add('open');
+    // 先默认向下展开，实测菜单高度和可用空间
+    menu.classList.remove('open-up');
+    menu.classList.add('open');
+    const triggerRect = trigger.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+    // 找到底部粘性按钮区域的顶边作为下界
+    const pageView = trigger.closest('.page-view');
+    const btnArea = pageView ? pageView.querySelector('.create-btn-area') : null;
+    const bottomLimit = btnArea
+      ? btnArea.getBoundingClientRect().top - 4
+      : window.innerHeight;
+    const availableSpace = bottomLimit - triggerRect.bottom;
+    // 用菜单真实高度判断，空间不够则翻转为向上展开
+    if (menuRect.height > availableSpace) {
+      menu.classList.add('open-up');
+    }
+  }
+}
+
+function selectSelectorOption(option, menuId) {
+  const menu = menuId ? document.getElementById(menuId) : option.closest('.selector-menu');
+  if (!menu) return;
+  menu.querySelectorAll('.selector-option').forEach(o => o.classList.remove('selected'));
+  option.classList.add('selected');
+  const trigger = menu.previousElementSibling;
+  if (trigger) {
+    const value = option.dataset.value || option.textContent.trim();
+    trigger.querySelector('.selector-value').textContent = value;
+    trigger.classList.remove('open');
+  }
+  menu.classList.remove('open');
+  updateCost();
+}
+
+function updateCost() {
+  const modelMenu = document.getElementById('modelMenu');
+  const qtyMenu = document.getElementById('qtyMenu');
+  const resMenu = document.getElementById('resMenu');
+  const modelOpt = modelMenu ? modelMenu.querySelector('.selector-option.selected') : null;
+  const qtyOpt = qtyMenu ? qtyMenu.querySelector('.selector-option.selected') : null;
+  const resOpt = resMenu ? resMenu.querySelector('.selector-option.selected') : null;
+  const price = modelOpt ? (parseInt(modelOpt.dataset.price) || 0) : 0;
+  const qty = qtyOpt ? (parseInt(qtyOpt.dataset.qty) || 1) : 1;
+  const mult = resOpt ? (parseFloat(resOpt.dataset.multiplier) || 1) : 1;
+  const cost = Math.round(price * qty * mult);
+  const el = document.getElementById('pointsCost');
+  if (el) el.textContent = (price === 0 ? '免费' : cost + ' 积分');
+}
+
+function updateCharCount() {
+  const textarea = document.getElementById('promptInput');
+  const counter = document.getElementById('charCounter');
+  if (textarea && counter) {
+    counter.textContent = textarea.value.length + '/800';
+  }
 }
 
 function selectParam(el) {
@@ -465,13 +628,70 @@ function selectParam(el) {
   el.classList.add('selected');
 }
 
+let createStartTime = null;
+
 function startCreating() {
-  const overlay = document.getElementById('genOverlay');
-  overlay.classList.add('show');
+  const output = document.getElementById('createOutput');
+  const processing = document.getElementById('outputProcessing');
+  const result = document.getElementById('outputResult');
+  const progressBar = document.getElementById('outputProgressBar');
+  const progressText = document.getElementById('outputProgressText');
+  const statusText = document.getElementById('outputStatus');
+  output.classList.add('show');
+  processing.style.display = 'block';
+  result.style.display = 'none';
+  progressBar.style.width = '0%';
+  createStartTime = Date.now();
+  let progress = 0;
+  const statuses = ['AI正在构思画面...','正在生成细节...','优化画质中...','即将完成...'];
+  const timer = setInterval(() => {
+    progress += Math.random() * 15 + 5;
+    if (progress >= 100) { progress = 100; clearInterval(timer); showOutputResult(); }
+    progressBar.style.width = progress + '%';
+    progressText.textContent = Math.round(progress) + '%';
+    const idx = Math.min(Math.floor(progress / 25), statuses.length - 1);
+    statusText.textContent = statuses[idx];
+  }, 400);
+}
+
+function showOutputResult() {
+  const output = document.getElementById('createOutput');
+  const processing = output.querySelector('#outputProcessing');
+  const result = output.querySelector('#outputResult');
+  processing.style.display = 'none';
+  result.style.display = 'block';
+  const elapsed = ((Date.now() - createStartTime) / 1000).toFixed(1);
+  document.getElementById('outputTime').textContent = elapsed + 's';
+  document.getElementById('outputSize').textContent = '1.2 MB';
+  document.getElementById('outputRes').textContent = '1024×1024';
+  const btn = document.getElementById('outputDownloadBtn');
+  btn.classList.remove('downloading');
+  btn.innerHTML = '<i class="fas fa-download"></i> 下载图片';
+}
+
+function downloadOutput() {
+  const btn = document.getElementById('outputDownloadBtn');
+  if (btn.classList.contains('downloading')) return;
+  btn.classList.add('downloading');
+  btn.innerHTML = '<span class="download-spinner"></span> 下载中...';
   setTimeout(() => {
-    overlay.classList.remove('show');
-    navigateTo('pg-create-result');
-  }, 3000);
+    btn.classList.remove('downloading');
+    btn.innerHTML = '<i class="fas fa-check"></i> 已保存';
+    showToast('图片已保存到相册');
+    setTimeout(() => { btn.innerHTML = '<i class="fas fa-download"></i> 下载图片'; }, 2500);
+  }, 2000);
+}
+
+function showOutputPreview() {
+  const overlay = document.getElementById('outputPreviewOverlay');
+  if (!overlay) return;
+  overlay.classList.add('show');
+}
+
+function hideOutputPreview() {
+  const overlay = document.getElementById('outputPreviewOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('show');
 }
 
 function switchToolState(state) {
@@ -522,6 +742,49 @@ function doSignin() {
 }
 
 // ═══ Override showToast & initTabBar for SPA ═══
+// ═══ Search Panel ═══
+function openSearch() {
+  const panel = document.getElementById('searchPanel');
+  if (panel) { panel.classList.add('show'); setTimeout(() => document.getElementById('searchInput')?.focus(), 200); }
+}
+function closeSearch() {
+  const panel = document.getElementById('searchPanel');
+  if (panel) panel.classList.remove('show');
+}
+
+// ═══ Works Manage Mode ═══
+let manageMode = false;
+function toggleManageMode() {
+  manageMode = !manageMode;
+  const grid = document.getElementById('worksGridHistory');
+  const btn = document.getElementById('worksManageBtn');
+  const bar = document.getElementById('worksManageBar');
+  if (grid) grid.classList.toggle('manage-mode', manageMode);
+  if (btn) btn.textContent = manageMode ? '完成' : '管理';
+  if (bar) bar.classList.toggle('show', manageMode);
+  if (!manageMode) {
+    document.querySelectorAll('.works-item.selected').forEach(i => i.classList.remove('selected'));
+    updateSelCount();
+  }
+}
+function worksItemClick(item) {
+  if (!manageMode) { navigateTo('pg-works-detail'); return; }
+  item.classList.toggle('selected');
+  updateSelCount();
+}
+function updateSelCount() {
+  const count = document.querySelectorAll('.works-item.selected').length;
+  const el = document.getElementById('worksSelCount');
+  if (el) el.textContent = count;
+}
+function deleteSelectedWorks() {
+  const sel = document.querySelectorAll('.works-item.selected');
+  if (sel.length === 0) { showToast('请先选择要删除的作品'); return; }
+  sel.forEach(i => i.remove());
+  showToast('已删除 ' + sel.length + ' 个作品');
+  updateSelCount();
+}
+
 function showToast(msg) {
   const toast = document.getElementById('sharedToast');
   toast.textContent = msg;
@@ -556,6 +819,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initInspirationTabs();
   initTemplateFilter();
   initSubCarousels();
+  const promptInput = document.getElementById('promptInput');
+  if (promptInput) {
+    promptInput.addEventListener('input', function() {
+      updateCharCount();
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+    updateCharCount();
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.selector-group')) {
+      document.querySelectorAll('.selector-trigger.open').forEach(t => {
+        t.classList.remove('open');
+        t.nextElementSibling.classList.remove('open','open-up');
+      });
+    }
+  });
 });
 </script>
 </body>

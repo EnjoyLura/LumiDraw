@@ -93,8 +93,8 @@
   animation: btn-breathe 2.8s ease-in-out infinite;
 }
 @keyframes btn-breathe {
-  0%, 100% { box-shadow: 0 4px 24px rgba(88,215,185,.3); }
-  50% { box-shadow: 0 4px 24px rgba(88,215,185,.3), 0 0 30px 4px rgba(88,215,185,.2); }
+  0%, 100% { box-shadow: 0 2px 12px rgba(88,215,185,.25); }
+  50% { box-shadow: 0 2px 12px rgba(88,215,185,.25), 0 0 18px 2px rgba(88,215,185,.18); }
 }
 
 /* ── 3. 极光散射 — 多层渐变波动 ── */
