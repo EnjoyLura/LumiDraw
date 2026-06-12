@@ -174,7 +174,7 @@
 .ripple-wave {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(253,121,168,0.25), transparent 70%);
+  background: radial-gradient(circle, rgba(88,215,185,0.18), transparent 70%);
   transform: scale(0);
   animation: ripple-expand 0.9s ease-out forwards;
   pointer-events: none; z-index: 1;
@@ -185,7 +185,7 @@
 .click-hint {
   position: absolute;
   bottom: 12px; right: 16px;
-  font-size: 11px; color: rgba(253,121,168,0.5);
+  font-size: 11px; color: rgba(88,215,185,0.5);
   z-index: 3; pointer-events: none;
   animation: hint-blink 2s ease-in-out infinite;
 }

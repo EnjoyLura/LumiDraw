@@ -68,22 +68,21 @@
 
 /* ── Pill 标签/筛选 ── */
 .glass-pill {
-  padding: 8px 18px;
+  padding: 4px 12px;
   border-radius: 100px;
-  font-size: 13px; font-weight: 500;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
+  font-size: 12px; font-weight: 400;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all .25s ease;
   white-space: nowrap;
-  backdrop-filter: blur(20px);
 }
-.glass-pill:hover { background: var(--glass-hover); color: var(--text-primary); }
+.glass-pill:hover { color: var(--text-primary); }
 .glass-pill.active {
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
-  color: #fff; border-color: transparent;
-  box-shadow: 0 4px 16px rgba(88,215,185,.3);
+  background: linear-gradient(135deg, var(--accent-1), #5bc0eb);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(88,215,185,.25);
 }
 
 /* ── 输入框 ── */
@@ -275,8 +274,9 @@
 /* ── 筛选横滑条 ── */
 .filter-bar {
   display: flex;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: 6px;
+  padding: 0 16px 6px;
+  margin-top: 4px;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -287,9 +287,11 @@
   display: flex;
   gap: 12px;
   padding: 12px 16px;
+  overflow: hidden;
 }
 .waterfall-col {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;

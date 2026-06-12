@@ -60,30 +60,32 @@ function initStardust() {
 }
 
 // ── 波纹触控 ──
+let rippleInited = false;
 function initRipple() {
+  if (rippleInited) return;
+  rippleInited = true;
   document.querySelectorAll('.card-ripple, .ripple-target').forEach(el => {
     el.addEventListener('click', e => {
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const size = Math.max(rect.width, rect.height) * 0.5;
-      for (let i = 0; i < 2; i++) {
-        setTimeout(() => {
-          const ripple = document.createElement('div');
-          ripple.classList.add('ripple-wave');
-          ripple.style.width = ripple.style.height = size + 'px';
-          ripple.style.left = (x - size / 2) + 'px';
-          ripple.style.top = (y - size / 2) + 'px';
-          el.appendChild(ripple);
-          ripple.addEventListener('animationend', () => ripple.remove());
-        }, i * 120);
-      }
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple-wave');
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (x - size / 2) + 'px';
+      ripple.style.top = (y - size / 2) + 'px';
+      el.appendChild(ripple);
+      ripple.addEventListener('animationend', () => ripple.remove());
     });
   });
 }
 
 // ── Tab 切换 ──
+let tabsInited = false;
 function initTabs() {
+  if (tabsInited) return;
+  tabsInited = true;
   document.querySelectorAll('.glass-tabs').forEach(tabGroup => {
     const tabs = tabGroup.querySelectorAll('.glass-tab');
     const panels = tabGroup.parentElement.querySelectorAll('.tab-panel');
@@ -101,7 +103,10 @@ function initTabs() {
 }
 
 // ── Filter 筛选切换 ──
+let filterInited = false;
 function initFilter() {
+  if (filterInited) return;
+  filterInited = true;
   document.querySelectorAll('.filter-bar').forEach(bar => {
     const pills = bar.querySelectorAll('.glass-pill');
     pills.forEach(pill => {
@@ -127,7 +132,10 @@ function showToast(msg) {
 }
 
 // ── Switch 开关 ──
+let switchesInited = false;
 function initSwitches() {
+  if (switchesInited) return;
+  switchesInited = true;
   document.querySelectorAll('.glass-switch').forEach(sw => {
     sw.addEventListener('click', () => {
       sw.classList.toggle('on');
