@@ -1,6 +1,7 @@
 /* =============================================
    Lumi-Draw Prototype — Light FX
-   五种光影交互范式
+   Zen Design v2.0 · 五种光影交互范式
+   支持浅色/深色双主题
    ============================================= */
 
 /* ── 1. 流光边框 — Conic Gradient 旋转 ── */
@@ -13,8 +14,8 @@
   padding: 1.5px; pointer-events: none;
   background: conic-gradient(
     from var(--flow-angle),
-    transparent 20%, var(--accent-1) 42%,
-    var(--accent-3) 48%, transparent 65%
+    transparent 20%, var(--accent) 42%,
+    var(--accent-hover) 48%, transparent 65%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
@@ -25,8 +26,8 @@
   pointer-events: none; z-index: 0;
   background: conic-gradient(
     from var(--flow-angle),
-    transparent 20%, rgba(88,215,185,0.04) 42%,
-    rgba(58,175,142,0.04) 48%, transparent 65%
+    transparent 20%, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.04) 42%,
+    rgba(var(--accent-hover-r),var(--accent-hover-g),var(--accent-hover-b),0.04) 48%, transparent 65%
   );
   filter: blur(18px);
   animation: flow-rot 3.5s linear infinite;
@@ -36,7 +37,7 @@
 /* 流光按钮变体 */
 .btn-flow {
   position: relative;
-  background: var(--glass-bg) !important;
+  background: var(--glass) !important;
   border: none !important;
   overflow: hidden;
 }
@@ -45,8 +46,8 @@
   padding: 2px; pointer-events: none;
   background: conic-gradient(
     from var(--flow-angle),
-    transparent 15%, var(--accent-1) 40%,
-    var(--accent-3) 50%, transparent 70%
+    transparent 15%, var(--accent) 40%,
+    var(--accent-hover) 50%, transparent 70%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
@@ -54,9 +55,8 @@
 }
 .btn-flow .btn-text {
   position: relative; z-index: 2;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-3));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
+  font-weight: 700;
 }
 
 /* ── 2. 呼吸脉冲 — Box-Shadow 节律 ── */
@@ -65,21 +65,21 @@
 }
 @keyframes breathe {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(58,175,142,0),
-                0 0 0 0 rgba(58,175,142,0),
-                inset 0 0 0 0 rgba(58,175,142,0);
+    box-shadow: 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                inset 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0);
   }
   50% {
-    box-shadow: 0 0 20px 2px rgba(58,175,142,0.1),
-                0 0 50px 4px rgba(58,175,142,0.05),
-                inset 0 0 30px 0 rgba(58,175,142,0.035);
+    box-shadow: 0 0 20px 2px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.1),
+                0 0 50px 4px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.05),
+                inset 0 0 30px 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.035);
   }
 }
 .breathe-core {
   position: absolute; top: 50%; left: 50%;
   width: 60%; height: 60%; border-radius: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(58,175,142,0.08), transparent 70%);
+  background: radial-gradient(circle, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.08), transparent 70%);
   animation: breathe-core 3.2s ease-in-out infinite;
   pointer-events: none; z-index: 0;
 }
@@ -93,8 +93,8 @@
   animation: btn-breathe 2.8s ease-in-out infinite;
 }
 @keyframes btn-breathe {
-  0%, 100% { box-shadow: 0 2px 12px rgba(88,215,185,.25); }
-  50% { box-shadow: 0 2px 12px rgba(88,215,185,.25), 0 0 18px 2px rgba(88,215,185,.18); }
+  0%, 100% { box-shadow: var(--shadow-glow); }
+  50% { box-shadow: var(--shadow-glow), 0 0 18px 2px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.18); }
 }
 
 /* ── 3. 极光散射 — 多层渐变波动 ── */
@@ -107,23 +107,29 @@
   border-radius: 50%; filter: blur(36px);
 }
 .ab-1 {
-  background: linear-gradient(90deg, transparent, rgba(58,175,142,0.28), rgba(88,215,185,0.18), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.28), rgba(var(--accent-hover-r),var(--accent-hover-g),var(--accent-hover-b),0.18), transparent);
   top: 5%; left: -20%;
   animation: ab1 7s ease-in-out infinite;
 }
 .ab-2 {
-  background: linear-gradient(90deg, transparent, rgba(253,121,168,0.22), rgba(253,203,110,0.16), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--warn-r),var(--warn-g),var(--warn-b),0.22), rgba(var(--info-r),var(--info-g),var(--info-b),0.16), transparent);
   bottom: 0; left: -20%;
   animation: ab2 9s ease-in-out infinite;
 }
 .ab-3 {
-  background: linear-gradient(90deg, transparent, rgba(88,215,185,0.14), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-hover-r),var(--accent-hover-g),var(--accent-hover-b),0.14), transparent);
   top: 30%; left: -20%;
   animation: ab3 11s ease-in-out infinite;
 }
 @keyframes ab1 { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(18%) scaleY(1.35); } }
 @keyframes ab2 { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-14%) scaleY(.7); } }
 @keyframes ab3 { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(10%) scaleY(1.2); } }
+
+/* 浅色模式极光增强 */
+[data-theme="light"] .aurora-band { filter: blur(28px); }
+[data-theme="light"] .ab-1 { opacity: 0.5; }
+[data-theme="light"] .ab-2 { opacity: 0.4; }
+[data-theme="light"] .ab-3 { opacity: 0.35; }
 
 /* 极光页面背景区 */
 .aurora-section {
@@ -169,12 +175,15 @@
   50% { transform: translate(13px, 9px); opacity: .7; }
 }
 
+/* 浅色模式粒子增强 */
+[data-theme="light"] .sd-particle { opacity: 0.6 !important; }
+
 /* ── 5. 波纹触控 — 点击扩散涟漪 ── */
 .card-ripple { cursor: pointer; }
 .ripple-wave {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(88,215,185,0.18), transparent 70%);
+  background: radial-gradient(circle, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.18), transparent 70%);
   transform: scale(0);
   animation: ripple-expand 0.9s ease-out forwards;
   pointer-events: none; z-index: 1;
@@ -185,7 +194,8 @@
 .click-hint {
   position: absolute;
   bottom: 12px; right: 16px;
-  font-size: 11px; color: rgba(88,215,185,0.5);
+  font-size: 11px; color: var(--accent);
+  opacity: 0.5;
   z-index: 3; pointer-events: none;
   animation: hint-blink 2s ease-in-out infinite;
 }
@@ -201,3 +211,20 @@
               transform .7s cubic-bezier(.22,1,.36,1);
 }
 .lfx-enter.visible { opacity: 1; transform: translateY(0); }
+
+/* ── 浅色模式呼吸效果增强 ── */
+[data-theme="light"] .card-breathe {
+  animation: breathe-light 3.2s ease-in-out infinite;
+}
+@keyframes breathe-light {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                inset 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.15),
+                0 0 50px 4px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.08),
+                inset 0 0 30px 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.05);
+  }
+}

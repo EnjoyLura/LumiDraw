@@ -42,7 +42,7 @@ function initStardust() {
   document.querySelectorAll('.card-stardust').forEach(card => {
     const wrap = card.querySelector('.stardust-wrap');
     if (!wrap) return;
-    const colors = ['var(--accent-4)', 'var(--accent-1)', '#ffffff', 'var(--accent-3)'];
+    const colors = ['var(--warn)', 'var(--accent)', '#ffffff', 'var(--accent-hover)'];
     const anims = ['sdf0', 'sdf1', 'sdf2'];
     for (let i = 0; i < 20; i++) {
       const p = document.createElement('div');
@@ -154,8 +154,34 @@ function initTabBar() {
   });
 }
 
+// ── 主题切换 ──
+function toggleTheme() {
+  const html = document.documentElement;
+  const icon = document.getElementById('themeIcon');
+  const current = html.getAttribute('data-theme');
+
+  if (current === 'dark') {
+    html.setAttribute('data-theme', 'light');
+    if (icon) icon.className = 'fa-solid fa-sun';
+    localStorage.setItem('lumi-theme', 'light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    if (icon) icon.className = 'fa-solid fa-moon';
+    localStorage.setItem('lumi-theme', 'dark');
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('lumi-theme');
+  const theme = saved || 'dark'; // 默认深色模式
+  document.documentElement.setAttribute('data-theme', theme);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
 // ── 统一初始化 ──
 function initApp() {
+  initTheme();
   initScrollReveal();
   initStagger();
   initStardust();

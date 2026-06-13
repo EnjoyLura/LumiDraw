@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +15,13 @@
 .page-view[data-type="sub"]{top:84px;bottom:34px}
 .page-view[data-type="sub"] .nav-bar{display:none}
 .page-view[data-type="overlay"]{inset:0;z-index:60;background:#000}
-.mini-title-bar{position:absolute;top:0;left:0;right:0;height:84px;display:flex;align-items:flex-end;padding:0 16px 14px;z-index:45;background:rgba(10,10,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
-.mini-title-bar .title-text{font-size:16px;font-weight:600;color:var(--text-primary);flex:1;text-align:center;line-height:20px}
+.mini-title-bar{position:absolute;top:0;left:0;right:0;height:84px;display:flex;align-items:flex-end;padding:0 16px 14px;z-index:45;background:var(--glass);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--border)}
+.mini-title-bar .title-text{font-size:16px;font-weight:600;color:var(--fg-primary);flex:1;text-align:center;line-height:20px}
 .mini-title-bar .mtb-phantom{display:none;width:34px;flex-shrink:0}
 .mini-title-bar.is-sub .mtb-phantom{display:block}
 .mini-title-bar.hidden{display:none}
-.mini-title-bar .mtb-back{display:none;font-size:18px;color:var(--text-primary);cursor:pointer;padding:2px 8px 0;border-radius:8px;transition:background .2s;flex-shrink:0;line-height:20px}
-.mini-title-bar .mtb-back:hover{background:rgba(255,255,255,.08)}
+.mini-title-bar .mtb-back{display:none;font-size:18px;color:var(--fg-primary);cursor:pointer;padding:2px 8px 0;border-radius:8px;transition:background .2s;flex-shrink:0;line-height:20px}
+.mini-title-bar .mtb-back:hover{background:var(--glass-hover)}
 .mini-title-bar.is-sub .mtb-back{display:block}
 .page-view.active{display:flex;flex-direction:column;opacity:1}
 .page-view.slide-in{animation:slideIn .3s ease forwards}
@@ -38,7 +38,7 @@
 <div class="phone-frame">
   <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
   <div class="mini-title-bar" id="miniTitleBar"><span class="mtb-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></span><span class="title-text">画廊</span><span class="mtb-phantom"></span></div>
-  <div class="ambient-bg"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+  <!-- <div class="ambient-bg"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div> -->
   <div class="noise-overlay"></div>
 
   <!-- ═══ 画廊 ═══ -->
@@ -98,7 +98,7 @@
 <div class="template-card" onclick="navigateTo('pg-template-detail')"><div class="template-img" style="height:120px;background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(58,175,142,.06))">🎉</div><div class="template-info"><div class="template-title">节日海报</div><div class="template-desc-row"><div class="template-desc">一键生成节日海报</div><div class="template-usage">1.1k 使用</div></div></div></div>
 </div>
 </div></div></div>
-      <div class="tab-panel" data-panel="tools" style="display:none"><div class="tool-grid stagger-children"><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(58,175,142,.1);color:var(--accent-3)"><i class="fas fa-scissors"></i></div><div class="tool-name">AI抠图</div><div class="tool-desc">智能去除背景</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(88,215,185,.1);color:var(--accent-1)"><i class="fas fa-eraser"></i></div><div class="tool-name">AI去水印</div><div class="tool-desc">智能去除水印</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)"><i class="fas fa-expand"></i></div><div class="tool-name">图片变清晰</div><div class="tool-desc">低分辨率高清增强</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(253,121,168,.1);color:var(--accent-4)"><i class="fas fa-clock-rotate-left"></i></div><div class="tool-name">老照片修复</div><div class="tool-desc">修复 + 上色</div><div class="tool-points">3 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(143,232,208,.1);color:var(--accent-2)"><i class="fas fa-palette"></i></div><div class="tool-name">AI风格迁移</div><div class="tool-desc">动漫/油画/水彩</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(85,239,196,.1);color:#55efc4"><i class="fas fa-up-right-and-down-left-from-center"></i></div><div class="tool-name">AI扩图</div><div class="tool-desc">智能扩展边界</div><div class="tool-points">3 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(88,215,185,.1);color:var(--accent-1)"><i class="fas fa-id-card"></i></div><div class="tool-name">证件照</div><div class="tool-desc">智能换底美颜</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(253,203,110,.1);color:var(--accent-5)"><i class="fas fa-image"></i></div><div class="tool-name">AI换背景</div><div class="tool-desc">一键替换场景</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(143,232,208,.1);color:var(--accent-2)"><i class="fas fa-droplet"></i></div><div class="tool-name">图片上色</div><div class="tool-desc">黑白照片上色</div><div class="tool-points">2 积分/次</div></div></div></div>
+      <div class="tab-panel" data-panel="tools" style="display:none"><div class="tool-grid stagger-children"><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.1);color:var(--accent)"><i class="fas fa-scissors"></i></div><div class="tool-name">AI抠图</div><div class="tool-desc">智能去除背景</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.1);color:var(--accent)"><i class="fas fa-eraser"></i></div><div class="tool-name">AI去水印</div><div class="tool-desc">智能去除水印</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(253,203,110,.1);color:var(--points-gold)"><i class="fas fa-expand"></i></div><div class="tool-name">图片变清晰</div><div class="tool-desc">低分辨率高清增强</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--warn-r),var(--warn-g),var(--warn-b),.1);color:var(--warn)"><i class="fas fa-clock-rotate-left"></i></div><div class="tool-name">老照片修复</div><div class="tool-desc">修复 + 上色</div><div class="tool-points">3 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--accent-hover-r),var(--accent-hover-g),var(--accent-hover-b),.1);color:var(--accent-hover)"><i class="fas fa-palette"></i></div><div class="tool-name">AI风格迁移</div><div class="tool-desc">动漫/油画/水彩</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(85,239,196,.1);color:#55efc4"><i class="fas fa-up-right-and-down-left-from-center"></i></div><div class="tool-name">AI扩图</div><div class="tool-desc">智能扩展边界</div><div class="tool-points">3 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.1);color:var(--accent)"><i class="fas fa-id-card"></i></div><div class="tool-name">证件照</div><div class="tool-desc">智能换底美颜</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(253,203,110,.1);color:var(--points-gold)"><i class="fas fa-image"></i></div><div class="tool-name">AI换背景</div><div class="tool-desc">一键替换场景</div><div class="tool-points">2 积分/次</div></div><div class="tool-card card-breathe" onclick="navigateTo('pg-tool-process')"><div class="breathe-core"></div><div class="tool-icon" style="background:rgba(var(--accent-hover-r),var(--accent-hover-g),var(--accent-hover-b),.1);color:var(--accent-hover)"><i class="fas fa-droplet"></i></div><div class="tool-name">图片上色</div><div class="tool-desc">黑白照片上色</div><div class="tool-points">2 积分/次</div></div></div></div>
     </div>
   </div>
 
@@ -170,10 +170,10 @@
     <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">作品详情</span></div>
     <div class="page-content-sub" style="padding-bottom:70px">
       <div class="detail-image reveal" onclick="navigateTo('pg-image-preview')">🎨</div>
-      <div class="author-bar reveal"><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-avatar">L</a><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-info"><div class="author-name">LumiArtist</div><div class="author-stats" style="color:rgba(255,255,255,.78)">48 作品 · 1.2k 获赞</div></a><div class="glass-badge badge-cyan" style="padding:8px 18px;font-size:14px" onclick="this.classList.toggle('followed');this.textContent=this.classList.contains('followed')?'已关注':'关注';this.style.background=this.classList.contains('followed')?'rgba(255,255,255,.06)':'';this.style.color=this.classList.contains('followed')?'var(--text-muted)':''">关注</div></div>
+      <div class="author-bar reveal"><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-avatar">L</a><a href="javascript:void(0)" onclick="navigateTo('pg-gallery-user')" class="author-info"><div class="author-name">LumiArtist</div><div class="author-stats" style="color:rgba(255,255,255,.78)">48 作品 · 1.2k 获赞</div></a><div class="glass-badge badge-cyan" style="padding:8px 18px;font-size:14px" onclick="this.classList.toggle('followed');this.textContent=this.classList.contains('followed')?'已关注':'关注';this.style.background=this.classList.contains('followed')?'var(--glass)':'';this.style.color=this.classList.contains('followed')?'var(--fg-tertiary)':''">关注</div></div>
       <div class="detail-section reveal"><div class="param-card"><div class="param-row"><div class="param-label">标题</div><div class="param-value">赛博朋克风格的猫咪宇航员，霞虹灯光下漫步星空</div></div><div class="param-row"><div class="param-label">模型</div><div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div></div><div class="param-row"><div class="param-label">尺寸</div><div class="param-value">1:1 · 1024×1024</div></div><div class="param-row"><div class="param-label">风格</div><div class="param-value">赛博朋克</div></div></div></div>
     </div>
-    <div class="detail-actions-bar" style="position:absolute;bottom:0;left:0;right:0;z-index:20"><div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')"><i class="fas fa-heart"></i><span>128</span></div><div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')"><i class="fas fa-star"></i><span>56</span></div><div class="action-btn" onclick="switchTab('pg-create')"><i class="fas fa-wand-magic-sparkles" style="color:var(--accent-1)"></i><span style="color:var(--accent-1)">同款</span></div></div>
+    <div class="detail-actions-bar" style="position:absolute;bottom:0;left:0;right:0;z-index:20"><div class="action-btn liked" onclick="this.classList.toggle('liked');showToast(this.classList.contains('liked')?'已点赞':'取消点赞')"><i class="fas fa-heart"></i><span>128</span></div><div class="action-btn" onclick="this.classList.toggle('collected');showToast(this.classList.contains('collected')?'已收藏':'取消收藏')"><i class="fas fa-star"></i><span>56</span></div><div class="action-btn" onclick="switchTab('pg-create')"><i class="fas fa-wand-magic-sparkles" style="color:var(--accent)"></i><span style="color:var(--accent)">同款</span></div></div>
   </div>
 
   <!-- 用户主页 -->
@@ -204,9 +204,9 @@
     <div class="page-content-sub">
       <div class="tool-process-page">
         <div class="carousel reveal" id="toolCarousel" style="height:160px;margin:0 0 12px"><div class="carousel-slide td-slide" style="background:linear-gradient(135deg,rgba(58,175,142,.12),rgba(88,215,185,.08)),url(images/gallery-card-cybercat.png);background-size:cover;background-position:center"></div><div class="carousel-slide td-slide" style="background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(253,203,110,.08)),url(images/tool-card-robot.png);background-size:cover;background-position:center;position:absolute;top:0;left:0;opacity:0"></div><div class="carousel-slide td-slide" style="background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(143,232,208,.08)),url(images/gallery-card-sakura.png);background-size:cover;background-position:center;position:absolute;top:0;left:0;opacity:0"></div></div>
-        <div class="state-upload active" id="stateUpload"><div class="process-step reveal"><div class="step-icon"><i class="fas fa-scissors" style="color:var(--accent-3)"></i></div><div class="step-title">AI智能抠图</div><div class="step-desc">上传图片，AI自动去除背景，2 积分/次</div></div><div class="upload-zone reveal" onclick="switchToolState('processing')"><i class="fas fa-cloud-arrow-up"></i><span>点击上传或拖拽图片到这里</span></div></div>
+        <div class="state-upload active" id="stateUpload"><div class="process-step reveal"><div class="step-icon"><i class="fas fa-scissors" style="color:var(--accent)"></i></div><div class="step-title">AI智能抠图</div><div class="step-desc">上传图片，AI自动去除背景，2 积分/次</div></div><div class="upload-zone reveal" onclick="switchToolState('processing')"><i class="fas fa-cloud-arrow-up"></i><span>点击上传或拖拽图片到这里</span></div></div>
         <div class="state-processing" id="stateProcessing"><div class="process-progress card-aurora"><div class="aurora-wrap"><div class="aurora-band ab-1" style="opacity:.15"></div><div class="aurora-band ab-2" style="opacity:.1"></div></div><div class="progress-spinner"></div><div class="progress-text">AI正在处理...</div><div class="progress-sub">预计 5-10 秒完成</div><div style="margin-top:16px"><div class="glass-progress"><div class="progress-bar" id="progressBar" style="width:60%"></div></div></div></div><div style="text-align:center;margin-top:20px"><button class="btn-small" onclick="switchToolState('result')">模拟完成</button></div></div>
-        <div class="state-result" id="stateResult"><div class="process-result reveal"><div class="result-image" style="width:100%;aspect-ratio:4/3;border-radius:var(--radius-md);background:linear-gradient(135deg,rgba(58,175,142,.12),rgba(88,215,185,.08));display:flex;align-items:center;justify-content:center;font-size:60px;color:var(--text-muted)">👤</div><div style="font-size:14px;color:var(--text-primary);font-weight:600;margin-top:8px">抠图完成！</div><div style="font-size:12px;color:var(--text-muted);margin-top:4px">消耗 2 积分 · 余额 228 积分</div></div><div class="result-actions reveal"><button class="btn-primary" onclick="showToast('已保存到相册')"><i class="fas fa-download"></i> 保存</button><button class="btn-glass" onclick="showToast('已保存到作品')"><i class="fas fa-folder"></i> 存作品</button></div></div>
+        <div class="state-result" id="stateResult"><div class="process-result reveal"><div class="result-image" style="width:100%;aspect-ratio:4/3;border-radius:var(--radius-md);background:linear-gradient(135deg,rgba(58,175,142,.12),rgba(88,215,185,.08));display:flex;align-items:center;justify-content:center;font-size:60px;color:var(--fg-tertiary)">👤</div><div style="font-size:14px;color:var(--fg-primary);font-weight:600;margin-top:8px">抠图完成！</div><div style="font-size:12px;color:var(--fg-tertiary);margin-top:4px">消耗 2 积分 · 余额 228 积分</div></div><div class="result-actions reveal"><button class="btn-primary" onclick="showToast('已保存到相册')"><i class="fas fa-download"></i> 保存</button><button class="btn-glass" onclick="showToast('已保存到作品')"><i class="fas fa-folder"></i> 存作品</button></div></div>
       </div>
     </div>
   </div>
@@ -351,6 +351,21 @@
   <!-- Toast -->
   <div class="toast" id="sharedToast"></div>
 </div><!-- /phone-frame -->
+
+<!-- 主题切换按钮 -->
+<div class="theme-switcher" style="position:fixed;top:20px;right:20px;z-index:100;display:flex;flex-direction:column;align-items:center;gap:8px">
+  <button class="theme-toggle-btn" onclick="toggleTheme()" style="position:relative;width:56px;height:30px;background:var(--bg-muted);border:1px solid var(--border-strong);border-radius:9999px;cursor:pointer;display:flex;align-items:center;padding:0 4px;transition:all .25s ease">
+    <div style="width:22px;height:22px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--bg-base);transition:all .25s cubic-bezier(0.68,-0.2,0.27,1.2);transform:translateX(0)">
+      <i class="fa-solid fa-moon" id="themeIcon"></i>
+    </div>
+  </button>
+  <span style="font-size:11px;color:var(--fg-tertiary);font-family:'Space Grotesk','Noto Sans SC',sans-serif">切换主题</span>
+</div>
+<style>
+[data-theme="light"] .theme-toggle-btn > div { transform:translateX(26px) !important; }
+[data-theme="light"] #themeIcon { }
+.theme-toggle-btn:hover { border-color:var(--accent) !important; }
+</style>
 
 <script src="shared/app.js"></script>
 <script>
@@ -732,7 +747,7 @@ function doSignin() {
   for(let i=0;i<15;i++){
     const p=document.createElement('div');
     p.className='sd-particle';
-    const colors=['var(--accent-4)','var(--accent-1)','var(--accent-5)','var(--accent-3)'];
+    const colors = ['var(--warn)','var(--accent)','var(--points-gold)','var(--accent-hover)'];
     const sz=Math.random()*3+1;
     const c=colors[Math.floor(Math.random()*colors.length)];
     p.style.cssText='width:'+sz+'px;height:'+sz+'px;left:50%;top:40%;background:'+c+';box-shadow:0 0 '+sz*2+'px '+c+';opacity:1;position:absolute;z-index:99;animation:sdf1 '+Math.random()*2+1+'s ease-out forwards;';
@@ -798,7 +813,7 @@ function initTabBar() {} // disabled — SPA handles tab-bar via switchTab()
 function initPreviewStardust() {
   const wrap = document.getElementById('stardustBg');
   if (!wrap || wrap.children.length > 0) return;
-  const colors = ['rgba(88,215,185,0.5)', 'rgba(143,232,208,0.3)', 'rgba(255,255,255,0.4)', 'rgba(58,175,142,0.4)'];
+  const colors = ['rgba(0,212,170,0.5)', 'rgba(0,234,189,0.3)', 'rgba(255,255,255,0.4)', 'rgba(0,184,147,0.4)'];
   const anims = ['sdf0', 'sdf1', 'sdf2'];
   for (let i = 0; i < 30; i++) {
     const p = document.createElement('div');
