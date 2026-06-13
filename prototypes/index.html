@@ -566,6 +566,7 @@ function showPage(id) {
 }
 
 function switchTab(id) {
+  if (id === currentTab) return;
   if (tabPages.includes(id)) {
     navStack.length = 0; // clear navigation stack
     showPage(id);
