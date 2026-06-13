@@ -471,7 +471,7 @@
 .preview-save:hover { background:var(--glass-hover); }
 
 /* ── 画廊搜索面板 ── */
-.search-panel { position:absolute; top:0; right:0; bottom:0; width:100%; z-index:55; background:var(--glass); backdrop-filter:blur(20px); display:none; flex-direction:column; padding:16px; overflow-y:auto; }
+.search-panel { position:absolute; top:0; right:0; bottom:0; width:100%; z-index:55; background:var(--bg-base); display:none; flex-direction:column; padding:16px; overflow-y:auto; }
 .search-panel.show { display:flex; animation:slideIn .25s ease; }
 .search-bar { display:flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--radius-full); background:var(--glass); border:1px solid var(--glass-border); margin-bottom:16px; }
 .search-bar input { flex:1; background:transparent; border:none; outline:none; color:var(--fg-primary); font-size:14px; }
