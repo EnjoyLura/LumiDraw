@@ -210,7 +210,7 @@
 .style-card { flex-shrink:0; width:72px; cursor:pointer; text-align:center; transition:all var(--transition-fast); }
 .style-card .style-img { width:72px; height:72px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; font-size:28px; border:2px solid transparent; transition:border-color var(--transition-fast); }
 .style-card.active .style-img { border-color:var(--accent); }
-.style-card .style-name { font-size:10px; color:var(--fg-secondary); margin-top:6px; white-space:nowrap; }
+.style-card .style-name { font-size:10px; color:var(--fg-primary); margin-top:6px; white-space:nowrap; }
 .style-card.active .style-name { color:var(--accent); font-weight:600; }
 
 .create-btn-area { padding:6px 16px; position:sticky; bottom:0; background:var(--glass); backdrop-filter:blur(20px); border-top:1px solid var(--glass-border); z-index:20; display:flex; align-items:center; gap:10px; }
