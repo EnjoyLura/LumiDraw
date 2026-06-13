@@ -110,7 +110,19 @@
 <div class="selector-group"><div class="selector-label">尺寸</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">1:1</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu"><div class="selector-option selected" data-value="1:1" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-1-1"></span>1:1</div><div class="selector-option" data-value="16:9" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-16-9"></span>16:9</div><div class="selector-option" data-value="9:16" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-9-16"></span>9:16</div><div class="selector-option" data-value="4:3" onclick="selectSelectorOption(this)"><span class="ratio-preview ratio-4-3"></span>4:3</div></div></div>
 <div class="selector-group"><div class="selector-label">分辨率</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">高清 1024px</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu" id="resMenu"><div class="selector-option" data-value="标清 512px" data-multiplier="1" onclick="selectSelectorOption(this,'resMenu')">标清 512px</div><div class="selector-option selected" data-value="高清 1024px" data-multiplier="1.5" onclick="selectSelectorOption(this,'resMenu')">高清 1024px</div><div class="selector-option" data-value="超清 2048px" data-multiplier="2" onclick="selectSelectorOption(this,'resMenu')">超清 2048px</div></div></div>
 <div class="selector-group"><div class="selector-label">数量</div><div class="selector-trigger" onclick="toggleSelector(this)"><span class="selector-value">1 张</span><i class="fas fa-chevron-up selector-arrow"></i></div><div class="selector-menu" id="qtyMenu"><div class="selector-option selected" data-value="1 张" data-qty="1" onclick="selectSelectorOption(this,'qtyMenu')">1 张</div><div class="selector-option" data-value="2 张" data-qty="2" onclick="selectSelectorOption(this,'qtyMenu')">2 张</div><div class="selector-option" data-value="4 张" data-qty="4" onclick="selectSelectorOption(this,'qtyMenu')">4 张</div></div></div>
-</div></div></div>
+</div></div>
+<div class="style-scroll" id="styleScroll">
+<div class="style-card active" onclick="selectStyle(this)" data-style="赛博朋克"><div class="style-img" style="background:linear-gradient(135deg,#0a0a2e,#6c5ce7,#00cec9)">🌃</div><div class="style-name">赛博朋克</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="动漫"><div class="style-img" style="background:linear-gradient(135deg,#fd79a8,#a29bfe)">🌸</div><div class="style-name">动漫</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="写实摄影"><div class="style-img" style="background:linear-gradient(135deg,#2d3436,#636e72)">📷</div><div class="style-name">写实摄影</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="水彩"><div class="style-img" style="background:linear-gradient(135deg,#dfe6e9,#74b9ff,#a29bfe)">🎨</div><div class="style-name">水彩</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="油画"><div class="style-img" style="background:linear-gradient(135deg,#b8860b,#8b4513,#2f4f4f)">🖌️</div><div class="style-name">油画</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="像素风"><div class="style-img" style="background:linear-gradient(135deg,#00b894,#fdcb6e,#e17055)">👾</div><div class="style-name">像素风</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="水墨"><div class="style-img" style="background:linear-gradient(135deg,#f5f5f5,#bdc3c7,#2c3e50)">🏔️</div><div class="style-name">水墨</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="3D渲染"><div class="style-img" style="background:linear-gradient(135deg,#6c5ce7,#fd79a8,#fdcb6e)">💎</div><div class="style-name">3D渲染</div></div>
+<div class="style-card" onclick="selectStyle(this)" data-style="极简线条"><div class="style-img" style="background:linear-gradient(135deg,#f8f9fa,#dee2e6)">✏️</div><div class="style-name">极简线条</div></div>
+</div>
+</div>
 
     <!-- 输出组件 -->
     <div class="create-output" id="createOutput">
@@ -658,6 +670,11 @@ function selectSelectorOption(option, menuId) {
   }
   menu.classList.remove('open');
   updateCost();
+}
+
+function selectStyle(card) {
+  document.querySelectorAll('.style-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
 }
 
 function updateCost() {
