@@ -183,9 +183,9 @@
 /* 模型选择器样式 */
 .model-row { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
 .model-row-top { display:flex; align-items:center; gap:6px; }
-.model-text-group { display:flex; flex-direction:column; min-width:0; }
-.model-icon { width:26px; height:26px; border-radius:4px; background:var(--glass-hover); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--fg-tertiary); }
-.model-icon svg { width:16px; height:16px; }
+.model-text-group { display:flex; flex-direction:column; min-width:0; flex:1; }
+.model-icon { width:34px; height:34px; border-radius:4px; background:var(--glass-hover); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--fg-secondary); }
+.model-icon svg { width:18px; height:18px; }
 .model-name { font-size:12px; color:inherit; }
 .model-tag { font-size:8px; padding:1px 5px; border-radius:var(--radius-xs); background:var(--accent-soft); color:var(--accent); font-weight:600; white-space:nowrap; margin-left:auto; }
 .model-tag.tag-new { background:rgba(59,130,246,.12); color:#3B82F6; }
@@ -204,7 +204,7 @@
 .points-tip .tip-label { font-size:13px; color:var(--fg-secondary); }
 .points-tip .tip-cost { font-size:16px; font-weight:700; color:var(--points-gold); }
 .points-tip .tip-balance { font-size:12px; color:var(--fg-tertiary); margin-top:2px; }
-.create-btn-area { padding:16px; position:sticky; bottom:0; background:var(--glass); backdrop-filter:blur(20px); border-top:1px solid var(--glass-border); z-index:20; display:flex; align-items:center; gap:10px; }
+.create-btn-area { padding:8px 16px 16px; position:sticky; bottom:0; background:var(--glass); backdrop-filter:blur(20px); border-top:1px solid var(--glass-border); z-index:20; display:flex; align-items:center; gap:10px; }
 .create-points-widget { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px; border-radius:var(--radius-sm); background:transparent; border:none; }
 .create-points-widget .points-label { font-size:13px; color:var(--fg-tertiary); }
 .create-points-widget .points-cost { font-size:16px; font-weight:700; color:var(--points-gold); margin-top:2px; display:flex; align-items:center; gap:4px; }
@@ -302,8 +302,8 @@
 .works-item:hover { transform:scale(1.02); border-color:var(--border-strong); }
 .works-item .item-img { width:100%; display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--fg-tertiary); }
 .works-item .item-meta { padding:6px 8px; }
-.works-item .item-model { font-size:10px; color:var(--fg-secondary); }
-.works-item .item-time { font-size:10px; color:var(--fg-tertiary); }
+.works-item .item-model { font-size:10px; color:var(--fg-primary); }
+.works-item .item-time { font-size:10px; color:var(--fg-secondary); }
 
 /* ── 作品详情页 ── */
 .detail-img { width:100%; aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--accent-muted); font-size:80px; color:var(--fg-tertiary); }
