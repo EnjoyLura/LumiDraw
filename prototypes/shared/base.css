@@ -49,9 +49,9 @@
   --content-bottom: calc(var(--tab-bar-h) + var(--safe-bottom));
 
   /* 积分专用色（不随主题切换） */
-  --points-gold: #fdcb6e;
-  --points-gold-soft: rgba(253, 203, 110, 0.1);
-  --points-gold-border: rgba(253, 203, 110, 0.18);
+  --points-gold: #3B82F6;
+  --points-gold-soft: rgba(59, 130, 246, 0.1);
+  --points-gold-border: rgba(59, 130, 246, 0.18);
 
   /* 兼容旧名称（映射到新变量） */
   --accent-5: var(--points-gold);
