@@ -223,7 +223,7 @@
     <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">作品详情</span></div>
     <div class="page-content-sub">
       <div class="detail-img reveal" onclick="navigateTo('pg-image-preview')">🚀</div>
-      <div class="detail-actions reveal"><button class="btn-primary" onclick="showToast('已保存到相册')"><i class="fas fa-download"></i> 下载</button><button class="btn-glass" onclick="showToast('已发布到画廊')"><i class="fas fa-share"></i> 发布</button></div>
+      <div class="detail-actions reveal"><button class="btn-primary" onclick="showToast('已保存到相册')"><i class="fas fa-download"></i> 下载</button><button class="btn-glass" onclick="navigateTo('pg-publish')"><i class="fas fa-share"></i> 发布</button></div>
       <div class="detail-params reveal"><div class="param-card"><div class="param-row"><div class="param-label">Prompt</div><div class="param-value">赛博朋克风格的猫咪宇航员</div></div><div class="param-row"><div class="param-label">模型</div><div class="param-value"><span class="glass-badge badge-purple">Nano Banana 2.0</span></div></div><div class="param-row"><div class="param-label">尺寸</div><div class="param-value">1:1 · 1024×1024</div></div><div class="param-row"><div class="param-label">时间</div><div class="param-value">2026-06-11 14:30</div></div></div></div>
       <div class="detail-actions reveal"><button class="btn-small" onclick="showToast('确认删除？')" style="width:100%"><i class="fas fa-trash"></i> 删除作品</button></div>
     </div>
@@ -267,7 +267,6 @@
     <div class="page-content-sub">
       <div class="settings-page">
       <div class="settings-group reveal"><div class="group-label">通用</div><div class="settings-item" onclick="navigateTo('pg-edit-profile')"><div class="item-left"><i class="fas fa-user"></i><span class="item-label">个人资料</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="navigateTo('pg-notification')"><div class="item-left"><i class="fas fa-bell"></i><span class="item-label">通知设置</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="navigateTo('pg-change-password')"><div class="item-left"><i class="fas fa-lock"></i><span class="item-label">修改密码</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item"><div class="item-left"><i class="fas fa-circle-half-stroke"></i><span class="item-label">深色模式</span></div><div class="item-right"><div class="glass-switch" id="themeSwitch" onclick="toggleTheme();this.classList.toggle('on')"><div class="switch-dot"></div></div></div></div></div>
-      <div class="settings-group reveal"><div class="group-label">隐私</div><div class="settings-item"><div class="item-left"><i class="fas fa-eye"></i><span class="item-label">公开我的作品</span></div><div class="item-right"><div class="glass-switch on"><div class="switch-dot"></div></div></div></div><div class="settings-item"><div class="item-left"><i class="fas fa-terminal"></i><span class="item-label">公开我的Prompt</span></div><div class="item-right"><div class="glass-switch"><div class="switch-dot"></div></div></div></div></div>
       <div class="settings-group reveal"><div class="group-label">关于</div><div class="settings-item" onclick="navigateTo('pg-update-log')"><div class="item-left"><i class="fas fa-info-circle"></i><span class="item-label">版本号</span></div><div class="item-right"><span class="item-value">v1.0.0</span><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="showToast('用户协议')"><div class="item-left"><i class="fas fa-file-lines"></i><span class="item-label">用户协议</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div><div class="settings-item" onclick="showToast('隐私政策')"><div class="item-left"><i class="fas fa-shield"></i><span class="item-label">隐私政策</span></div><div class="item-right"><i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px"></i></div></div></div>
       <button class="logout-btn reveal" onclick="showToast('确认退出登录？')">退出登录</button></div>
     </div>
@@ -327,6 +326,41 @@
         <div class="settings-item"><div class="item-left"><i class="fas fa-circle" style="color:var(--text-muted);font-size:6px"></i><span class="item-label">内测版本发布</span></div></div>
         <div class="settings-item"><div class="item-left"><i class="fas fa-circle" style="color:var(--text-muted);font-size:6px"></i><span class="item-label">基础创作功能上线</span></div></div>
       </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 发布作品 -->
+  <div class="page-view" id="pg-publish" data-type="sub">
+    <div class="nav-bar"><a href="javascript:void(0)" onclick="navigateBack()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">发布作品</span></div>
+    <div class="page-content-sub">
+      <div class="publish-page">
+        <div class="publish-preview reveal"><div class="publish-preview-img">🚀</div></div>
+        <div class="publish-section reveal">
+          <div class="publish-label">作品标题</div>
+          <input class="publish-input" placeholder="给你的作品取个名字" maxlength="30" oninput="document.getElementById('publishCharCount').textContent=this.value.length">
+          <div class="publish-char-hint"><span id="publishCharCount">0</span>/30</div>
+        </div>
+        <div class="publish-section reveal">
+          <div class="publish-label">选择标签（可多选）</div>
+          <div class="publish-tag-grid">
+            <span class="publish-tag" onclick="this.classList.toggle('active')">赛博朋克</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">人像</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">风景</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">插画</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">动漫</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">摄影</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">抽象</span>
+            <span class="publish-tag" onclick="this.classList.toggle('active')">科幻</span>
+          </div>
+        </div>
+        <div class="publish-section reveal">
+          <div class="publish-label">作品描述（可选）</div>
+          <textarea class="publish-textarea" placeholder="简单描述你的创作灵感…" maxlength="100" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="publish-btn-area">
+        <button class="btn-primary" style="width:100%" onclick="showToast('发布成功！');setTimeout(()=>navigateBack(),1500)"><i class="fas fa-share"></i> 发布到画廊</button>
       </div>
     </div>
   </div>
@@ -482,7 +516,8 @@ const pageTitles = {
   'pg-gallery-detail':'作品详情','pg-gallery-user':'用户主页','pg-template-detail':'模板详情',
   'pg-tool-process':'AI工具','pg-create-result':'创作完成','pg-works-detail':'作品详情',
   'pg-points-center':'积分中心','pg-sign-in':'每日签到','pg-invite':'邀请好友',
-  'pg-settings':'设置','pg-edit-profile':'编辑资料','pg-notification':'通知设置','pg-change-password':'修改密码','pg-update-log':'更新日志'
+  'pg-settings':'设置','pg-edit-profile':'编辑资料','pg-notification':'通知设置','pg-change-password':'修改密码','pg-update-log':'更新日志',
+  'pg-publish':'发布作品'
 };
 
 function showPage(id) {
@@ -495,13 +530,18 @@ function showPage(id) {
   // Show/hide tabbar
   const isTab = tabPages.includes(id);
   document.getElementById('sharedTabBar').classList.toggle('hidden', !isTab);
-  // Update title bar — always visible, show back button for sub-pages
+  // Update title bar — hide for overlay pages
   const titleBar = document.getElementById('miniTitleBar');
   if (titleBar) {
-    titleBar.classList.remove('hidden');
-    titleBar.classList.toggle('is-sub', !isTab);
-    const titleText = titleBar.querySelector('.title-text');
-    if (titleText) titleText.textContent = pageTitles[id] || '';
+    const isOverlay = page.dataset.type === 'overlay';
+    if (isOverlay) {
+      titleBar.classList.add('hidden');
+    } else {
+      titleBar.classList.remove('hidden');
+      titleBar.classList.toggle('is-sub', !isTab);
+      const titleText = titleBar.querySelector('.title-text');
+      if (titleText) titleText.textContent = pageTitles[id] || '';
+    }
   }
   // Update tabbar active state
   if (isTab) {
