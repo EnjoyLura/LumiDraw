@@ -34,30 +34,7 @@
 }
 @keyframes flow-rot { to { --flow-angle: 360deg; } }
 
-/* 流光按钮变体 */
-.btn-flow {
-  position: relative;
-  background: var(--glass) !important;
-  border: none !important;
-  overflow: hidden;
-}
-.btn-flow .flow-border {
-  position: absolute; inset: 0; border-radius: inherit;
-  padding: 2px; pointer-events: none;
-  background: conic-gradient(
-    from var(--flow-angle),
-    transparent 15%, var(--accent) 40%,
-    var(--accent-hover) 50%, transparent 70%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  animation: flow-rot 3s linear infinite;
-}
-.btn-flow .btn-text {
-  position: relative; z-index: 2;
-  color: var(--accent);
-  font-weight: 700;
-}
+/* 流光按钮变体 — 已废弃，改用渐变背景 */
 
 /* ── 2. 呼吸脉冲 — Box-Shadow 节律 ── */
 .card-breathe {
@@ -178,19 +155,7 @@
 /* 浅色模式粒子增强 */
 [data-theme="light"] .sd-particle { opacity: 0.6 !important; }
 
-/* ── 5. 波纹触控 — 点击扩散涟漪 ── */
-.card-ripple { cursor: pointer; }
-.ripple-wave {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.18), transparent 70%);
-  transform: scale(0);
-  animation: ripple-expand 0.9s ease-out forwards;
-  pointer-events: none; z-index: 1;
-}
-@keyframes ripple-expand {
-  to { transform: scale(4); opacity: 0; }
-}
+/* ── 5. 波纹触控 — 已禁用 ── */
 .click-hint {
   position: absolute;
   bottom: 12px; right: 16px;

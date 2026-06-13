@@ -177,6 +177,9 @@ function initTheme() {
   document.documentElement.setAttribute('data-theme', theme);
   const icon = document.getElementById('themeIcon');
   if (icon) icon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  // 同步设置页主题开关状态
+  const sw = document.getElementById('themeSwitch');
+  if (sw) { theme === 'dark' ? sw.classList.add('on') : sw.classList.remove('on'); }
 }
 
 // ── 统一初始化 ──
@@ -185,7 +188,6 @@ function initApp() {
   initScrollReveal();
   initStagger();
   initStardust();
-  initRipple();
   initTabs();
   initFilter();
   initSwitches();
