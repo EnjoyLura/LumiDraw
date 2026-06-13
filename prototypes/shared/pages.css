@@ -153,7 +153,7 @@
 .create-section .section-label,.recharge-section .section-label,.form-label { font-size:12px; font-weight:600; color:var(--fg-tertiary); letter-spacing:.05em; margin-bottom:12px; }
 .section-header-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .section-header-row .section-label { margin-bottom:0; }
-.char-counter { font-size:11px; color:var(--fg-tertiary); font-weight:400; letter-spacing:0; }
+.char-counter { font-size:11px; color:var(--fg-tertiary); font-weight:400; letter-spacing:0; line-height:1; }
 .prompt-area { position:relative; }
 .prompt-area textarea { width:100%; min-height:240px; padding:14px 16px 50px; border-radius:var(--radius-sm); background:var(--glass); border:1px solid var(--border-strong); color:var(--fg-primary); font-size:14px; font-family:inherit; line-height:1.6; backdrop-filter:blur(20px); resize:none; overflow:hidden; outline:none; transition:border-color var(--transition-base); }
 .prompt-area textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
@@ -392,7 +392,7 @@
 /* ── 签到页 ── */
 .signin-page { padding:16px; }
 .signin-header { text-align:center; margin-bottom:20px; }
-.signin-header .signin-title { font-size:20px; font-weight:700; color:var(--fg-primary); }
+.signin-header .signin-title { font-size:16px; font-weight:700; color:var(--fg-primary); }
 .signin-header .signin-desc { font-size:13px; color:var(--fg-secondary); margin-top:6px; }
 .signin-header .signin-streak { font-size:24px; font-weight:200; color:var(--accent); margin-top:12px; letter-spacing:-1px; }
 .signin-header .signin-streak b { font-weight:700; }

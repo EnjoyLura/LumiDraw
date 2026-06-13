@@ -340,6 +340,7 @@ body {
   color: var(--bg-base);
   box-shadow: var(--shadow-glow);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  animation: btn-breathe 3s ease-in-out infinite;
 }
 .tab-create .create-icon:hover {
   transform: scale(1.1);
