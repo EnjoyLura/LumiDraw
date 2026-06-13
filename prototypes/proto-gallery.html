@@ -44,15 +44,23 @@
     object-fit: cover;
   }
   .gallery-card .card-img-placeholder {
-    width: 100%; display: flex;
+    width: 100%;
+    display: flex;
     align-items: center; justify-content: center;
-    background: linear-gradient(135deg, rgba(108,92,231,.08), rgba(0,206,201,.08));
+    background: linear-gradient(135deg, rgba(88,215,185,.08), rgba(58,175,142,.08));
     font-size: 32px; color: var(--text-muted);
   }
   .gallery-card .card-bottom {
-    padding: 10px 12px;
-    display: flex; align-items: center; gap: 8px;
+    padding: 10px 10px 10px 8px;
+    display: flex; flex-direction: column; gap: 6px;
+    background: rgba(10,10,26,.95);
   }
+  /* ── 瀑布流卡片宽高比 ── */
+  .ratio-1-1 { aspect-ratio:1/1; }
+  .ratio-3-4 { aspect-ratio:3/4; }
+  .ratio-4-3 { aspect-ratio:4/3; }
+  .ratio-9-16 { aspect-ratio:9/16; }
+  .ratio-16-9 { aspect-ratio:16/9; }
   .gallery-card .card-avatar-sm {
     width: 22px; height: 22px; border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-1), var(--accent-3));

@@ -14,13 +14,15 @@
   .carousel-dots { display:flex;gap:6px;justify-content:center;padding:8px 0; }
   .carousel-dot { width:6px;height:6px;border-radius:50%;background:var(--glass-border);cursor:pointer;transition:all .3s; }
   .carousel-dot.active { background:var(--accent-1);width:18px;border-radius:3px;animation:breathe 2s ease-in-out infinite; }
-  .template-info { padding:16px; }
+  .template-info { padding:16px;background:rgba(10,10,26,.65);backdrop-filter:blur(16px);border-radius:var(--radius-md);margin:0 16px; }
   .template-info .template-title { font-size:20px;font-weight:700;color:var(--text-primary); }
   .template-info .template-desc { font-size:14px;color:var(--text-secondary);line-height:1.6;margin-top:8px; }
   .prompt-display { padding:14px 16px;border-radius:var(--radius-sm);background:rgba(108,92,231,.06);border:1px solid rgba(108,92,231,.12);margin:16px;font-size:13px;color:var(--text-secondary);line-height:1.7; }
   .prompt-display .placeholder { color:var(--accent-1);font-weight:600;background:rgba(108,92,231,.1);padding:2px 6px;border-radius:4px; }
-  .use-btn-area { padding:16px;position:sticky;bottom:0;background:rgba(10,10,15,.8);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);z-index:20; }
-  .use-btn { position:relative;overflow:hidden;width:100%;padding:16px;border-radius:100px;font-size:16px;font-weight:700;text-align:center;cursor:pointer;background:var(--glass-bg);border:none;display:flex;align-items:center;justify-content:center;gap:8px; }
+  .use-btn-area { display:flex;align-items:center;gap:12px;padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));position:absolute;bottom:0;left:0;right:0;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-top:1px solid var(--glass-border);z-index:20; }
+  .use-btn-area .use-btn-points { font-size:13px;color:var(--accent-5);font-weight:600;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:2px; }
+  .use-btn-area .use-btn-points .points-label { font-size:10px;color:var(--text-muted);font-weight:400; }
+  .use-btn { position:relative;overflow:hidden;flex:1;padding:16px;border-radius:100px;font-size:16px;font-weight:700;text-align:center;cursor:pointer;background:var(--glass-bg);border:none;display:flex;align-items:center;justify-content:center;gap:8px; }
   .use-btn .flow-border { position:absolute;inset:0;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from var(--flow-angle),transparent 15%,var(--accent-1) 40%,var(--accent-3) 50%,transparent 70%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:flow-rot 3s linear infinite; }
   .use-btn .btn-inner { position:relative;z-index:2;background:linear-gradient(135deg,var(--accent-1),var(--accent-3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 </style>
@@ -29,7 +31,7 @@
 <div class="phone-frame">
   <div class="status-bar"><span class="time">9:41</span><span class="icons"><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
   <div class="nav-bar"><a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a><span class="nav-title">模板详情</span></div>
-  <div class="page-content-sub">
+  <div class="page-content-sub" style="flex:1;height:auto;padding-bottom:72px">
     <!-- 轮播 -->
     <div class="carousel reveal" id="carousel">
       <div class="carousel-slide" style="background:linear-gradient(135deg,rgba(108,92,231,.12),rgba(0,206,201,.08))">👤</div>
@@ -55,6 +57,7 @@
     </div>
     <!-- 使用按钮 -->
     <div class="use-btn-area reveal">
+      <div class="use-btn-points"><span>3</span><span class="points-label">积分</span></div>
       <a href="proto-create.html?template=cyberpunk-avatar" class="use-btn btn-flow">
         <div class="flow-border"></div>
         <span class="btn-inner"><i class="fas fa-wand-magic-sparkles"></i> 使用模板创作</span>
