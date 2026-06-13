@@ -161,7 +161,7 @@
 .prompt-area textarea::placeholder { color:var(--fg-disabled); }
 .prompt-upload-btn { position:absolute; bottom:10px; left:10px; width:32px; height:32px; border-radius:50%; background:var(--glass); border:1px solid rgba(255,255,255,.2); color:var(--fg-primary); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--transition-base); z-index:2; backdrop-filter:blur(var(--blur-amount)); }
 .prompt-upload-btn:hover { background:var(--glass-hover); color:var(--accent); border-color:var(--accent); }
-.prompt-clear-btn { position:absolute; bottom:10px; right:10px; width:32px; height:32px; border-radius:50%; background:var(--glass); border:1px solid var(--border-strong); color:var(--fg-secondary); font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--transition-base); z-index:2; backdrop-filter:blur(var(--blur-amount)); }
+.prompt-clear-btn { position:absolute; bottom:10px; right:10px; width:32px; height:32px; background:transparent; border:none; color:var(--fg-tertiary); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--transition-base); z-index:2; }
 .prompt-clear-btn:hover { background:var(--error-soft); color:var(--error); }
 .create-params-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--radius-md); padding:16px; backdrop-filter:blur(var(--blur-amount)); }
 .create-selectors { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
