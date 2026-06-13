@@ -415,18 +415,10 @@ small { font-size: 12px; color: var(--fg-tertiary); }
 }
 
 /* ── Toast 提示 ── */
-.toast {
-  position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
-  padding: 10px 24px; border-radius: var(--radius-full);
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  color: var(--fg-primary); font-size: 14px; font-weight: 500;
-  z-index: 999; opacity: 0;
-  transition: opacity var(--transition-base), transform var(--transition-base);
-  pointer-events: none;
-  border: 1px solid var(--glass-border);
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+.toast { position:fixed; bottom:120px; left:50%; transform:translateX(-50%); padding:10px 24px; border-radius:var(--radius-full); background:var(--glass); backdrop-filter:blur(20px); color:var(--fg-primary); font-size:14px; font-weight:500; z-index:999; opacity:0; transition:opacity var(--transition-base), transform var(--transition-base); pointer-events:none; border:1px solid var(--glass-border); }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(-10px); }
+.toast.toast-top { bottom:auto; top:60px; }
+.toast.toast-top.show { transform:translateX(-50%) translateY(10px); }
 
 /* ── 空状态 ── */
 .empty-state {
