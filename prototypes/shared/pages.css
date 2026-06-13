@@ -472,7 +472,7 @@
 
 /* ── 图片预览页 ── */
 .preview-frame { width:var(--phone-width); height:var(--phone-height); background:var(--bg-base); border-radius:40px; overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; }
-.preview-image { width:90%; aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--accent-muted); font-size:80px; color:var(--fg-tertiary); border-radius:var(--radius-md); }
+.preview-image { width:90%; aspect-ratio:1; display:flex; align-items:center; justify-content:center; background:var(--accent-muted); font-size:80px; color:var(--fg-tertiary); border-radius:var(--radius-md); margin:auto; }
 .preview-close { position:absolute; top:50px; left:16px; width:36px; height:36px; border-radius:50%; background:var(--glass); display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--fg-primary); cursor:pointer; z-index:10; backdrop-filter:blur(20px); transition:background var(--transition-base); }
 .preview-close:hover { background:var(--glass-hover); }
 .preview-bottom { position:absolute; bottom:40px; left:0; right:0; display:flex; justify-content:center; z-index:10; }
