@@ -305,6 +305,8 @@
 .works-header h1 { font-size:22px; font-weight:700; background:linear-gradient(135deg,var(--accent-hover),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .works-header .manage-btn { font-size:13px; color:var(--fg-secondary); cursor:pointer; padding:6px 12px; border-radius:var(--radius-sm); background:var(--glass); border:1px solid var(--glass-border); transition:all var(--transition-base); }
 .works-header .manage-btn:hover { background:var(--glass-hover); color:var(--fg-primary); }
+.works-search-btn { width:32px; height:32px; border-radius:50%; background:var(--glass); border:1px solid var(--glass-border); display:flex; align-items:center; justify-content:center; color:var(--fg-secondary); font-size:14px; cursor:pointer; transition:all var(--transition-base); }
+.works-search-btn:hover { background:var(--glass-hover); color:var(--fg-primary); }
 .works-tabs { margin:12px 16px; }
 .works-grid { column-count:2; column-gap:8px; padding:16px; }
 .works-item { position:relative; border-radius:var(--radius-sm); background:var(--glass); border:1px solid var(--glass-border); overflow:hidden; cursor:pointer; transition:all var(--transition-base); break-inside:avoid; margin-bottom:8px; }
