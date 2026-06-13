@@ -194,9 +194,11 @@
 .model-row { display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
 .model-row-top { display:flex; align-items:center; gap:6px; }
 .model-text-group { display:flex; flex-direction:column; min-width:0; flex:1; }
-.model-icon { width:34px; height:34px; border-radius:4px; background:var(--glass-hover); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--fg-secondary); }
+.selector-option:has(.model-text-group) { align-items:center; }
+.model-icon { width:24px; height:24px; border-radius:6px; background:transparent; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--fg-secondary); overflow:hidden; }
 .model-icon svg { width:18px; height:18px; }
-.model-name { font-size:12px; color:inherit; }
+.model-icon img { width:100%; height:100%; object-fit:cover; border-radius:4px; }
+.model-name { font-size:12px; color:inherit; font-weight:600; }
 .model-tag { font-size:8px; padding:1px 5px; border-radius:var(--radius-xs); background:var(--accent-soft); color:var(--accent); font-weight:600; white-space:nowrap; margin-left:auto; }
 .model-tag.tag-new { background:rgba(59,130,246,.12); color:#3B82F6; }
 .model-tag.tag-hot { background:rgba(255,107,53,.1); color:var(--warn); }
@@ -205,6 +207,7 @@
 .selector-value { font-size:13px; color:var(--fg-primary); font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:flex; align-items:center; gap:6px; }
 .selector-value .model-icon { width:16px; height:16px; }
 .selector-value .model-icon svg { width:10px; height:10px; }
+.selector-value .model-icon img { width:100%; height:100%; }
 .ratio-preview { display:inline-block; width:20px; border:1.5px solid var(--fg-tertiary); border-radius:2px; margin-right:10px; vertical-align:middle; flex-shrink:0; }
 .ratio-preview.ratio-1-1 { height:16px; }
 .ratio-preview.ratio-16-9 { height:11px; }
