@@ -377,7 +377,7 @@ small { font-size: 12px; color: var(--fg-tertiary); }
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 12px 24px; border-radius: var(--radius-md);
   font-size: 14px; font-weight: 500;
-  background: var(--glass); border: 1px solid var(--glass-border);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
   color: var(--fg-primary); cursor: pointer;
   backdrop-filter: blur(10px);
   transition: background var(--transition-fast) cubic-bezier(0.4,0,0.2,1), transform var(--transition-fast) cubic-bezier(0.4,0,0.2,1);
@@ -387,7 +387,7 @@ small { font-size: 12px; color: var(--fg-tertiary); }
 .btn-small {
   padding: 8px 16px; border-radius: var(--radius-md);
   font-size: 12px; font-weight: 500;
-  background: var(--glass); border: 1px solid var(--glass-border);
+  background: var(--bg-elevated); border: 1px solid var(--border-subtle);
   color: var(--fg-secondary); cursor: pointer;
   transition: all var(--transition-fast) cubic-bezier(0.4,0,0.2,1);
 }

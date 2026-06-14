@@ -5,15 +5,13 @@
 
 /* ── 通用毛玻璃卡片 ── */
 .glass {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  backdrop-filter: blur(var(--blur-amount));
-  -webkit-backdrop-filter: blur(var(--blur-amount));
   transition: all var(--transition-base) cubic-bezier(0.4,0,0.2,1);
 }
 .glass:hover {
-  background: var(--glass-hover);
+  background: var(--bg-surface);
   border-color: var(--border-strong);
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
@@ -21,17 +19,15 @@
 
 /* ── 图片卡片 ── */
 .glass-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  backdrop-filter: blur(var(--blur-amount));
-  -webkit-backdrop-filter: blur(var(--blur-amount));
   overflow: hidden;
   cursor: pointer;
   transition: all var(--transition-base) cubic-bezier(0.4,0,0.2,1);
 }
 .glass-card:hover {
-  background: var(--glass-hover);
+  background: var(--bg-surface);
   border-color: var(--border-strong);
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
@@ -90,7 +86,7 @@
   width: 100%;
   padding: 14px 18px;
   border-radius: var(--radius-md);
-  background: var(--glass);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   color: var(--fg-primary);
   font-size: 14px; font-family: inherit;
@@ -108,7 +104,7 @@
   width: 100%;
   padding: 14px 18px;
   border-radius: var(--radius-md);
-  background: var(--glass);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   color: var(--fg-primary);
   font-size: 14px; font-family: inherit;
@@ -129,10 +125,9 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: var(--glass);
+  background: var(--bg-elevated);
   border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
 }
 .glass-tab {
   padding: 10px 16px;
@@ -144,7 +139,7 @@
   text-align: center;
   flex: 1;
 }
-.glass-tab:hover { color: var(--fg-primary); background: var(--glass-hover); }
+.glass-tab:hover { color: var(--fg-primary); background: var(--bg-surface); }
 .glass-tab.active {
   background: var(--accent);
   color: var(--bg-base);
@@ -155,16 +150,15 @@
   display: flex;
   align-items: center;
   padding: 14px 16px;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast) cubic-bezier(0.4,0,0.2,1);
   gap: 14px;
-  backdrop-filter: blur(10px);
 }
 .glass-list-item:hover {
-  background: var(--glass-hover);
+  background: var(--bg-surface);
   transform: translateX(4px);
 }
 .glass-list-item .item-icon {
@@ -260,9 +254,8 @@
   gap: 10px;
   padding: 10px 16px;
   border-radius: var(--radius-md);
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(10px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
 }
 .glass-search i { color: var(--fg-tertiary); font-size: 14px; }
 .glass-search input {
