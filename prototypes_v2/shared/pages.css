@@ -219,9 +219,10 @@
 .ratio-preview.ratio-4-3 { height:14px; }
 .points-tip { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; border-radius:var(--radius-sm); background:var(--points-gold-soft); border:1px solid var(--points-gold-border); }
 .points-tip .tip-label { font-size:13px; color:var(--fg-secondary); }
-.points-tip .tip-cost { font-size:16px; font-weight:700; color:var(--points-gold); }
+.points-tip .tip-cost { font-size:16px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .points-tip .tip-balance { font-size:12px; color:var(--fg-tertiary); margin-top:2px; }
 /* 风格选择器 */
+.style-label { font-size:10px; color:var(--fg-tertiary); font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:10px 0 0 2px; }
 .style-scroll { display:flex; gap:10px; overflow-x:auto; padding:12px 0 12px 0; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
 .style-scroll::-webkit-scrollbar { display:none; }
 .style-card { flex-shrink:0; width:72px; cursor:pointer; text-align:center; transition:all var(--transition-fast); }
@@ -233,7 +234,9 @@
 .create-btn-area { padding:6px 16px; position:sticky; bottom:0; background:var(--glass); backdrop-filter:blur(20px); border-top:1px solid var(--glass-border); z-index:20; display:flex; align-items:center; gap:10px; }
 .create-points-widget { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 12px; border-radius:var(--radius-sm); background:rgba(59,130,246,.06); border:1px solid rgba(59,130,246,.12); backdrop-filter:blur(var(--blur-amount)); }
 .create-points-widget .points-label { font-size:12px; color:var(--fg-tertiary); white-space:nowrap; line-height:1; }
-.create-points-widget .points-cost { font-size:16px; font-weight:700; color:var(--points-gold); display:flex; align-items:center; gap:4px; line-height:1; }
+.create-points-widget .points-cost { font-size:16px; font-weight:700; display:flex; align-items:center; gap:4px; line-height:1; }
+.create-points-widget .points-cost,
+.create-points-widget .points-cost > span { background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .create-points-widget .points-cost svg { width:16px; height:16px; }
 
 /* 积分✦图标 */
@@ -368,7 +371,7 @@
 .profile-sign { font-size:12px; color:var(--fg-secondary); margin-top:4px; }
 .profile-points { display:flex; align-items:center; gap:8px; padding:10px 16px; border-radius:var(--radius-sm); background:var(--points-gold-soft); border:1px solid var(--points-gold-border); margin-top:16px; position:relative; z-index:2; cursor:pointer; }
 .profile-points .points-icon { font-size:18px; color:var(--points-gold); }
-.profile-points .points-num { font-size:20px; font-weight:700; color:var(--points-gold); }
+.profile-points .points-num { font-size:20px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .profile-points .points-label { font-size:12px; color:var(--fg-tertiary); }
 .profile-points .points-arrow { font-size:14px; color:var(--fg-tertiary); margin-left:auto; }
 .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:0; margin-top:16px; }
@@ -381,7 +384,7 @@
 .profile-points-card .pdc-info { flex:1; }
 .profile-points-card .pdc-row { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
 .profile-points-card .pdc-label { font-size:12px; color:var(--fg-tertiary); }
-.profile-points-card .pdc-value { font-size:24px; font-weight:700; color:var(--points-gold); }
+.profile-points-card .pdc-value { font-size:24px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .profile-points-card .pdc-sub { font-size:12px; color:var(--fg-tertiary); }
 .profile-points-card .pdc-btn { padding:8px 20px; border-radius:var(--radius-md); font-size:13px; font-weight:600; background:linear-gradient(135deg,var(--accent),var(--secondary)); color:#fff; border:none; cursor:pointer; white-space:nowrap; }
 .profile-menu { padding:0 16px; margin-top:12px; }
@@ -401,7 +404,8 @@
 .balance-card { position:relative; padding:24px; border-radius:var(--radius-lg); background:var(--bg-elevated); border:1px solid var(--border-subtle); overflow:hidden; margin:16px; }
 .balance-card .aurora-wrap { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
 .balance-card .aurora-wrap .aurora-band { opacity:.15; }
-.balance-num { font-size:36px; font-weight:200; color:var(--points-gold); letter-spacing:-1px; position:relative; z-index:2; display:flex; align-items:center; gap:8px; }
+.balance-num { font-size:36px; font-weight:200; letter-spacing:-1px; position:relative; z-index:2; display:flex; align-items:center; gap:8px; }
+.balance-num .balance-value { background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .balance-num svg { width:22px; height:22px; opacity:.6; }
 .balance-num .unit { font-size:18px; font-weight:300; opacity:.6; }
 .balance-label { font-size:12px; color:var(--fg-tertiary); margin-top:8px; position:relative; z-index:2; }
