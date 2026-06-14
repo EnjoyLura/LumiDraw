@@ -1,0 +1,156 @@
+/* =============================================
+   Lumi-Draw Prototype — Light FX
+   Modern Design v2.0 · 简化光影交互
+   支持浅色/深色双主题
+   ============================================= */
+
+/* ── 1. 流光边框 — Conic Gradient 旋转 ── */
+@property --flow-angle {
+  syntax: '<angle>'; initial-value: 0deg; inherits: false;
+}
+.card-flow { border: none; }
+.card-flow .flow-border {
+  position: absolute; inset: 0; border-radius: inherit;
+  padding: 1.5px; pointer-events: none;
+  background: conic-gradient(
+    from var(--flow-angle),
+    transparent 20%, var(--accent) 42%,
+    var(--secondary) 48%, transparent 65%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: flow-rot 3.5s linear infinite;
+}
+.card-flow .flow-trail {
+  position: absolute; inset: 0; border-radius: inherit;
+  pointer-events: none; z-index: 0;
+  background: conic-gradient(
+    from var(--flow-angle),
+    transparent 20%, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.04) 42%,
+    rgba(var(--secondary-r),var(--secondary-g),var(--secondary-b),0.04) 48%, transparent 65%
+  );
+  filter: blur(18px);
+  animation: flow-rot 3.5s linear infinite;
+}
+@keyframes flow-rot { to { --flow-angle: 360deg; } }
+
+/* 流光按钮变体 — 已废弃，改用渐变背景 */
+
+/* 呼吸脉冲 — 简化为柔和脉冲 */
+.card-breathe {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.1),
+                0 0 50px 4px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.05);
+  }
+}
+
+/* 呼吸按钮变体 */
+.btn-breathe {
+  animation: pulseSoft 2.8s ease-in-out infinite;
+}
+
+/* ── 3. 极光散射 — 简化为2层 ── */
+.card-aurora .aurora-wrap {
+  position: absolute; inset: 0; border-radius: inherit;
+  overflow: hidden; pointer-events: none; z-index: 0;
+}
+.aurora-band {
+  position: absolute; width: 140%; height: 45%;
+  border-radius: 50%; filter: blur(36px);
+}
+.ab-1 {
+  background: linear-gradient(90deg, transparent, rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.28), rgba(var(--secondary-r),var(--secondary-g),var(--secondary-b),0.18), transparent);
+  top: 5%; left: -20%;
+  animation: ab1 7s ease-in-out infinite;
+}
+.ab-2 {
+  background: linear-gradient(90deg, transparent, rgba(var(--warn-r),var(--warn-g),var(--warn-b),0.22), rgba(var(--info-r),var(--info-g),var(--info-b),0.16), transparent);
+  bottom: 0; left: -20%;
+  animation: ab2 9s ease-in-out infinite;
+}
+@keyframes ab1 { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(18%) scaleY(1.35); } }
+@keyframes ab2 { 0%,100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(-14%) scaleY(.7); } }
+
+/* 浅色模式极光增强 */
+[data-theme="light"] .aurora-band { filter: blur(28px); }
+[data-theme="light"] .ab-1 { opacity: 0.5; }
+[data-theme="light"] .ab-2 { opacity: 0.4; }
+
+/* 极光页面背景区 */
+.aurora-section {
+  position: relative;
+}
+.aurora-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora-section .aurora-wrap {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 4. 星尘漂浮 — JS 粒子 ── */
+.stardust-wrap {
+  position: absolute; inset: 0; border-radius: inherit;
+  overflow: hidden; pointer-events: none; z-index: 1;
+}
+.sd-particle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+}
+@keyframes sdf0 {
+  0%, 100% { transform: translate(0, 0); opacity: .3; }
+  25% { transform: translate(9px, -14px); opacity: .75; }
+  50% { transform: translate(-5px, -9px); opacity: .3; }
+  75% { transform: translate(7px, 5px); opacity: .1; }
+}
+@keyframes sdf1 {
+  0%, 100% { transform: translate(0, 0); opacity: .25; }
+  33% { transform: translate(-11px, 7px); opacity: .8; }
+  66% { transform: translate(6px, -11px); opacity: .15; }
+}
+@keyframes sdf2 {
+  0%, 100% { transform: translate(0, 0); opacity: .35; }
+  50% { transform: translate(13px, 9px); opacity: .7; }
+}
+
+/* 浅色模式粒子增强 */
+[data-theme="light"] .sd-particle { opacity: 0.6 !important; }
+
+/* ── 5. 波纹触控 — 已禁用 ── */
+
+/* ── 光效卡片入场 ── */
+.lfx-enter {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .5s cubic-bezier(0.4,0,0.2,1),
+              transform .5s cubic-bezier(0.4,0,0.2,1);
+}
+.lfx-enter.visible { opacity: 1; transform: translateY(0); }
+
+/* ── 浅色模式呼吸效果增强 ── */
+[data-theme="light"] .card-breathe {
+  animation: breathe-light 3.2s ease-in-out infinite;
+}
+@keyframes breathe-light {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0),
+                0 0 0 0 rgba(var(--accent-r),var(--accent-g),var(--accent-b),0);
+  }
+  50% {
+    box-shadow: 0 0 20px 2px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.15),
+                0 0 50px 4px rgba(var(--accent-r),var(--accent-g),var(--accent-b),0.08);
+  }
+}

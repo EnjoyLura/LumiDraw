@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计语言系统 - 微信小程序前端设计模范</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-soft': 'pulseSoft 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* 平滑过渡效果 */
+        .transition-smooth {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* 悬浮效果 */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 玻璃态效果 */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 4px;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        
+        /* 自定义选择颜色 */
+        ::selection {
+            background: rgba(139, 92, 246, 0.3);
+            color: inherit;
+        }
+        
+        /* 动画延迟类 */
+        .animation-delay-100 {
+            animation-delay: 100ms;
+        }
+        
+        .animation-delay-200 {
+            animation-delay: 200ms;
+        }
+        
+        .animation-delay-300 {
+            animation-delay: 300ms;
+        }
+        
+        .animation-delay-400 {
+            animation-delay: 400ms;
+        }
+        
+        .animation-delay-500 {
+            animation-delay: 500ms;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-dark-950 text-dark-900 dark:text-dark-50 transition-colors duration-300">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass transition-smooth">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-palette text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">设计语言</span>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#colors" class="text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 transition-smooth">色彩系统</a>
+                        <a href="#typography" class="text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 transition-smooth">排版</a>
+                        <a href="#components" class="text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 transition-smooth">组件</a>
+                        <a href="#effects" class="text-dark-600 dark:text-dark-300 hover:text-primary-600 dark:hover:text-primary-400 transition-smooth">效果</a>
+                    </div>
+                    
+                    <!-- 主题切换按钮 -->
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-dark-200 dark:hover:bg-dark-700 transition-smooth focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-dark-900">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- 标题区域 -->
+        <section class="mb-16 text-center animate-fade-in">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                微信小程序设计语言系统
+            </h1>
+            <p class="text-lg md:text-xl text-dark-600 dark:text-dark-300 max-w-3xl mx-auto">
+                一套专为微信小程序项目设计的现代化设计语言，提供深色主题、高对比度设计、丝滑微动效和柔和的暗色调氛围。
+            </p>
+        </section>
+
+        <!-- 色彩系统 -->
+        <section id="colors" class="mb-20 animate-slide-up">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg mr-4">
+                    <i class="fas fa-palette text-white text-xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold">色彩系统</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 基础颜色 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-xl font-semibold mb-6">基础颜色</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-white dark:bg-dark-950 border border-dark-200 dark:border-dark-700 shadow-inner"></div>
+                                <span class="font-medium">背景色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#FFFFFF / #020617</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-dark-100 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 shadow-inner"></div>
+                                <span class="font-medium">表面色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#F1F5F9 / #1E293B</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-dark-200 dark:bg-dark-700 border border-dark-300 dark:border-dark-600 shadow-inner"></div>
+                                <span class="font-medium">边框色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#E2E8F0 / #334155</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-dark-400 dark:bg-dark-500 border border-dark-300 dark:border-dark-600 shadow-inner"></div>
+                                <span class="font-medium">文本次要</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#94A3B8 / #64748B</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 强调色 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-xl font-semibold mb-6">强调色</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-primary-500 shadow-inner"></div>
+                                <span class="font-medium">主色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#0EA5E9</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-secondary-500 shadow-inner"></div>
+                                <span class="font-medium">辅助色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#8B5CF6</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-green-500 shadow-inner"></div>
+                                <span class="font-medium">成功色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#22C55E</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-500 shadow-inner"></div>
+                                <span class="font-medium">错误色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#EF4444</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-yellow-500 shadow-inner"></div>
+                                <span class="font-medium">警告色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#EAB308</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500 shadow-inner"></div>
+                                <span class="font-medium">信息色</span>
+                            </div>
+                            <span class="text-sm text-dark-500 dark:text-dark-400 font-mono">#3B82F6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 渐变色 -->
+            <div class="mt-8 bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                <h3 class="text-xl font-semibold mb-6">渐变色</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="rounded-xl overflow-hidden">
+                        <div class="h-24 bg-gradient-to-r from-primary-500 to-secondary-500"></div>
+                        <div class="p-3 bg-dark-100 dark:bg-dark-800">
+                            <span class="text-sm font-medium">主渐变</span>
+                            <p class="text-xs text-dark-500 dark:text-dark-400 mt-1">from-primary-500 to-secondary-500</p>
+                        </div>
+                    </div>
+                    <div class="rounded-xl overflow-hidden">
+                        <div class="h-24 bg-gradient-to-r from-green-400 to-blue-500"></div>
+                        <div class="p-3 bg-dark-100 dark:bg-dark-800">
+                            <span class="text-sm font-medium">自然渐变</span>
+                            <p class="text-xs text-dark-500 dark:text-dark-400 mt-1">from-green-400 to-blue-500</p>
+                        </div>
+                    </div>
+                    <div class="rounded-xl overflow-hidden">
+                        <div class="h-24 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                        <div class="p-3 bg-dark-100 dark:bg-dark-800">
+                            <span class="text-sm font-medium">活力渐变</span>
+                            <p class="text-xs text-dark-500 dark:text-dark-400 mt-1">from-purple-500 to-pink-500</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 排版系统 -->
+        <section id="typography" class="mb-20 animate-slide-up animation-delay-100">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary-500 to-secondary-600 flex items-center justify-center shadow-lg mr-4">
+                    <i class="fas fa-font text-white text-xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold">排版系统</h2>
+            </div>
+            
+            <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                <div class="space-y-8">
+                    <div>
+                        <h1 class="text-4xl font-bold mb-2">标题 H1</h1>
+                        <p class="text-dark-500 dark:text-dark-400">用于页面主要标题，最大字号</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 2.25rem (36px) | Font weight: 700</p>
+                    </div>
+                    
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">标题 H2</h2>
+                        <p class="text-dark-500 dark:text-dark-400">用于章节标题</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 1.875rem (30px) | Font weight: 700</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">标题 H3</h3>
+                        <p class="text-dark-500 dark:text-dark-400">用于子章节标题</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 1.5rem (24px) | Font weight: 700</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold mb-2">标题 H4</h4>
+                        <p class="text-dark-500 dark:text-dark-400">用于小节标题</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 1.25rem (20px) | Font weight: 700</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-base font-medium mb-2">正文 Body</p>
+                        <p class="text-dark-500 dark:text-dark-400">标准正文内容，用于大多数文本</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 1rem (16px) | Font weight: 500</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm font-medium mb-2">辅助文本 Small</p>
+                        <p class="text-dark-500 dark:text-dark-400">较小的辅助文字，用于说明和提示</p>
+                        <p class="text-sm text-dark-400 dark:text-dark-500 mt-1">Font size: 0.875rem (14px) | Font weight: 500</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 组件示例 -->
+        <section id="components" class="mb-20 animate-slide-up animation-delay-200">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center shadow-lg mr-4">
+                    <i class="fas fa-cubes text-white text-xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold">组件示例</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 按钮组件 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">按钮 Button</h3>
+                    <div class="space-y-3">
+                        <button class="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white py-2 px-4 rounded-xl transition-smooth shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            主要按钮
+                        </button>
+                        <button class="w-full bg-dark-100 dark:bg-dark-800 hover:bg-dark-200 dark:hover:bg-dark-700 text-dark-700 dark:text-dark-200 py-2 px-4 rounded-xl transition-smooth border border-dark-200 dark:border-dark-700">
+                            次要按钮
+                        </button>
+                        <button class="w-full border-2 border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 py-2 px-4 rounded-xl transition-smooth">
+                            边框按钮
+                        </button>
+                        <button class="w-full bg-transparent text-dark-600 dark:text-dark-300 hover:text-dark-900 dark:hover:text-white hover:bg-dark-100 dark:hover:bg-dark-800 py-2 px-4 rounded-xl transition-smooth">
+                            文本按钮
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 卡片组件 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">卡片 Card</h3>
+                    <div class="bg-dark-50 dark:bg-dark-800 rounded-xl overflow-hidden shadow-md">
+                        <div class="h-32 bg-gradient-to-r from-primary-400 to-secondary-400"></div>
+                        <div class="p-4">
+                            <h4 class="font-semibold mb-2">卡片标题</h4>
+                            <p class="text-dark-500 dark:text-dark-400 text-sm mb-3">这是一张展示卡片的示例，包含了图片、标题和描述文本。</p>
+                            <button class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-medium transition-smooth">
+                                了解更多 →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 表单组件 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">表单 Form</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">用户名</label>
+                            <input type="text" placeholder="请输入用户名" 
+                                   class="w-full bg-dark-50 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-dark-800 dark:text-dark-200 transition-smooth">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">密码</label>
+                            <input type="password" placeholder="请输入密码"
+                                   class="w-full bg-dark-50 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-dark-800 dark:text-dark-200 transition-smooth">
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" class="mr-2 h-4 w-4 text-primary-600 bg-dark-50 dark:bg-dark-800 border-dark-300 dark:border-dark-600 rounded focus:ring-primary-500">
+                            <label for="remember" class="text-sm text-dark-600 dark:text-dark-300">记住我</label>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white py-2 px-4 rounded-xl transition-smooth shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            登录
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 提示组件 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">提示 Alert</h3>
+                    <div class="space-y-3">
+                        <div class="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 p-4 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-green-700 dark:text-green-400">操作成功！</span>
+                            </div>
+                        </div>
+                        <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                <span class="text-red-700 dark:text-red-400">发生错误！</span>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                                <span class="text-yellow-700 dark:text-yellow-400">注意警告！</span>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-xl">
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                                <span class="text-blue-700 dark:text-blue-400">信息提示</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 导航组件 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">导航 Nav</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="flex items-center p-3 rounded-xl bg-dark-100 dark:bg-dark-800 text-dark-900 dark:text-white">
+                            <i class="fas fa-home mr-3 text-primary-500"></i>
+                            首页
+                        </a>
+                        <a href="#" class="flex items-center p-3 rounded-xl hover:bg-dark-100 dark:hover:bg-dark-800 text-dark-600 dark:text-dark-300 hover:text-dark-900 dark:hover:text-white transition-smooth">
+                            <i class="fas fa-chart-bar mr-3"></i>
+                            数据分析
+                        </a>
+                        <a href="#" class="flex items-center p-3 rounded-xl hover:bg-dark-100 dark:hover:bg-dark-800 text-dark-600 dark:text-dark-300 hover:text-dark-900 dark:hover:text-white transition-smooth">
+                            <i class="fas fa-users mr-3"></i>
+                            用户管理
+                        </a>
+                        <a href="#" class="flex items-center p-3 rounded-xl hover:bg-dark-100 dark:hover:bg-dark-800 text-dark-600 dark:text-dark-300 hover:text-dark-900 dark:hover:text-white transition-smooth">
+                            <i class="fas fa-cog mr-3"></i>
+                            设置
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- 加载状态 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">加载 Loading</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-center py-4">
+                            <div class="animate-spin rounded-full h-10 w-10 border-4 border-primary-500 border-t-transparent"></div>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2">
+                            <div class="w-3 h-3 bg-primary-500 rounded-full animate-bounce"></div>
+                            <div class="w-3 h-3 bg-primary-500 rounded-full animate-bounce animation-delay-100"></div>
+                            <div class="w-3 h-3 bg-primary-500 rounded-full animate-bounce animation-delay-200"></div>
+                        </div>
+                        <div class="text-center text-dark-500 dark:text-dark-400 text-sm">正在加载中...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 效果示例 -->
+        <section id="effects" class="mb-20 animate-slide-up animation-delay-300">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center shadow-lg mr-4">
+                    <i class="fas fa-magic text-white text-xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold">效果示例</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 玻璃态效果 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">玻璃态效果 Glassmorphism</h3>
+                    <div class="relative h-64 rounded-xl overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="glass w-3/4 p-6 rounded-xl text-center">
+                                <h4 class="text-xl font-semibold mb-2">玻璃态卡片</h4>
+                                <p class="text-sm text-dark-700 dark:text-dark-200">这是一个具有玻璃态效果的卡片，背景模糊且半透明，创造出深度感和层次感。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 微动效 -->
+                <div class="bg-white dark:bg-dark-900 rounded-2xl p-6 shadow-lg hover-lift transition-smooth">
+                    <h3 class="text-lg font-semibold mb-4">微动效 Micro-interactions</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-dark-50 dark:bg-dark-800 rounded-xl text-center transform hover:scale-105 transition-transform duration-300">
+                            <i class="fas fa-heart text-2xl text-red-500 mb-2 hover:animate-pulse"></i>
+                            <p class="text-sm">缩放效果</p>
+                        </div>
+                        <div class="p-4 bg-dark-50 dark:bg-dark-800 rounded-xl text-center transform hover:rotate-3 transition-transform duration-300">
+                            <i class="fas fa-sync-alt text-2xl text-primary-500 mb-2"></i>
+                            <p class="text-sm">旋转效果</p>
+                        </div>
+                        <div class="p-4 bg-dark-50 dark:bg-dark-800 rounded-xl text-center transform hover:-translate-y-1 transition-transform duration-300">
+                            <i class="fas fa-arrow-up text-2xl text-green-500 mb-2"></i>
+                            <p class="text-sm">上移效果</p>
+                        </div>
+                        <div class="p-4 bg-dark-50 dark:bg-dark-800 rounded-xl text-center">
+                            <i class="fas fa-circle text-2xl text-secondary-500 mb-2 animate-pulse"></i>
+                            <p class="text-sm">脉冲效果</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark-100 dark:bg-dark-900 border-t border-dark-200 dark:border-dark-800 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-dark-500 dark:text-dark-400">© 2023 微信小程序设计语言系统 | 深色主题设计模范</p>
+        </div>
+    </footer>
+
+    <!-- 主题切换脚本 -->
+    <script>
+        // 检查用户系统主题偏好
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // 主题切换功能
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            
+            // 保存用户偏好
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+    </script>
+</body>
+</html>
