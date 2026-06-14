@@ -76,10 +76,10 @@
   --fg-tertiary: #64748B;
   --fg-disabled: #475569;
 
-  --accent: #0EA5E9;
-  --accent-hover: #0284C7;
-  --accent-soft: rgba(14, 165, 233, 0.12);
-  --accent-muted: rgba(14, 165, 233, 0.06);
+  --accent: #38BDF8;
+  --accent-hover: #0EA5E9;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --accent-muted: rgba(56, 189, 248, 0.06);
 
   --warn: #EAB308;
   --warn-soft: rgba(234, 179, 8, 0.12);
@@ -99,7 +99,7 @@
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 20px rgba(14, 165, 233, 0.15);
+  --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.15);
 
   --glass: rgba(0, 0, 0, 0.2);
   --glass-border: rgba(255, 255, 255, 0.05);
@@ -108,8 +108,8 @@
   --scrollbar-thumb: rgba(255,255,255,0.15);
 
   /* RGB 分量变量（供 gradient / keyframes 使用） */
-  --accent-r: 14; --accent-g: 165; --accent-b: 233;
-  --accent-hover-r: 2; --accent-hover-g: 132; --accent-hover-b: 199;
+  --accent-r: 56; --accent-g: 189; --accent-b: 248;
+  --accent-hover-r: 14; --accent-hover-g: 165; --accent-hover-b: 233;
   --warn-r: 234; --warn-g: 179; --warn-b: 8;
   --info-r: 59; --info-g: 130; --info-b: 246;
   --error-r: 239; --error-g: 68; --error-b: 68;
@@ -140,10 +140,10 @@
   --fg-tertiary: #64748B;
   --fg-disabled: #94A3B8;
 
-  --accent: #0EA5E9;
-  --accent-hover: #0284C7;
-  --accent-soft: rgba(14, 165, 233, 0.08);
-  --accent-muted: rgba(14, 165, 233, 0.04);
+  --accent: #38BDF8;
+  --accent-hover: #0EA5E9;
+  --accent-soft: rgba(56, 189, 248, 0.08);
+  --accent-muted: rgba(56, 189, 248, 0.04);
 
   --warn: #EAB308;
   --warn-soft: rgba(234, 179, 8, 0.08);
@@ -163,7 +163,7 @@
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-  --shadow-glow: 0 0 20px rgba(14, 165, 233, 0.1);
+  --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.1);
 
   --glass: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.08);
@@ -172,8 +172,8 @@
   --scrollbar-thumb: rgba(0,0,0,0.15);
 
   /* RGB 分量变量 */
-  --accent-r: 14; --accent-g: 165; --accent-b: 233;
-  --accent-hover-r: 2; --accent-hover-g: 132; --accent-hover-b: 199;
+  --accent-r: 56; --accent-g: 189; --accent-b: 248;
+  --accent-hover-r: 14; --accent-hover-g: 165; --accent-hover-b: 233;
   --warn-r: 234; --warn-g: 179; --warn-b: 8;
   --info-r: 59; --info-g: 130; --info-b: 246;
   --error-r: 239; --error-g: 68; --error-b: 68;
