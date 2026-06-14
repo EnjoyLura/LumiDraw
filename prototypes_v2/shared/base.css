@@ -4,7 +4,7 @@
    Primary Blue × Secondary Purple × 毛玻璃 × 简洁动效
    ============================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+Mono:wght@300;400;500;600;700&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -93,6 +93,7 @@
   --info: #3B82F6;
   --info-soft: rgba(59, 130, 246, 0.12);
 
+  --border-subtle: rgba(255, 255, 255, 0.04);
   --border: rgba(255, 255, 255, 0.05);
   --border-strong: rgba(255, 255, 255, 0.1);
 
@@ -157,6 +158,7 @@
   --info: #3B82F6;
   --info-soft: rgba(59, 130, 246, 0.08);
 
+  --border-subtle: rgba(0, 0, 0, 0.04);
   --border: rgba(0, 0, 0, 0.06);
   --border-strong: rgba(0, 0, 0, 0.12);
 
@@ -194,7 +196,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Noto Sans Mono', 'Inter', system-ui, sans-serif;
   background: var(--bg-base);
   color: var(--fg-primary);
   -webkit-font-smoothing: antialiased;
@@ -298,7 +300,7 @@ body {
   white-space: nowrap;
 }
 
-/* ── TabBar ── */
+/* ── TabBar（半透明实底，无 blur） ── */
 .tab-bar {
   height: var(--content-bottom);
   display: flex;
@@ -306,8 +308,6 @@ body {
   justify-content: space-around;
   padding-top: 8px;
   background: var(--glass);
-  backdrop-filter: blur(var(--blur-amount)) saturate(1.5);
-  -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(1.5);
   border-top: 1px solid var(--glass-border);
   position: relative;
   z-index: 50;
