@@ -65,8 +65,8 @@
 
 /* ── 深色主题 ── */
 [data-theme="dark"] {
-  --bg-base: #000000;
-  --bg-elevated: #0f0f0f;
+  --bg-base: #08080e;
+  --bg-elevated: #121218;
   --bg-surface: #141414;
   --bg-overlay: #1a1a1a;
   --bg-muted: #2a2a2a;
