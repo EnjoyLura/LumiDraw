@@ -78,8 +78,8 @@
 }
 .glass-pill:hover { color: var(--fg-primary); }
 .glass-pill.active {
-  background: var(--accent);
-  color: var(--bg-base);
+  background: #fff;
+  color: #111;
 }
 
 /* ── 输入框 ── */
@@ -124,27 +124,29 @@
 /* ── Tab 切换器 ── */
 .glass-tabs {
   display: flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  border: 0.5px solid var(--card-border);
-  box-shadow: var(--card-shadow);
+  gap: 20px;
+  padding: 0;
 }
 .glass-tab {
-  padding: 10px 16px;
-  border-radius: var(--radius-md);
-  font-size: 13px; font-weight: 500;
-  color: var(--fg-secondary);
+  padding: 6px 0;
+  font-size: 14px; font-weight: 400;
+  color: var(--fg-tertiary);
   cursor: pointer;
-  transition: all var(--transition-fast) cubic-bezier(0.4,0,0.2,1);
-  text-align: center;
-  flex: 1;
+  transition: all .2s;
+  position: relative;
 }
-.glass-tab:hover { color: var(--fg-primary); background: var(--bg-surface); }
+.glass-tab:hover { color: var(--fg-secondary); }
 .glass-tab.active {
-  background: var(--accent);
-  color: var(--bg-base);
+  color: #fff;
+}
+.glass-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 16px; height: 2px;
+  border-radius: 1px;
+  background: #fff;
 }
 
 /* ── 列表项 ── */
