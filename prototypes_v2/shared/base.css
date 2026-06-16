@@ -76,10 +76,10 @@
   --fg-tertiary: #64748B;
   --fg-disabled: #475569;
 
-  --accent: #38BDF8;
-  --accent-hover: #0EA5E9;
-  --accent-soft: rgba(56, 189, 248, 0.12);
-  --accent-muted: rgba(56, 189, 248, 0.06);
+  --accent: #7ec4e8;
+  --accent-hover: #5eb0d8;
+  --accent-soft: rgba(126, 196, 232, 0.12);
+  --accent-muted: rgba(126, 196, 232, 0.06);
 
   --warn: #EAB308;
   --warn-soft: rgba(234, 179, 8, 0.12);
@@ -114,8 +114,8 @@
   --scrollbar-thumb: rgba(255,255,255,0.15);
 
   /* RGB 分量变量（供 gradient / keyframes 使用） */
-  --accent-r: 56; --accent-g: 189; --accent-b: 248;
-  --accent-hover-r: 14; --accent-hover-g: 165; --accent-hover-b: 233;
+  --accent-r: 126; --accent-g: 196; --accent-b: 232;
+  --accent-hover-r: 94; --accent-hover-g: 176; --accent-hover-b: 216;
   --warn-r: 234; --warn-g: 179; --warn-b: 8;
   --info-r: 59; --info-g: 130; --info-b: 246;
   --error-r: 239; --error-g: 68; --error-b: 68;
@@ -146,10 +146,10 @@
   --fg-tertiary: #64748B;
   --fg-disabled: #94A3B8;
 
-  --accent: #38BDF8;
-  --accent-hover: #0EA5E9;
-  --accent-soft: rgba(56, 189, 248, 0.08);
-  --accent-muted: rgba(56, 189, 248, 0.04);
+  --accent: #7ec4e8;
+  --accent-hover: #5eb0d8;
+  --accent-soft: rgba(126, 196, 232, 0.08);
+  --accent-muted: rgba(126, 196, 232, 0.04);
 
   --warn: #EAB308;
   --warn-soft: rgba(234, 179, 8, 0.08);
@@ -184,8 +184,8 @@
   --scrollbar-thumb: rgba(0,0,0,0.15);
 
   /* RGB 分量变量 */
-  --accent-r: 56; --accent-g: 189; --accent-b: 248;
-  --accent-hover-r: 14; --accent-hover-g: 165; --accent-hover-b: 233;
+  --accent-r: 126; --accent-g: 196; --accent-b: 232;
+  --accent-hover-r: 94; --accent-hover-g: 176; --accent-hover-b: 216;
   --warn-r: 234; --warn-g: 179; --warn-b: 8;
   --info-r: 59; --info-g: 130; --info-b: 246;
   --error-r: 239; --error-g: 68; --error-b: 68;
