@@ -105,7 +105,7 @@
 .inspiration-header .subtitle { font-size:12px; color:var(--fg-tertiary); margin-top:4px; }
 .insp-tabs { margin:12px 16px; }
 .template-section { padding:0; }
-.template-filter { display:flex; gap:6px; margin-bottom:12px; padding:0 16px; overflow-x:auto; scrollbar-width:none; }
+.template-filter { display:flex; gap:6px; margin-bottom:12px; padding:0 16px 0 4px; overflow-x:auto; scrollbar-width:none; }
 .template-filter::-webkit-scrollbar { display:none; }
 .template-card { position:relative; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); overflow:hidden; cursor:pointer; transition:all var(--transition-base) cubic-bezier(0.4,0,0.2,1); }
 .template-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow-hover); }
