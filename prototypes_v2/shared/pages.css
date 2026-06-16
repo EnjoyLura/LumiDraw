@@ -23,8 +23,8 @@
 .carousel-dot { display:inline-block; width:6px; height:6px; border-radius:6px; background:var(--border-strong); transition:all .4s cubic-bezier(.4,0,.2,1); cursor:pointer; }
 .carousel-dot.active { width:18px; background:var(--accent); }
 
-.gallery-card { position:relative; border-radius:var(--radius-md); overflow:hidden; background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); cursor:pointer; transition:all var(--transition-base) cubic-bezier(0.4,0,0.2,1); }
-.gallery-card:hover { transform:translateY(-4px); border-color:var(--border-strong); box-shadow:var(--card-shadow-hover); }
+.gallery-card { position:relative; border-radius:var(--radius-md); overflow:hidden; background:var(--bg-elevated); box-shadow:var(--card-shadow); cursor:pointer; transition:all var(--transition-base) cubic-bezier(0.4,0,0.2,1); }
+.gallery-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow-hover); }
 .gallery-card:active { transform:scale(0.97); box-shadow:var(--card-shadow); transition-duration:0.1s; }
 .gallery-card .card-img-placeholder { width:100%; display:flex; align-items:center; justify-content:center; background:var(--bg-elevated); font-size:32px; color:var(--fg-tertiary); }
 .gallery-card .card-bottom { padding:10px 10px 10px 8px; display:flex; flex-direction:column; gap:6px; background:var(--bg-elevated); }
@@ -59,7 +59,7 @@
 .gallery-tab { font-size:15px; font-weight:400; color:var(--fg-tertiary); cursor:pointer; transition:all .2s; padding:4px 0; position:relative; }
 .gallery-tab:hover { color:var(--fg-secondary); }
 .gallery-tab.active { color:#fff; font-weight:400; }
-.gallery-tab.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:16px; height:2px; border-radius:1px; background:#fff; }
+.gallery-tab.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:16px; height:2px; border-radius:1px; background:var(--accent); }
 .gallery-tabs .tab-search { margin-left:auto; width:28px; height:28px; border-radius:var(--radius-sm); background:var(--bg-elevated); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--fg-tertiary); font-size:12px; transition:all .2s; }
 .gallery-tabs .tab-search:hover { background:var(--bg-surface); color:var(--fg-primary); }
 
@@ -108,7 +108,7 @@
 .template-filter { display:flex; gap:6px; margin-bottom:12px; padding:0 16px; overflow-x:auto; scrollbar-width:none; }
 .template-filter::-webkit-scrollbar { display:none; }
 .template-card { position:relative; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); overflow:hidden; cursor:pointer; transition:all var(--transition-base) cubic-bezier(0.4,0,0.2,1); }
-.template-card:hover { transform:translateY(-4px); border-color:var(--border-strong); box-shadow:var(--card-shadow-hover); }
+.template-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow-hover); }
 .template-card:active { transform:scale(0.97); box-shadow:var(--card-shadow); transition-duration:0.1s; }
 .template-card .template-img { width:100%; display:flex; align-items:center; justify-content:center; background:var(--bg-elevated); font-size:28px; color:var(--fg-tertiary); }
 .template-card .template-info { padding:8px 10px 10px; background:var(--bg-elevated); margin:0; border-radius:0; }
@@ -118,7 +118,7 @@
 .template-card .template-info .template-usage { font-size:10px; color:var(--fg-secondary); white-space:nowrap; flex-shrink:0; line-height:1; }
 .tool-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:16px; }
 .tool-card { position:relative; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); padding:0; cursor:pointer; transition:all var(--transition-base) cubic-bezier(0.4,0,0.2,1); overflow:hidden; height:140px; }
-.tool-card:hover { transform:translateY(-4px); border-color:var(--border-strong); box-shadow:var(--card-shadow-hover); }
+.tool-card:hover { transform:translateY(-4px); box-shadow:var(--card-shadow-hover); }
 .tool-card:active { transform:scale(0.97); box-shadow:var(--card-shadow); transition-duration:0.1s; }
 .tool-card .tool-icon { position:absolute; inset:0; }
 .tool-card .tool-icon img { width:100%; height:100%; object-fit:cover; }
@@ -339,15 +339,20 @@
 /* ── 作品页 ── */
 .works-header { padding:0 16px; position:relative; z-index:2; }
 .works-header h1 { font-size:22px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.works-header .manage-btn { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; transition:all .2s; flex-shrink:0; }
-.works-header .manage-btn:hover { opacity:0.7; }
+.works-header .manage-btn { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; transition:all .2s; flex-shrink:0; color:var(--fg-disabled); }
+.works-header .manage-btn:hover { color:var(--fg-primary); }
 .works-header .manage-btn.active { color:#ff6b6b !important; }
-.works-search-btn { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; transition:all .2s; flex-shrink:0; }
-.works-search-btn:hover { opacity:0.7; }
+.works-search-btn { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; cursor:pointer; transition:all .2s; flex-shrink:0; color:var(--fg-tertiary); }
+.works-search-btn:hover { color:var(--fg-primary); }
 .works-tabs { margin:12px 16px; }
+.works-tabs .glass-tabs { position:relative; }
+.works-tabs .glass-tab { position:absolute; left:50%; transform:translateX(-50%); }
+.works-tabs .glass-tab:nth-child(2) { transform:translateX(calc(-50% - 80px)); }
+.works-tabs .glass-tab:nth-child(3) { transform:translateX(-50%); }
+.works-tabs .glass-tab:nth-child(4) { transform:translateX(calc(-50% + 80px)); }
 .works-grid { column-count:2; column-gap:8px; padding:16px; }
 .works-item { position:relative; border-radius:var(--radius-sm); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); overflow:hidden; cursor:pointer; transition:all var(--transition-base); break-inside:avoid; margin-bottom:8px; }
-.works-item:hover { transform:scale(1.02); border-color:var(--border-strong); }
+.works-item:hover { transform:scale(1.02); }
 .works-item:active { transform:scale(0.97); transition-duration:0.1s; }
 .works-item .item-img { width:100%; display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--fg-tertiary); }
 .works-item .item-meta { padding:6px 8px; }
@@ -377,13 +382,16 @@
 .stat-item .stat-label { font-size:11px; color:var(--fg-tertiary); margin-top:4px; }
 
 /* 积分卡片 */
-.profile-points-card { display:flex; align-items:center; gap:16px; padding:16px; margin:14px 16px 2px; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); }
-.profile-points-card .pdc-info { flex:1; }
-.profile-points-card .pdc-row { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
-.profile-points-card .pdc-label { font-size:12px; color:var(--fg-tertiary); }
-.profile-points-card .pdc-value { font-size:24px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.profile-points-card .pdc-sub { font-size:12px; color:var(--fg-tertiary); }
-.profile-points-card .pdc-btn { padding:8px 20px; border-radius:var(--radius-md); font-size:13px; font-weight:600; background:linear-gradient(135deg,var(--accent),var(--secondary)); color:#fff; border:none; cursor:pointer; white-space:nowrap; }
+.profile-points-card { position:relative; display:flex; align-items:center; gap:16px; padding:18px 20px; margin:14px 16px 2px; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); overflow:hidden; }
+.profile-points-card::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; background:radial-gradient(circle, rgba(108,92,231,.18) 0%, transparent 70%); pointer-events:none; }
+.profile-points-card::after { content:''; position:absolute; bottom:-20px; left:20%; width:140px; height:80px; background:radial-gradient(circle, rgba(0,206,201,.08) 0%, transparent 70%); pointer-events:none; }
+.profile-points-card .pdc-info { flex:1; position:relative; z-index:1; }
+.profile-points-card .pdc-label-top { font-size:10px; color:var(--fg-tertiary); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; font-weight:500; }
+.profile-points-card .pdc-row { display:flex; align-items:baseline; gap:6px; margin-bottom:4px; }
+.profile-points-card .pdc-value { font-size:30px; font-weight:800; background:linear-gradient(135deg,var(--accent),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
+.profile-points-card .pdc-unit { font-size:13px; font-weight:500; color:var(--fg-secondary); }
+.profile-points-card .pdc-sub { font-size:11px; color:var(--fg-disabled); margin-top:2px; }
+.profile-points-card .pdc-btn { position:relative; z-index:1; padding:8px 20px; border-radius:var(--radius-md); font-size:13px; font-weight:600; background:linear-gradient(135deg,var(--accent),var(--secondary)); color:#fff; border:1px solid rgba(255,255,255,.15); cursor:pointer; white-space:nowrap; box-shadow:0 2px 12px rgba(108,92,231,.25); }
 .profile-menu { padding:0 16px; margin-top:12px; }
 .profile-menu-card { background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); border-radius:var(--radius-md); padding:8px 16px; }
 .profile-menu .menu-group { margin-bottom:8px; }
@@ -525,7 +533,10 @@
 
 /* ── 画廊搜索面板 ── */
 .search-panel { position:absolute; top:0; right:0; bottom:0; width:100%; z-index:55; background:var(--bg-base); display:none; flex-direction:column; padding:16px; overflow-y:auto; }
-.search-panel.show { display:flex; animation:slideIn .25s ease; }
+.search-panel.show { display:flex; animation:searchFadeIn .25s ease forwards; }
+.search-panel.fade-out { animation:searchFadeOut .25s ease forwards; pointer-events:none; }
+@keyframes searchFadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+@keyframes searchFadeOut { from{opacity:1;transform:translateY(0)} to{opacity:0;transform:translateY(6px)} }
 .search-bar { display:flex; align-items:center; gap:8px; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-elevated); border:0.5px solid var(--card-border); box-shadow:var(--card-shadow); margin-bottom:16px; }
 .search-bar input { flex:1; background:transparent; border:none; outline:none; color:var(--fg-primary); font-size:14px; }
 .search-bar input::placeholder { color:var(--fg-disabled); }

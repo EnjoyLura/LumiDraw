@@ -164,7 +164,7 @@
   <div class="page-view" id="pg-works" data-type="tabbar">
     <div class="page-content">
       <div class="works-tabs reveal"><div class="glass-tabs"><div class="glass-tab active" data-tab="history">历史作品</div><div class="glass-tab" data-tab="published">已发布</div><div class="glass-tab" data-tab="collected">收藏夹</div></div></div>
-      <div class="works-header reveal" style="display:flex;justify-content:space-between;align-items:center"><div class="manage-btn" id="worksManageBtn" onclick="toggleManageMode()">管理</div><div class="works-search-btn" onclick="openWorksSearch()"><i class="fas fa-search"></i></div></div>
+      <div class="works-header reveal" style="display:flex;justify-content:space-between;align-items:center"><div class="manage-btn" id="worksManageBtn" onclick="toggleManageMode()"><i class="fas fa-bars"></i></div><div class="works-search-btn" onclick="openWorksSearch()"><i class="fas fa-search"></i></div></div>
       <div class="tab-panel" data-panel="history"><div class="works-grid stagger-children" id="worksGridHistory"><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:160px;background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06)),url(images/gallery-card-cybercat.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">Nano Banana 2.0</div><div class="item-time">今天 14:30</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:120px;background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06)),url(images/gallery-card-sakura.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">Seedream 4.0</div><div class="item-time">今天 12:15</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:180px;background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06)),url(images/gallery-banner-2.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">Seedream 4.0</div><div class="item-time">昨天 20:00</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:140px;background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06)),url(images/gallery-card-cybercity.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">GPT-Image-1</div><div class="item-time">昨天 18:30</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:150px;background:linear-gradient(135deg,rgba(253,203,110,.08),rgba(85,239,196,.06)),url(images/gallery-banner-1.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">Nano Banana Pro</div><div class="item-time">6月9日</div></div></div><div class="works-item" onclick="worksItemClick(this)"><div class="select-check"><i class="fas fa-check"></i></div><div class="item-img" style="height:130px;background:linear-gradient(135deg,rgba(85,239,196,.08),rgba(88,215,185,.06)),url(images/inspiration-card-forest.png);background-size:cover;background-position:center"></div><div class="item-meta"><div class="item-model">Seedream 4.5</div><div class="item-time">6月8日</div></div></div></div></div>
       <div class="tab-panel" data-panel="published" style="display:none"><div class="works-grid stagger-children"><div class="gallery-card" onclick="galleryCardClick(this,'pg-published-detail')"><div class="select-check"><i class="fas fa-check"></i></div><div class="card-img-placeholder" style="height:150px;background:linear-gradient(135deg,rgba(88,215,185,.1),rgba(58,175,142,.06)),url(images/gallery-card-cybercat.png);background-size:cover;background-position:center"></div><div class="card-bottom"><div class="card-title-row"><span class="card-title">赛博朋克猫咪</span><span class="card-likes"><i class="fas fa-heart"></i> 56</span></div><div class="card-user-row"><div class="card-avatar-sm" onclick="navigateTo('pg-gallery-user')">L</div><span class="card-name">LumiArtist</span><span class="card-fav" onclick="toggleFav(this,event)" data-count="128"><i class="fas fa-star"></i> 128</span></div></div></div><div class="gallery-card" onclick="galleryCardClick(this,'pg-published-detail')"><div class="select-check"><i class="fas fa-check"></i></div><div class="card-img-placeholder" style="height:170px;background:linear-gradient(135deg,rgba(253,121,168,.1),rgba(88,215,185,.06)),url(images/gallery-card-sakura.png);background-size:cover;background-position:center"></div><div class="card-bottom"><div class="card-title-row"><span class="card-title">樱花庭院</span><span class="card-likes"><i class="fas fa-heart"></i> 34</span></div><div class="card-user-row"><div class="card-avatar-sm" onclick="navigateTo('pg-gallery-user')">L</div><span class="card-name">LumiArtist</span><span class="card-fav" onclick="toggleFav(this,event)" data-count="89"><i class="fas fa-star"></i> 89</span></div></div></div></div></div>
       <div class="tab-panel" data-panel="collected" style="display:none"><div class="works-grid stagger-children"><div class="gallery-card" onclick="galleryCardClick(this,'pg-gallery-detail')"><div class="select-check"><i class="fas fa-check"></i></div><div class="card-img-placeholder" style="height:160px;background:linear-gradient(135deg,rgba(58,175,142,.1),rgba(253,203,110,.06)),url(images/gallery-banner-2.png);background-size:cover;background-position:center"></div><div class="card-bottom"><div class="card-title-row"><span class="card-title">星空海洋</span><span class="card-remix" onclick="remixCard(event,'星空下深邃海洋，波光粼粼')">生成同款</span></div><div class="card-user-row"><div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-3),var(--accent-5))" onclick="navigateTo('pg-gallery-user')">A</div><span class="card-name">AquaVision</span><span class="card-fav" onclick="toggleFav(this,event)" data-count="56"><i class="fas fa-star"></i> 56</span></div></div></div><div class="gallery-card" onclick="galleryCardClick(this,'pg-gallery-detail')"><div class="select-check"><i class="fas fa-check"></i></div><div class="card-img-placeholder" style="height:140px;background:linear-gradient(135deg,rgba(143,232,208,.1),rgba(253,121,168,.06)),url(images/inspiration-card-cute.png);background-size:cover;background-position:center"></div><div class="card-bottom"><div class="card-title-row"><span class="card-title">蝴蝶之梦</span><span class="card-remix" onclick="remixCard(event,'蝴蝶之梦，梦幻蝴蝶翅膀')">生成同款</span></div><div class="card-user-row"><div class="card-avatar-sm" style="background:linear-gradient(135deg,var(--accent-2),var(--accent-3))" onclick="navigateTo('pg-gallery-user')">D</div><span class="card-name">DreamWeaver</span><span class="card-fav" onclick="toggleFav(this,event)" data-count="67"><i class="fas fa-star"></i> 67</span></div></div></div></div></div>
@@ -919,21 +919,27 @@ function openTool(el) {
 // ═══ Search Panel ═══
 function openSearch() {
   const panel = document.getElementById('searchPanel');
-  if (panel) { panel.classList.add('show'); setTimeout(() => document.getElementById('searchInput')?.focus(), 200); }
+  if (panel) { panel.style.display = ''; panel.classList.add('show'); setTimeout(() => document.getElementById('searchInput')?.focus(), 200); }
 }
 function closeSearch() {
   const panel = document.getElementById('searchPanel');
-  if (panel) panel.classList.remove('show');
+  if (!panel || !panel.classList.contains('show')) return;
+  panel.classList.remove('show');
+  panel.classList.add('fade-out');
+  setTimeout(() => { panel.classList.remove('fade-out'); panel.style.display = 'none'; }, 250);
 }
 
 // ═══ Works Search Panel ═══
 function openWorksSearch() {
   const panel = document.getElementById('worksSearchPanel');
-  if (panel) { panel.classList.add('show'); setTimeout(() => document.getElementById('worksSearchInput')?.focus(), 200); }
+  if (panel) { panel.style.display = ''; panel.classList.add('show'); setTimeout(() => document.getElementById('worksSearchInput')?.focus(), 200); }
 }
 function closeWorksSearch() {
   const panel = document.getElementById('worksSearchPanel');
-  if (panel) panel.classList.remove('show');
+  if (!panel || !panel.classList.contains('show')) return;
+  panel.classList.remove('show');
+  panel.classList.add('fade-out');
+  setTimeout(() => { panel.classList.remove('fade-out'); panel.style.display = 'none'; }, 250);
 }
 function fillWorksSearch(tag) {
   const input = document.getElementById('worksSearchInput');
@@ -963,7 +969,7 @@ function toggleManageMode() {
   const btn = document.getElementById('worksManageBtn');
   const bar = document.getElementById('worksManageBar');
   document.querySelectorAll('#pg-works .works-grid').forEach(g => g.classList.toggle('manage-mode', manageMode));
-  if (btn) btn.textContent = manageMode ? '完成' : '管理';
+  if (btn) { btn.classList.toggle('active', manageMode); btn.innerHTML = manageMode ? '<i class="fas fa-check"></i>' : '<i class="fas fa-bars"></i>'; }
   if (bar) bar.classList.toggle('show', manageMode);
   if (!manageMode) {
     document.querySelectorAll('#pg-works .works-item.selected, #pg-works .gallery-card.selected').forEach(i => i.classList.remove('selected'));

@@ -6,14 +6,12 @@
 /* ── 通用毛玻璃卡片 ── */
 .glass {
   background: var(--bg-elevated);
-  border: 0.5px solid var(--card-border);
   border-radius: var(--radius-md);
   box-shadow: var(--card-shadow);
   transition: all var(--transition-base) cubic-bezier(0.4,0,0.2,1);
 }
 .glass:hover {
   background: var(--bg-surface);
-  border-color: var(--border-strong);
   transform: translateY(-4px);
   box-shadow: var(--card-shadow-hover);
 }
@@ -21,7 +19,6 @@
 /* ── 图片卡片 ── */
 .glass-card {
   background: var(--bg-elevated);
-  border: 0.5px solid var(--card-border);
   border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
@@ -30,7 +27,6 @@
 }
 .glass-card:hover {
   background: var(--bg-surface);
-  border-color: var(--border-strong);
   transform: translateY(-4px);
   box-shadow: var(--card-shadow-hover);
 }
@@ -78,8 +74,8 @@
 }
 .glass-pill:hover { color: var(--fg-primary); }
 .glass-pill.active {
-  background: #fff;
-  color: #111;
+  background: transparent;
+  color: #fff;
 }
 
 /* ── 输入框 ── */
@@ -146,7 +142,7 @@
   transform: translateX(-50%);
   width: 16px; height: 2px;
   border-radius: 1px;
-  background: #fff;
+  background: var(--accent);
 }
 
 /* ── 列表项 ── */
