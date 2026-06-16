@@ -344,7 +344,7 @@ body {
   position: relative;
 }
 .tab-item i { font-size: 20px; }
-.tab-item.active { color: var(--accent); }
+.tab-item.active { color: #B8C4CE; }
 .tab-item:hover { color: var(--fg-secondary); }
 
 /* ── 创作 Tab 特殊样式 ── */
@@ -356,7 +356,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), #38BDF8, var(--secondary));
   display: flex;
   align-items: center;
   justify-content: center;

@@ -121,6 +121,7 @@
 /* ── Tab 切换器 ── */
 .glass-tabs {
   display: flex;
+  align-items: center;
   gap: 20px;
   padding: 0;
 }
@@ -134,7 +135,7 @@
 }
 .glass-tab:hover { color: var(--fg-secondary); }
 .glass-tab.active {
-  color: var(--accent);
+  color: #B8C4CE;
   font-weight: 600;
 }
 .glass-tab.active::after {
@@ -277,7 +278,7 @@
 .filter-bar {
   display: flex;
   gap: 6px;
-  padding: 0 16px 6px;
+  padding: 0 16px 6px 4px;
   margin-top: 4px;
   overflow-x: auto;
   scrollbar-width: none;
