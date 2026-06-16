@@ -75,7 +75,7 @@
 .glass-pill:hover { color: var(--fg-primary); }
 .glass-pill.active {
   background: transparent;
-  color: var(--accent);
+  color: #B8C4CE;
   font-weight: 600;
 }
 
